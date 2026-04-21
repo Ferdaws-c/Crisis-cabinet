@@ -24,11 +24,13 @@ func _ready() -> void:
 func _check_phase() -> void:
 	if is_unlocked: return
 	
-	var phase_map = {"Executing": 1, "Monitoring": 2, "Closing": 3}
+	var phase_map = {"Executing": 1, "Monitoring": 2, "Closing": 3, "Finished": 4}
 	var current_phase_level = phase_map.get(GameManager.current_phase, 0)
 	
 	var required_phase_level = 1
-	if required_xp >= 495:
+	if required_xp >= 500:
+		required_phase_level = 4
+	elif required_xp >= 495:
 		required_phase_level = 3
 	elif required_xp >= 330:
 		required_phase_level = 2

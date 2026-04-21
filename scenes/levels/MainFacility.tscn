@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=4 uid="uid://c2ovsulpwutp2"]
+[gd_scene load_steps=30 format=4 uid="uid://c2ovsulpwutp2"]
 
 [ext_resource type="PackedScene" uid="uid://b75wqqk13hogs" path="res://scenes/player/Player.tscn" id="1_45ba0"]
 [ext_resource type="PackedScene" uid="uid://btcsb2ft3ridk" path="res://scenes/environment/RiskRoom.tscn" id="2_a06dh"]
@@ -18,9 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://d2yv12vixngd7" path="res://scenes/ui/PauseMenu.tscn" id="19_d4kdi"]
 [ext_resource type="PackedScene" uid="uid://dws6qs0eogup4" path="res://scenes/ui/info_popup.tscn" id="20_axxfu"]
 [ext_resource type="FontFile" uid="uid://c7tp21o6fnlhe" path="res://assets/Fonts/Pixelify_Sans/static/PixelifySans-Regular.ttf" id="20_d4kdi"]
-[ext_resource type="FontFile" uid="uid://dt4c5ye0spj8o" path="res://assets/Fonts/Pixelify_Sans/static/PixelifySans-SemiBold.ttf" id="21_d4kdi"]
 [ext_resource type="PackedScene" uid="uid://bk7h0cvnc076l" path="res://scenes/ui/CeoPopup.tscn" id="21_je3rf"]
-[ext_resource type="FontFile" uid="uid://coks77qvm2gni" path="res://assets/Fonts/Pixelify_Sans/static/PixelifySans-Medium.ttf" id="21_xpwjk"]
 [ext_resource type="PackedScene" uid="uid://d2xudsjk54fju" path="res://scenes/ui/Credits.tscn" id="22_1ljnt"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tlhd4"]
@@ -2545,7 +2543,7 @@ required_xp = 495
 [node name="CeoRoomDoor" parent="InteractionTriggers/Doors" instance=ExtResource("12_8avxx")]
 z_index = 7
 position = Vector2(-3816, -441)
-required_xp = 550
+required_xp = 600
 
 [node name="InfoTrigger" parent="InteractionTriggers" instance=ExtResource("12_d4kdi")]
 z_index = 4
@@ -2609,50 +2607,6 @@ visible = false
 [node name="Texts" type="Node" parent="."]
 
 [node name="XPTexts" type="Node" parent="Texts"]
-
-[node name="Label" type="Label" parent="Texts/XPTexts"]
-texture_filter = 1
-offset_left = -3273.0
-offset_top = -146.0
-offset_right = -3228.0
-offset_bottom = -123.0
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("20_d4kdi")
-theme_override_font_sizes/font_size = 12
-text = "165XP"
-
-[node name="Label2" type="Label" parent="Texts/XPTexts"]
-texture_filter = 1
-offset_left = -3817.0
-offset_top = -625.0
-offset_right = -3772.0
-offset_bottom = -602.0
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("21_d4kdi")
-theme_override_font_sizes/font_size = 12
-text = "330XP"
-
-[node name="Label3" type="Label" parent="Texts/XPTexts"]
-texture_filter = 1
-offset_left = -3612.0
-offset_top = -624.0
-offset_right = -3567.0
-offset_bottom = -601.0
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("21_xpwjk")
-theme_override_font_sizes/font_size = 12
-text = "495XP"
-
-[node name="Label4" type="Label" parent="Texts/XPTexts"]
-texture_filter = 1
-offset_left = -3832.0
-offset_top = -479.0
-offset_right = -3787.0
-offset_bottom = -456.0
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("21_xpwjk")
-theme_override_font_sizes/font_size = 12
-text = "550XP"
 
 [node name="PressEInteract" type="Label" parent="Texts"]
 z_index = 7

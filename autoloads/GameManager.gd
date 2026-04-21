@@ -24,6 +24,7 @@ var game_over: bool = false
 var has_read_info: bool = false
 var has_saved_score: bool = false
 var decision_log: Array = []
+var total_play_time: float = 0.0
 
 # JSON Data
 var scenarios: Array = []
@@ -74,7 +75,18 @@ func reset_game(reset_difficulty: bool = true) -> void:
 	is_movement_paused = false
 	has_read_info = false
 	has_saved_score = false
+	total_play_time = 0.0
+	
+	stats_tiger = {"c": 0, "t": 0}
+	stats_alligator = {"c": 0, "t": 0}
+	stats_puppy = {"c": 0, "t": 0}
+	stats_kitten = {"c": 0, "t": 0}
+	
 	emit_signal("state_changed")
+
+func _process(delta: float) -> void:
+	if not is_movement_paused and not game_over and current_phase != "Finished":
+		total_play_time += delta
 
 func load_scenarios() -> void:
 	var file_path = "res://gppt_crisis_cabinet_v2.json"
@@ -135,24 +147,23 @@ func break_streak() -> void:
 	streak = 0
 	emit_signal("state_changed")
 
-func mark_scenario_complete() -> void:
+func mark_scenario_complete(passed: bool = true) -> void:
 	scenarios_completed += 1
 	
-	var base_xp = 50
-	if current_difficulty == "Easy":
-		base_xp = 165
-	elif current_difficulty == "Medium":
-		base_xp = 85
-		
-	# Award XP based on streak (base XP + 10% extra per streak point)
-	var streak_multiplier = 1.0 + (streak * 0.1)
-	xp_score += int(base_xp * streak_multiplier)
+	if passed:
+		var base_xp = 110
+			
+		# Award XP based on streak (base XP + 10% extra per streak point)
+		var streak_multiplier = 1.0 + (streak * 0.1)
+		xp_score += int(base_xp * streak_multiplier)
 	
 	var max_s = 12
 	if current_difficulty == "Easy": max_s = 4
 	elif current_difficulty == "Medium": max_s = 8
 	
-	if scenarios_completed >= max_s * 0.75:
+	if scenarios_completed >= max_s:
+		current_phase = "Finished"
+	elif scenarios_completed >= max_s * 0.75:
 		current_phase = "Closing"
 	elif scenarios_completed >= max_s * 0.50:
 		current_phase = "Monitoring"
@@ -199,12 +210,16 @@ func save_high_score() -> void:
 	if has_saved_score: return
 	has_saved_score = true
 	var scores = get_high_scores()
+	
+	var composite_score = point_score + int(budget / 10.0) + xp_score - int(total_play_time * 5)
+	
 	scores.append({
 		"name": current_player_name, 
 		"diff": current_difficulty, 
-		"score": point_score, 
+		"score": composite_score, 
 		"budget": budget, 
-		"xp": xp_score
+		"xp": xp_score,
+		"time": total_play_time
 	})
 	# Sort descending by score
 	scores.sort_custom(func(a, b): return a["score"] > b["score"])

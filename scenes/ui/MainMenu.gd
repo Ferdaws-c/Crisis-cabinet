@@ -91,7 +91,7 @@ func _build_scoreboard_ui() -> void:
 	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	
 	var panel = PanelContainer.new()
-	panel.custom_minimum_size = Vector2(650, 500)
+	panel.custom_minimum_size = Vector2(950, 500)
 	
 	var style = StyleBoxFlat.new()
 	style.bg_color = Color(0.1, 0.1, 0.1, 0.95)
@@ -124,6 +124,18 @@ func _build_scoreboard_ui() -> void:
 	
 	vbox.add_child(HSeparator.new())
 	
+	var clear_btn = Button.new()
+	clear_btn.text = "🗑 CLEAR LEADERBOARD"
+	clear_btn.custom_minimum_size = Vector2(0, 40)
+	clear_btn.add_theme_color_override("font_color", Color(1.0, 0.4, 0.4))
+	clear_btn.pressed.connect(func():
+		var f = FileAccess.open("user://scoreboard.json", FileAccess.WRITE)
+		f.store_string("[]")
+		f.close()
+		_on_scoreboard_pressed()
+	)
+	vbox.add_child(clear_btn)
+	
 	var close_btn = Button.new()
 	close_btn.text = "CLOSE SCOREBOARD"
 	close_btn.custom_minimum_size = Vector2(0, 50)
@@ -153,9 +165,16 @@ func _on_scoreboard_pressed() -> void:
 				var l = RichTextLabel.new()
 				l.bbcode_enabled = true
 				l.fit_content = true
-				l.text = "[b]#%d %s[/b] [%s] - Score: %s | Budget: $%s | XP: %s" % [
+				l.autowrap_mode = TextServer.AUTOWRAP_OFF
+				
+				var time_val = s.get("time", 0.0)
+				var mins = int(time_val / 60.0)
+				var secs = int(time_val) % 60
+				var time_str = "%02d:%02d" % [mins, secs]
+				
+				l.text = "[b]#%d %s[/b] [%s] - Comp Score: %s | Time: %s | Budget: $%s | XP: %s" % [
 					i+1, s.get("name", "Unknown"), s.get("diff", "Easy"), str(s.get("score", 0)), 
-					str(s.get("budget", 0)), str(s.get("xp", 0))
+					time_str, str(s.get("budget", 0)), str(s.get("xp", 0))
 				]
 				list.add_child(l)
 				list.add_child(HSeparator.new())

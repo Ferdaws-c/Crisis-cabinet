@@ -169,7 +169,10 @@ func show_popup(scenario_data: Dictionary, _category: String) -> void:
 	self.visible = true
 
 	if title_label and current_scenario.has("title"):
-		title_label.text = current_scenario["title"]
+		var raw_title = current_scenario["title"]
+		if " — " in raw_title:
+			raw_title = raw_title.split(" — ", false, 1)[1]
+		title_label.text = raw_title
 		
 	# Initialize structured local logging
 	current_log = {
@@ -185,15 +188,8 @@ func show_popup(scenario_data: Dictionary, _category: String) -> void:
 	if impact_val: impact_val.text = current_scenario.get("impact", "N/A") + " / max 20 Days"
 	if urgency_val: urgency_val.text = current_scenario.get("urgency", "N/A")
 
-	# Determine severity badge from title
-	var sev = "CRITICAL" if "Tiger" in current_scenario.get("title","") else \
-			  "HIGH"     if "Alligator" in current_scenario.get("title","") else \
-			  "MEDIUM"   if "Puppy" in current_scenario.get("title","") else "LOW"
 	if alert_badge:
-		alert_badge.text = "⚠  " + sev + " RISK"
-		var badge_colors = {"CRITICAL":Color(0.9,0.1,0.1),"HIGH":Color(0.9,0.5,0.1),
-							"MEDIUM":Color(0.2,0.5,0.9),"LOW":Color(0.2,0.7,0.2)}
-		alert_badge.add_theme_color_override("font_color", badge_colors.get(sev, Color.WHITE))
+		alert_badge.hide()
 
 	# Fade in
 	if popup_panel:
@@ -244,6 +240,7 @@ func _show_lesson() -> void:
 		_start_classification()
 	)
 	mitigation_container.add_child(btn)
+	btn.grab_focus.call_deferred()
 
 # ── Step 1: Tusler Classification Mini-game ───
 func _start_classification() -> void:
@@ -265,6 +262,8 @@ func _start_classification() -> void:
 		_style_tile(btn, meta["color"])
 		btn.pressed.connect(_on_classification_selected.bind(cat))
 		tusler_grid.add_child(btn)
+		if cat == order[0]:
+			btn.grab_focus.call_deferred()
 
 # ── Step 2: PMBOK Strategy ────────────────────
 func _start_strategy() -> void:
@@ -295,6 +294,8 @@ func _start_strategy() -> void:
 			_style_tile(btn, s["color"])
 		btn.pressed.connect(_on_strategy_selected.bind(s["name"]))
 		strategy_container.add_child(btn)
+		if s == strategies[0]:
+			btn.grab_focus.call_deferred()
 
 # ── Step 3: Specific Mitigation ───────────────
 func _start_mitigation() -> void:
@@ -325,6 +326,8 @@ func _start_mitigation() -> void:
 		_style_tile(btn, Color(0.20, 0.35, 0.55)) # Neutral blue for all options
 		btn.pressed.connect(_on_mitigation_selected.bind(is_correct, opt))
 		mitigation_container.add_child(btn)
+		if opt == options[0]:
+			btn.grab_focus.call_deferred()
 
 # ── Callbacks ─────────────────────────────────
 func _on_classification_selected(cat: String) -> void:
@@ -419,6 +422,7 @@ func _show_intermediate_feedback(is_correct: bool, msg: String, next_func: Strin
 		_style_tile(btn, Color(0.2, 0.4, 0.8))
 		btn.pressed.connect(_on_intermediate_continue)
 		feedback_container.add_child(btn)
+		btn.grab_focus.call_deferred()
 
 func _on_intermediate_continue() -> void:
 	if next_callback == "_start_strategy":
@@ -453,6 +457,7 @@ func _show_feedback(is_correct: bool) -> void:
 		_style_tile(btn, Color(0.2, 0.4, 0.8))
 		btn.pressed.connect(_scenario_done)
 		feedback_container.add_child(btn)
+		btn.grab_focus.call_deferred()
 
 func _scenario_done() -> void:
 	if popup_panel:
@@ -460,7 +465,8 @@ func _scenario_done() -> void:
 		tw.tween_property(popup_panel, "modulate:a", 0.0, 0.4)
 		await tw.finished
 	self.visible = false
-	GameManager.mark_scenario_complete()
+	var passed = current_log.mitigate == true
+	GameManager.mark_scenario_complete(passed)
 	GameManager.is_movement_paused = false
 	emit_signal("scenario_completed")
 

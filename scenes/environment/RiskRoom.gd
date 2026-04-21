@@ -18,17 +18,25 @@ var completed_pads: Dictionary = {
 }
 
 func _ready() -> void:
+	var active_count = 3
 	if GameManager.current_difficulty == "Easy":
-		if alligator_pad:
-			alligator_pad.queue_free()
-			alligator_pad = null
-		if puppy_pad:
-			puppy_pad.queue_free()
-			puppy_pad = null
+		active_count = 1
 	elif GameManager.current_difficulty == "Medium":
-		if puppy_pad:
-			puppy_pad.queue_free()
-			puppy_pad = null
+		active_count = 2
+
+	var pads = []
+	if is_instance_valid(tiger_pad): pads.append(tiger_pad)
+	if is_instance_valid(alligator_pad): pads.append(alligator_pad)
+	if is_instance_valid(puppy_pad): pads.append(puppy_pad)
+	
+	pads.shuffle()
+	
+	for i in range(active_count, pads.size()):
+		var p = pads[i]
+		if p == tiger_pad: tiger_pad = null
+		elif p == alligator_pad: alligator_pad = null
+		elif p == puppy_pad: puppy_pad = null
+		p.queue_free()
 
 	# Prevent crashes if the user deletes a pad from the scene
 	if is_instance_valid(tiger_pad): tiger_pad.connect("pad_confirmed", Callable(self, "_on_pad_confirmed"))

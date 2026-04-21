@@ -24,6 +24,17 @@ func _build_ui() -> void:
 	main_vbox.add_theme_constant_override("separation", 30)
 	main_margin.add_child(main_vbox)
 	
+	var total_time = GameManager.total_play_time
+	var mins = int(total_time / 60.0)
+	var secs = int(total_time) % 60
+	
+	var header_lbl = Label.new()
+	header_lbl.text = "MISSION ACCOMPLISHED — CLEAR TIME: %02d:%02d" % [mins, secs]
+	header_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	header_lbl.add_theme_font_size_override("font_size", 28)
+	header_lbl.add_theme_color_override("font_color", Color(0.3, 0.9, 0.4))
+	main_vbox.add_child(header_lbl)
+	
 	# === TOP ROW: Tusler Grid | PMBOK Block ===
 	var top_hbox = HBoxContainer.new()
 	top_hbox.custom_minimum_size = Vector2(0, 250)
