@@ -1,2 +1,10 @@
+# Force GitHub to recognize .gd files as GDScript
+*.gd linguist-language=GDScript
+
+# Tell GitHub to ignore Godot's data and generated files in the language stats
+*.tscn linguist-generated
+*.tres linguist-generated
+*.import linguist-generated
+.godot/** linguist-generated
 # Normalize EOL for all files that Git considers text files.
 * text=auto eol=lf
