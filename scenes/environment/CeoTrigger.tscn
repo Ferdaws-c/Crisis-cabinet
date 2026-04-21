@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://s6ow57vgwopo" path="res://assets/LimeZu_Assets/businessman/businessman1_idle_down.png" id="2_hebn2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_40m0d"]
-size = Vector2(54, 50)
+size = Vector2(82.5, 61)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j8fgh"]
 atlas = ExtResource("2_hebn2")
@@ -42,6 +42,7 @@ radius = 7.0
 script = ExtResource("1_jwyi4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-7.75, -4)
 shape = SubResource("RectangleShape2D_40m0d")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

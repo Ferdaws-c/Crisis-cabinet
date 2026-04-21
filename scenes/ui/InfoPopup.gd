@@ -112,3 +112,4 @@ func _on_next_pressed() -> void:
 		self.visible = false
 		GameManager.has_read_info = true
 		GameManager.is_movement_paused = false
+		GameManager.emit_signal("state_changed")

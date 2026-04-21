@@ -4,8 +4,6 @@ extends Area2D
 @export var category: String = "tiger"
 
 var is_player_on_pad: bool = false
-var hold_time: float = 0.0
-const REQUIRED_HOLD_TIME: float = 0.5
 
 signal pad_confirmed(category)
 
@@ -13,14 +11,14 @@ func _ready() -> void:
 	self.body_entered.connect(_on_body_entered)
 	self.body_exited.connect(_on_body_exited)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if is_player_on_pad and not GameManager.is_movement_paused:
-		hold_time += delta
-		# If we had a progressbar child, update it here
-		# $ProgressBar.value = (hold_time / REQUIRED_HOLD_TIME) * 100
-		if hold_time >= REQUIRED_HOLD_TIME:
+		if Input.is_key_pressed(KEY_SPACE):
 			is_player_on_pad = false
-			hold_time = 0.0
+			# Remove the physical collision body if it exists
+			var static_body = get_node_or_null("StaticBody2D")
+			if static_body:
+				static_body.queue_free()
 			emit_signal("pad_confirmed", category)
 
 func _on_body_entered(body: Node2D) -> void:
@@ -31,6 +29,5 @@ func _on_body_entered(body: Node2D) -> void:
 func _on_body_exited(body: Node2D) -> void:
 	if body.name == "Player":
 		is_player_on_pad = false
-		hold_time = 0.0
 		# $ProgressBar.visible = false
 		# $ProgressBar.value = 0

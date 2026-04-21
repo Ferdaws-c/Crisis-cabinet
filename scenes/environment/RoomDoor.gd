@@ -35,7 +35,10 @@ func _check_phase() -> void:
 	elif required_xp >= 330:
 		required_phase_level = 2
 	elif required_xp <= 0:
-		required_phase_level = 0
+		if GameManager.has_read_info:
+			required_phase_level = 0
+		else:
+			required_phase_level = 99 # Hard lock until info is read
 		
 	if current_phase_level >= required_phase_level:
 		_perform_unlock()

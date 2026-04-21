@@ -2564,21 +2564,22 @@ z_index = 5
 position = Vector2(-3226, -6)
 
 [node name="RiskRoom2" parent="RiskRooms" instance=ExtResource("2_a06dh")]
-position = Vector2(-3769, -563)
+position = Vector2(-3765, -569)
 pad_1_scenario = "SC-04"
 pad_2_scenario = "SC-05"
 pad_3_scenario = "SC-06"
 
 [node name="RiskRoom3" parent="RiskRooms" instance=ExtResource("2_a06dh")]
 z_index = 5
-position = Vector2(-3817, -655)
+position = Vector2(-3816, -655)
 scale = Vector2(-0.972867, 0.923939)
 pad_1_scenario = "SC-07"
 pad_2_scenario = "SC-08"
 pad_3_scenario = "SC-09"
 
 [node name="RiskRoom4" parent="RiskRooms" instance=ExtResource("2_a06dh")]
-position = Vector2(-3561, -657)
+position = Vector2(-3588, -665)
+scale = Vector2(1.06613, 1)
 pad_1_scenario = "SC-10"
 pad_2_scenario = "SC-11"
 pad_3_scenario = "SC-12"
