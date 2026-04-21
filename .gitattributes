@@ -8,3 +8,6 @@
 .godot/** linguist-generated
 # Normalize EOL for all files that Git considers text files.
 * text=auto eol=lf
+#ignore these files
+*.json linguist-generated
+*.html linguist-generated
