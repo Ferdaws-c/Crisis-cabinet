@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://x8lisis3qklo"]
+
+[ext_resource type="Script" uid="uid://b1op26w8gciqv" path="res://scenes/ui/DifficultyPopup.gd" id="1_ada0p"]
+
+[node name="DifficultyPopup" type="CanvasLayer"]
+script = ExtResource("1_ada0p")

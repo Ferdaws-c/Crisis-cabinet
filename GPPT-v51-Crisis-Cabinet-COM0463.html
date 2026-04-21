@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Crisis Cabinet: IT Project Risk Simulation (COM0463) — GPPT v51</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;max-width:960px;margin:0 auto;padding:32px;color:#1e293b;background:#fff;line-height:1.7;font-size:14px}
+h1{font-size:1.9rem;margin-bottom:8px;color:#1e3a8a}
+h2{font-size:1.15rem;margin:24px 0 8px;color:#1d4ed8;border-bottom:2px solid #dbeafe;padding-bottom:4px}
+h3{font-size:1rem;margin:16px 0 6px;color:#2563eb}
+h4{font-size:.9rem;margin:12px 0 5px;font-weight:700;color:#334155}
+p{margin-bottom:8px;font-size:.9rem}
+ul{margin:6px 0 10px 20px;font-size:.9rem}
+li{margin-bottom:4px}
+table{width:100%;border-collapse:collapse;margin:8px 0;font-size:.85rem}
+th{background:#1e3a8a;color:#fff;padding:8px 11px;text-align:left;font-weight:600}
+td{padding:7px 11px;border-bottom:1px solid #e2e8f0;vertical-align:top}
+tr:nth-child(even) td{background:#f8fafc}
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:16px 20px;margin:12px 0;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.card-title{font-weight:800;font-size:.95rem;margin-bottom:6px;color:#0f172a}
+.cover{background:linear-gradient(135deg,#1e3a8a,#1d4ed8,#059669);color:#fff;padding:36px 40px;border-radius:10px;margin-bottom:28px}
+.cover h1{color:#fff;font-size:1.9rem;margin:0 0 10px;border:none}
+.cover .meta{font-size:.88rem;opacity:.9;margin:3px 0}
+.meta-pill{display:inline-block;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);border-radius:5px;padding:3px 10px;font-size:.78rem;margin:3px 3px 0 0}
+.info-box{padding:10px 14px;border-radius:6px;margin:10px 0;font-size:.85rem}
+.info-box.blue{background:#eff6ff;border-left:4px solid #2563eb}
+.info-box.amber{background:#fffbeb;border-left:4px solid #f59e0b}
+.info-box.red{background:#fef2f2;border-left:4px solid #dc2626}
+.info-box.green{background:#f0fdf4;border-left:4px solid #059669}
+.info-box.purple{background:#f5f3ff;border-left:4px solid #7c3aed}
+.tag{display:inline-block;padding:1px 8px;border-radius:20px;font-size:.7rem;font-weight:700;margin-right:3px}
+.tag.blue{background:#dbeafe;color:#1d4ed8}
+.tag.green{background:#dcfce7;color:#166534}
+.tag.amber{background:#fef9c3;color:#854d0e}
+.tag.red{background:#fee2e2;color:#991b1b}
+.tag.purple{background:#ede9fe;color:#6d28d9}
+.tag.gray{background:#f1f5f9;color:#475569}
+.label{font-weight:700;color:#1e3a8a}
+nav.toc{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:16px 20px;margin-bottom:24px}
+nav.toc h3{color:#1e3a8a;margin-top:0}
+nav.toc a{color:#2563eb;text-decoration:none;font-size:.84rem;display:block;padding:2px 0}
+nav.toc a:hover{text-decoration:underline}
+.dim-bar-wrap{display:flex;align-items:center;gap:10px;margin:5px 0}
+.dim-bar-bg{flex:1;height:10px;background:#e2e8f0;border-radius:5px;overflow:hidden}
+.dim-bar-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,#2563eb,#059669)}
+.dim-pct{font-weight:700;font-size:.82rem;color:#1d4ed8;min-width:38px;text-align:right}
+@media print{.cover{break-inside:avoid}h2{break-after:avoid}nav.toc{display:none}}
+</style>
+</head>
+<body>
+<a id="top"></a>
+
+<!-- SIDENAV -->
+<style>
+@media print{#gppt-sidenav{display:none}.gppt-body{margin-left:0!important}}
+#gppt-sidenav a:focus{outline:2px solid #38bdf8}
+.gppt-body{margin-left:200px}
+</style>
+<div id="gppt-sidenav" style="position:fixed;top:0;left:0;width:200px;height:100vh;background:#0f172a;overflow-y:auto;z-index:9999;display:flex;flex-direction:column;box-shadow:2px 0 12px rgba(0,0,0,.3)">
+  <div style="padding:12px 14px 8px;color:#38bdf8;font-weight:700;font-size:.82rem;border-bottom:1px solid #1e3a5f;flex-shrink:0">📋 GPPT v51</div>
+  <div style="flex:1;overflow-y:auto;padding:6px 0">
+    <a href="#sec-executive" style="display:block;padding:3px 12px;color:#94a3b8;text-decoration:none;font-size:.72rem;line-height:1.5" onmouseover="this.style.color='#38bdf8'" onmouseout="this.style.color='#94a3b8'">Executive Summary</a>
+    <a href="#sec-classification" style="display:block;padding:3px 12px;color:#94a3b8;text-decoration:none;font-size:.72rem;line-height:1.5" onmouseover="this.style.color='#38bdf8'" onmouseout="this.style.color='#94a3b8'">Project Classification</a>
+    <a href="#sec-problem" style="display:block;padding:3px 12px;color:#94a3b8;text-decoration:none;font-size:.72rem;line-height:1.5" onmouseover="this.style.color='#38bdf8'" onmouseout="this.style.color='#94a3b8'">Problem Statement</a>
+    <a href="#sec-scope" style="display:block;padding:3px 12px;color:#94a3b8;text-decoration:none;font-size:.72rem;line-height:1.5" onmouseover="this.style.color='#38bdf8'" onmouseout="this.style.color='#94a3b8'">Scope &amp; Requirements</a>
+    <a href="#sec-team" style="display:block;padding:3px 12px;color:#94a3b8;text-decoration:none;font-size:.72rem;line-height:1.5" onmouseover="this.style.color='#38bdf8'" onmouseout="this.style.color='#94a3b8'">Team Structure</a>
+    <a href="#sec-theory" style="display:block;padding:3px 12px;color:#94a3b8;text-decoration:none;font-size:.72rem;line-height:1.5" onmouseover="this.style.color='#38bdf8'" onmouseout="this.style.color='#94a3b8'">Theoretical Framework</a>
+    <a href="#sec-sixdim" style="display:block;padding:3px 12px;color:#94a3b8;text-decoration:none;font-size:.72rem;line-height:1.5" onmouseover="this.style.color='#38bdf8'" onmouseout="this.style.color='#94a3b8'">Six-Dimension Design</a>
+    <a href="#sec-concept" style="display:block;padding:3px 12px;color:#94a3b8;text-decoration:none;font-size:.72rem;line-height:1.5" onmouseover="this.style.color='#38bdf8'" onmouseout="this.style.color='#94a3b8'">Concept-to-Game Mapping</a>
+    <a href="#sec-narrative" style="display:block;padding:3px 12px;color:#94a3b8;text-decoration:none;font-size:.72rem;line-height:1.5" onmouseover="this.style.color='#38bdf8'" onmouseout="this.style.color='#94a3b8'">Narrative Framework</a>
+    <a href="#sec-session" style="display:block;padding:3px 12px;color:#94a3b8;text-decoration:none;font-size:.72rem;line-height:1.5" onmouseover="this.style.color='#38bdf8'" onmouseout="this.style.color='#94a3b8'">Session Flow</a>
+    <a href="#sec-scenarios" style="display:block;padding:3px 12px;color:#94a3b8;text-decoration:none;font-size:.72rem;line-height:1.5" onmouseover="this.style.color='#38bdf8'" onmouseout="this.style.color='#94a3b8'">Scenarios &amp; Activities</a>
+    <a href="#sec-scoring" style="display:block;padding:3px 12px;color:#94a3b8;text-decoration:none;font-size:.72rem;line-height:1.5" onmouseover="this.style.color='#38bdf8'" onmouseout="this.style.color='#94a3b8'">Scoring &amp; Badges</a>
+    <a href="#sec-social" style="display:block;padding:3px 12px;color:#94a3b8;text-decoration:none;font-size:.72rem;line-height:1.5" onmouseover="this.style.color='#38bdf8'" onmouseout="this.style.color='#94a3b8'">Social &amp; Rewards</a>
+    <a href="#sec-execlog" style="display:block;padding:3px 12px;color:#94a3b8;text-decoration:none;font-size:.72rem;line-height:1.5" onmouseover="this.style.color='#38bdf8'" onmouseout="this.style.color='#94a3b8'">Execution Log</a>
+    <a href="#sec-risks" style="display:block;padding:3px 12px;color:#94a3b8;text-decoration:none;font-size:.72rem;line-height:1.5" onmouseover="this.style.color='#38bdf8'" onmouseout="this.style.color='#94a3b8'">Risk Register (Tusler)</a>
+    <a href="#sec-support" style="display:block;padding:3px 12px;color:#94a3b8;text-decoration:none;font-size:.72rem;line-height:1.5" onmouseover="this.style.color='#38bdf8'" onmouseout="this.style.color='#94a3b8'">Support Team</a>
+    <a href="#sec-bloom" style="display:block;padding:3px 12px;color:#94a3b8;text-decoration:none;font-size:.72rem;line-height:1.5" onmouseover="this.style.color='#38bdf8'" onmouseout="this.style.color='#94a3b8'">Bloom's Outcomes</a>
+    <a href="#sec-kirkpatrick" style="display:block;padding:3px 12px;color:#94a3b8;text-decoration:none;font-size:.72rem;line-height:1.5" onmouseover="this.style.color='#38bdf8'" onmouseout="this.style.color='#94a3b8'">Kirkpatrick Evaluation</a>
+    <a href="#sec-kpis" style="display:block;padding:3px 12px;color:#94a3b8;text-decoration:none;font-size:.72rem;line-height:1.5" onmouseover="this.style.color='#38bdf8'" onmouseout="this.style.color='#94a3b8'">KPIs &amp; Assessment</a>
+    <a href="#sec-timeline" style="display:block;padding:3px 12px;color:#94a3b8;text-decoration:none;font-size:.72rem;line-height:1.5" onmouseover="this.style.color='#38bdf8'" onmouseout="this.style.color='#94a3b8'">Timeline</a>
+    <a href="#sec-future" style="display:block;padding:3px 12px;color:#94a3b8;text-decoration:none;font-size:.72rem;line-height:1.5" onmouseover="this.style.color='#38bdf8'" onmouseout="this.style.color='#94a3b8'">Future Enhancements</a>
+    <a href="#sec-quality" style="display:block;padding:3px 12px;color:#94a3b8;text-decoration:none;font-size:.72rem;line-height:1.5" onmouseover="this.style.color='#38bdf8'" onmouseout="this.style.color='#94a3b8'">Design Quality Score</a>
+  </div>
+  <a href="#top" style="display:block;margin:8px 12px 4px;padding:5px 0;text-align:center;color:#38bdf8;font-size:.75rem;border-top:1px solid #334155;text-decoration:none">↑ Top</a>
+</div>
+
+<div class="gppt-body">
+
+<!-- COVER -->
+<div class="cover" id="sec-cover">
+  <div style="font-size:.72rem;opacity:.65;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Gamification Project Proposal</div>
+  <h1>Crisis Cabinet: IT Project Risk Simulation (COM0463)</h1>
+  <p class="meta"><strong>Proposer:</strong> Ferdaws Qaem</p>
+  <p class="meta"><strong>Team:</strong> IKU-RiskGames-Squad</p>
+  <p class="meta"><strong>Organisation:</strong> Istanbul Kültür University, Department of Computer Engineering</p>
+  <p class="meta"><strong>Course:</strong> COM0463 — IT Project Management &nbsp;|&nbsp; <strong>Semester:</strong> 6th &nbsp;|&nbsp; <strong>School:</strong> IKU</p>
+  <div style="margin-top:14px">
+    <span class="meta-pill">Domain: Academic</span>
+    <span class="meta-pill">Type: Digital Scenario-Based Learning Game</span>
+    <span class="meta-pill">Target: COM0463 Students (n≈40)</span>
+    <span class="meta-pill">Proposal Date: 2026-04-09</span>
+    <span class="meta-pill">Start: 2026-09-01</span>
+  </div>
+  <div style="margin-top:10px;font-size:.7rem;opacity:.55">Generated by GPPT v51 — Design Assurance v2 | GACT v6.5 | G4E v1.5 | Export Date: 2026-04-08</div>
+</div>
+
+<!-- TOC -->
+<nav class="toc">
+  <h3>Table of Contents</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 20px">
+    <a href="#sec-executive">1. Executive Summary</a>
+    <a href="#sec-classification">2. Project Classification</a>
+    <a href="#sec-problem">3. Problem Statement</a>
+    <a href="#sec-scope">4. Scope &amp; Requirements</a>
+    <a href="#sec-team">5. Team Structure</a>
+    <a href="#sec-theory">6. Theoretical Framework</a>
+    <a href="#sec-sixdim">7. Six-Dimension Design</a>
+    <a href="#sec-concept">8. Concept-to-Game Mapping</a>
+    <a href="#sec-narrative">9. Narrative Framework</a>
+    <a href="#sec-session">10. Session Flow</a>
+    <a href="#sec-scenarios">11. Scenarios &amp; Activities</a>
+    <a href="#sec-scoring">12. Scoring System &amp; Badges</a>
+    <a href="#sec-social">13. Social Interaction &amp; Rewards</a>
+    <a href="#sec-execlog">14. Execution Log &amp; Analytics</a>
+    <a href="#sec-risks">15. Risk Register (Tusler)</a>
+    <a href="#sec-support">16. Support Team &amp; Facilitator</a>
+    <a href="#sec-bloom">17. Learning Outcomes (Bloom's)</a>
+    <a href="#sec-kirkpatrick">18. Kirkpatrick Evaluation Plan</a>
+    <a href="#sec-kpis">19. KPIs &amp; Assessment</a>
+    <a href="#sec-timeline">20. Timeline</a>
+    <a href="#sec-future">21. Future Enhancements</a>
+    <a href="#sec-quality">22. Design Quality Score</a>
+  </div>
+</nav>
+
+<!-- 1. EXECUTIVE SUMMARY -->
+<h2 id="sec-executive">1. Executive Summary</h2>
+<p>This proposal presents <strong>Crisis Cabinet: IT Project Risk Simulation (COM0463)</strong>, a Digital Scenario-Based Learning Game targeting <em>COM0463 IT Project Management students (3rd/4th year undergraduates, n≈40)</em> at Istanbul Kültür University, Department of Computer Engineering.</p>
+<p>Students in COM0463 can recite risk management frameworks (PMBOK §11, Tusler classification) in exams, but consistently fail to apply them under pressure in real project contexts. Conventional case studies lack urgency and consequence. Crisis Cabinet places each student in the role of a project manager facing live IT crises — they must classify each risk using the Tusler probability × impact matrix, select the correct response strategy (avoid/mitigate/transfer/accept), and specify concrete mitigation actions within a countdown timer.</p>
+<p>The project is grounded in <strong>Bloom's Taxonomy</strong> [Bloom et al., 1956], <strong>MDA Framework</strong> [Hunicke et al., 2004], <strong>Self-Determination Theory</strong> [Deci &amp; Ryan, 1985], and <strong>Flow Theory</strong> [Csikszentmihalyi, 1990], employing Points, Progress Tracking, Challenge, Timer, Badges, and Feedback as primary mechanics. The programme spans 3 sprints (March–May 2026) and targets a Tusler classification accuracy improvement from <strong>42%</strong> (baseline) to <strong>≥70%</strong> post-session.</p>
+
+<div class="info-box green">
+  <strong>Game Overview:</strong> Single HTML file, zero server dependency, 45-minute session, 12 IT project crisis scenarios across 4 PMBOK phases. Each crisis requires 3 sequential decisions: (1) Tusler classification → (2) PMBOK response strategy → (3) specific mitigation action. Timer pressure, health bar, streak bonus, and live GPPT dimension bars.
+</div>
+
+<!-- 2. PROJECT CLASSIFICATION -->
+<h2 id="sec-classification">2. Project Classification</h2>
+<table>
+  <thead><tr><th>Attribute</th><th>Value</th></tr></thead>
+  <tbody>
+    <tr><td>Project Type</td><td>Digital Scenario-Based Learning Game</td></tr>
+    <tr><td>Delivery Format</td><td>Vanilla JS + CSS custom properties. Single-file HTML. Fonts (Space Mono, Syne) from Google Fonts with monospace/sans-serif graceful fallback. Compatible with COM0463 university computer lab environment (Chrome/Firefox). Offline-capable after first load.</td></tr>
+    <tr><td>Session Structure</td><td>Single in-class session, Week 8–9 of COM0463 (Chapter 8 Risk Management). 45 minutes total: 5-min facilitator briefing → 5-min Tusler grid walkthrough → 30-min gameplay (12 scenarios × 3 decisions) → 5-min results debrief. Can be replayed independently for revision before Chapter 8 assessment.</td></tr>
+    <tr><td>Platform / Deployment</td><td>Single .html file — no server, no install, runs offline in any modern browser</td></tr>
+    <tr><td>Programme Duration</td><td>Sprint 1 (3 wks) + Sprint 2 (4 wks) + Sprint 3 (4 wks) — Mar–May 2026</td></tr>
+    <tr><td>Course Code</td><td>COM0463</td></tr>
+    <tr><td>Deliverable Area</td><td>Browser-Based Scenario Game — COM0463</td></tr>
+    <tr><td>Sample Size</td><td>n ≈ 40 students</td></tr>
+    <tr><td>Start Date</td><td>2026-09-01</td></tr>
+  </tbody>
+</table>
+
+<!-- 3. PROBLEM STATEMENT -->
+<h2 id="sec-problem">3. Problem Statement</h2>
+<div class="card">
+  <p>Students in COM0463 can recite risk management frameworks (PMBOK §11, Tusler classification) in exams, but consistently fail to apply them under pressure in real project contexts. Conventional case studies lack urgency and consequence. Crisis Cabinet places each student in the role of a project manager facing live IT crises — they must classify each risk using the Tusler probability × impact matrix, select the correct response strategy (avoid/mitigate/transfer/accept), and specify concrete mitigation actions within a countdown timer. The game replicates the cognitive load and time pressure of real project crises, developing decision-making competence that lecture-based methods cannot.</p>
+</div>
+
+<!-- 4. SCOPE & REQUIREMENTS -->
+<h2 id="sec-scope">4. Scope &amp; Requirements — Academic</h2>
+<h3>4.1 In Scope</h3>
+<ul>
+  <li>12 IT project crisis scenarios across 4 PMBOK phases (Planning ×3, Executing ×3, Monitoring ×3, Closing ×3)</li>
+  <li>Tusler risk classification mechanic (Tiger / Alligator / Puppy / Kitten) per crisis</li>
+  <li>Four PMBOK response strategy options per crisis (Avoid / Mitigate / Transfer / Accept)</li>
+  <li>Specific mitigation action selection with D7-aligned explanatory feedback</li>
+  <li>Countdown timer per decision step (45 seconds, colour-coded warning at 20s and 10s)</li>
+  <li>Project Health bar (100% start, depletes 5–15 pts on wrong answers and timeouts by severity)</li>
+  <li>Streak bonus multiplier: ×1.5 at 3+ consecutive correct answers</li>
+  <li>Live HUD: score, streak counter, health bar, phase badge, scenario counter</li>
+  <li>Left sidebar: 5 GPPT dimension bars (D1/D2/D3/D7/D8), risk register, strategy tracker</li>
+  <li>Right sidebar: performance panel (correct/wrong/accuracy/best streak/bonus), Tusler accuracy by category, feedback log</li>
+  <li>Results screen: letter grade (A+→D), percentage, Tusler accuracy per category, dimension breakdown with feedback text</li>
+  <li>Bloom-tagged feedback chips (Apply / Analyse / Evaluate) per scenario</li>
+  <li>Briefing screen: Tusler 2×2 grid, response strategy definitions, Bloom objectives</li>
+  <li>Splash screen: course code, narrative, mechanics overview</li>
+  <li>Single-file HTML — no server, no install, runs offline in any modern browser</li>
+</ul>
+<h3>4.2 Out of Scope (Phase 2)</h3>
+<ul>
+  <li>Multiplayer / real-time competitive mode</li>
+  <li>Instructor scenario editor GUI</li>
+  <li>LMS grade passback</li>
+  <li>Mobile native app</li>
+  <li>Server-side analytics</li>
+</ul>
+
+<h3>4.3 Functional Requirements</h3>
+<table>
+  <thead><tr><th>ID</th><th>Description</th><th>Priority</th></tr></thead>
+  <tbody>
+    <tr><td><strong>FR-CC-01</strong></td><td>System shall present 12 crisis scenarios in PMBOK phase order (Planning → Executing → Monitoring → Closing, 3 scenarios each)</td><td><span class="tag red">Must</span></td></tr>
+    <tr><td><strong>FR-CC-02</strong></td><td>Each scenario shall require three sequential decisions: (1) Tusler classification, (2) response strategy, (3) specific mitigation action</td><td><span class="tag red">Must</span></td></tr>
+    <tr><td><strong>FR-CC-03</strong></td><td>Tusler classification step shall offer exactly 4 options: Tiger, Alligator, Puppy, Kitten — each with icon and probability×impact sub-label</td><td><span class="tag red">Must</span></td></tr>
+    <tr><td><strong>FR-CC-04</strong></td><td>Response strategy step shall offer exactly 4 options: Avoid, Mitigate, Transfer, Accept — with scenario-specific realistic PM action labels</td><td><span class="tag red">Must</span></td></tr>
+    <tr><td><strong>FR-CC-05</strong></td><td>Mitigation step shall offer 4 options: one correct (specific, time-bounded, deliverable-focused), three distractors (vague, disproportionate, or impractical)</td><td><span class="tag red">Must</span></td></tr>
+    <tr><td><strong>FR-CC-06</strong></td><td>Countdown timer (45 seconds) shall reset per decision step; timeout triggers health damage and auto-advances with zero points</td><td><span class="tag red">Must</span></td></tr>
+    <tr><td><strong>FR-CC-07</strong></td><td>Project Health bar (starts 100%) shall decrease: Tiger/Alligator wrong = 10–15 HP; Puppy/Kitten wrong = 5 HP; timeout = same as wrong by category</td><td><span class="tag red">Must</span></td></tr>
+    <tr><td><strong>FR-CC-08</strong></td><td>Streak counter shall award ×1.5 bonus points on 3+ consecutive correct answers; streak resets on any wrong answer or timeout</td><td><span class="tag red">Must</span></td></tr>
+    <tr><td><strong>FR-CC-09</strong></td><td>All feedback panels shall include: correct/incorrect header, explanation text (≥2 sentences), Bloom level chip, points awarded or lost</td><td><span class="tag red">Must</span></td></tr>
+    <tr><td><strong>FR-CC-10</strong></td><td>Results screen shall display: letter grade, percentage, GPPT dimension scores (D1/D2/D3/D7/D8 with bar and text), Tusler accuracy per category</td><td><span class="tag red">Must</span></td></tr>
+    <tr><td><strong>FR-CC-11</strong></td><td>Briefing screen shall display Tusler 2×2 matrix, four strategy definitions, Bloom objectives, and scoring rules before game start</td><td><span class="tag amber">Should</span></td></tr>
+    <tr><td><strong>FR-CC-12</strong></td><td>Splash screen shall display course code (COM0463), narrative context, and game mechanics icons</td><td><span class="tag amber">Should</span></td></tr>
+  </tbody>
+</table>
+
+<h3>4.4 Non-Functional Requirements</h3>
+<table>
+  <thead><tr><th>ID</th><th>Attribute</th><th>Description</th><th>Target</th></tr></thead>
+  <tbody>
+    <tr><td><strong>NFR-CC-01</strong></td><td>Accessibility</td><td>All text readable at 1280×720; colour-blind-safe category colours used throughout</td><td>Font ≥14px; contrast ratio ≥4.5:1 (WCAG AA)</td></tr>
+    <tr><td><strong>NFR-CC-02</strong></td><td>Performance</td><td>Game loads and runs entirely client-side with zero server dependency during gameplay</td><td>Load time &lt;2s on standard university network; 0 external API calls during gameplay</td></tr>
+    <tr><td><strong>NFR-CC-03</strong></td><td>Portability</td><td>Single .html file, no build step, no npm, no framework dependency</td><td>Runs in Chrome ≥110, Firefox ≥110, Safari ≥16 without modification</td></tr>
+    <tr><td><strong>NFR-CC-04</strong></td><td>Pedagogical Integrity</td><td>All scenario correct answers must be defensible against PMBOK §11 and Tusler (2006) classification framework</td><td>100% of 12 scenarios reviewed and signed off by COM0463 instructor before deployment</td></tr>
+  </tbody>
+</table>
+
+<h3>4.5 Success Criteria</h3>
+<ul>
+  <li>D7 (Risk Management) dimension score ≥75% averaged across cohort</li>
+  <li>Tusler classification accuracy ≥70% per category by end of session</li>
+  <li>Student satisfaction ≥4.0/5.0 on post-game Likert exit ticket</li>
+  <li>Pre/post quiz improvement ≥20 percentage points on Tusler classification task</li>
+  <li>Zero game-breaking bugs in 40-student classroom deployment</li>
+</ul>
+
+<!-- 5. TEAM STRUCTURE -->
+<h2 id="sec-team">5. Team Structure</h2>
+<table>
+  <thead><tr><th>Student ID</th><th>Name</th><th>Surname</th><th>Email</th><th>Phone</th></tr></thead>
+  <tbody>
+    <tr><td>2300001530</td><td>Ferdaws</td><td>Qaem</td><td>2300001530@stu.iku.edu.tr</td><td>+905343586603</td></tr>
+    <tr><td>2300000061</td><td>Abdelmagied</td><td>Farhouda</td><td>2300000061@stu.iku.edu.tr</td><td>+905444477631</td></tr>
+    <tr><td>2300000497</td><td>Mohamed</td><td>Sallam</td><td>2300000497@stu.iku.edu.tr</td><td>+905013418975</td></tr>
+  </tbody>
+</table>
+
+<!-- 6. THEORETICAL FRAMEWORK -->
+<h2 id="sec-theory">6. Theoretical Framework</h2>
+<table>
+  <thead><tr><th>Theory</th><th>Application in Crisis Cabinet</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Bloom's Revised Taxonomy</strong><br><small>[Bloom et al., 1956; Anderson &amp; Krathwohl, 2001]</small></td>
+      <td>Three-step decision chain activates Bloom L3 (Apply: Tusler classify) → L4 (Analyse: strategy selection) → L5 (Evaluate: mitigation specificity). Bloom level chip in every feedback panel makes the taxonomy visible to students during play.</td>
+    </tr>
+    <tr>
+      <td><strong>MDA Framework</strong><br><small>[Hunicke, LeBlanc &amp; Zubek, 2004]</small></td>
+      <td>Mechanics = crisis card + timer + health bar. Dynamics = loss-aversion pressure from health bar + momentum from streak multiplier. Aesthetics = Challenge + Discovery + Accomplishment. Deliberate MDA chain ensures every mechanic produces an intended learning dynamic.</td>
+    </tr>
+    <tr>
+      <td><strong>Self-Determination Theory (SDT)</strong><br><small>[Deci &amp; Ryan, 1985]</small></td>
+      <td>Competence: three-step decision chain provides scaffolded success (classify → strategy → mitigate). Autonomy: replay available anytime; opt-in leaderboard. Relatedness: collective class Tusler accuracy projected post-session, individual scores private.</td>
+    </tr>
+    <tr>
+      <td><strong>Flow Theory</strong><br><small>[Csikszentmihalyi, 1990]</small></td>
+      <td>Difficulty escalates across PMBOK phases: Planning (knowledge/process risks) → Executing (live outages) → Monitoring (CPI crises, CVE) → Closing (SLA breach). Prevents boredom at entry and anxiety at peak. 45s timer calibrated to keep students in flow channel without inducing anxiety.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Player Type Distribution (Bartle / Hexad)</h3>
+<table>
+  <thead><tr><th>Type</th><th>%</th><th>Design Response</th></tr></thead>
+  <tbody>
+    <tr><td>🏆 Achievers</td><td>40%</td><td>Score maximisation, streak bonuses, grade ladder A+→D, Tusler accuracy bragging rights</td></tr>
+    <tr><td>🔍 Explorers / Free Spirits</td><td>25%</td><td>Discovering why each strategy is optimal through detailed PMBOK-grounded feedback explanations; replay at own pace</td></tr>
+    <tr><td>🤝 Socialisers</td><td>20%</td><td>Collective class Tusler accuracy projected post-session; peer discussion of contested scenarios (S8, S9)</td></tr>
+    <tr><td>⚔ Killers</td><td>15%</td><td>Minimising health damage, achieving perfect runs with zero timeouts</td></tr>
+  </tbody>
+</table>
+
+<h3>Octalysis Core Drives</h3>
+<table>
+  <thead><tr><th>Drive</th><th>Score</th><th>Implementation</th></tr></thead>
+  <tbody>
+    <tr><td>Development &amp; Accomplishment</td><td>80%</td><td>Streak bonus, Tusler accuracy tracker, letter grade</td></tr>
+    <tr><td>Empowerment of Creativity</td><td>70%</td><td>Three-step decision chain; multiple valid reasoning paths</td></tr>
+    <tr><td>Epic Meaning</td><td>60%</td><td>Crisis framing: 12 clients, live crises, real PM role</td></tr>
+    <tr><td>Unpredictability</td><td>65%</td><td>Scenario-specific strategy options; S8 Accept trap</td></tr>
+    <tr><td>Scarcity &amp; Impatience</td><td>60%</td><td>45s countdown timer per decision</td></tr>
+    <tr><td>Loss &amp; Avoidance</td><td>55%</td><td>Project Health bar; health damage on wrong answers</td></tr>
+    <tr><td>Ownership &amp; Possession</td><td>50%</td><td>GPPT D7 score, badges, Results screen screenshot</td></tr>
+    <tr><td>Social Influence</td><td>30%</td><td>Opt-in leaderboard; cohort accuracy aggregate</td></tr>
+  </tbody>
+</table>
+
+<!-- 7. SIX-DIMENSION DESIGN -->
+<h2 id="sec-sixdim">7. Six-Dimension Design</h2>
+
+<h3>What — Game Content</h3>
+<div class="info-box blue">
+  <p>12 IT project crisis scenarios mapped to 4 PMBOK phases (Planning S1–S3, Executing S4–S6, Monitoring S7–S9, Closing S10–S12). Each crisis requires three sequential decisions: (1) Tusler classification — Tiger (High Prob × High Impact), Alligator (Low × High), Puppy (High × Low), Kitten (Low × Low); (2) PMBOK response strategy — Avoid / Mitigate / Transfer / Accept; (3) specific mitigation action — one correct (D7-compliant: specific, time-bounded, deliverable-focused), three distractors (vague, disproportionate, or generic). Countdown timer 45s per decision. Project Health bar (100% start). Streak multiplier ×1.5 at ≥3 consecutive correct. Five GPPT dimension bars tracked live (D1 Pedagogical Alignment, D2 Game-Learning Integration, D3 Motivational Design, D7 Risk Management, D8 Innovation &amp; Quality).</p>
+</div>
+
+<h3>Why — Pedagogical Rationale</h3>
+<div class="info-box purple">
+  <p>Flow (Csikszentmihalyi, 1990): difficulty escalates from Planning through Executing to Monitoring — avoiding boredom at entry and anxiety at peak. SDT Competence (Deci &amp; Ryan, 1985): three-step decision chain progressively builds from recognition (classify) to strategy selection to specific action formulation. MDA (Hunicke et al., 2004): Mechanics = crisis card + timer + health; Dynamics = loss-aversion pressure from health bar + momentum from streak; Aesthetics = Challenge + Discovery + Accomplishment. Bloom L3–L5 activated across the three decision types.</p>
+</div>
+
+<h3>Who — Player Profiles</h3>
+<p>Achievers 40%: score maximisation, streak bonuses, grade ladder A+→D. Explorers 25%: discovering why each strategy is optimal through detailed PMBOK-grounded feedback. Free Spirits 20%: replaying scenarios at own pace to master all four Tusler categories. Killers 15%: minimising health damage, achieving perfect runs with zero timeouts. All four types served without forcing competitive modes on non-competitive players.</p>
+
+<h3>When — Session Timing</h3>
+<p>Single in-class session, Week 8–9 of COM0463 (Chapter 8 Risk Management). 45 minutes total: 5-min facilitator briefing → 5-min Tusler grid walkthrough → 30-min gameplay → 5-min results debrief. Can be replayed independently for revision before Chapter 8 assessment.</p>
+
+<h3>How — Delivery Method</h3>
+<p>Single HTML file deployed via LMS download link or USB drive. No install, no login, no internet required after initial font load. Facilitator displays briefing screen on projector; students play individually on laptops or university lab machines. Post-game: instructor screenshots Results screens for cohort Tusler accuracy analysis.</p>
+
+<h3>Where — Technology</h3>
+<p>Vanilla JS + CSS custom properties. Single-file HTML. Fonts (Space Mono, Syne) from Google Fonts with monospace/sans-serif graceful fallback. Compatible with COM0463 university computer lab environment (Chrome ≥110, Firefox ≥110). Offline-capable after first load.</p>
+
+<!-- MDA ANALYSIS -->
+<h3>MDA Analysis</h3>
+<table>
+  <thead><tr><th>Layer</th><th>Detail</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Mechanics</strong></td><td>Crisis cards (12 scenarios); three-step decision chain per crisis (classify → strategy → mitigate); countdown timer (45s, colour-coded: white→yellow at 20s→red/blinking at 10s); Project Health bar (100→0%); score accumulator; streak counter with ×1.5 bonus at ≥3; per-category Tusler tracker; Bloom-tagged feedback panels</td></tr>
+    <tr><td><strong>Dynamics</strong></td><td>Time pressure creates urgency mirroring real PM decision-making. Health bar creates loss aversion raising stakes for Tiger/Alligator disproportionately. Streak bonus creates positive momentum loops rewarding mastery runs. Three-step chain prevents superficial engagement — students cannot jump to strategy without first committing to Tusler classification.</td></tr>
+    <tr><td><strong>Aesthetics</strong></td><td>Challenge (primary): timer + health create sustained, calibrated tension escalating through PMBOK phases. Discovery: detailed PMBOK-grounded feedback reveals the why behind every PM decision. Accomplishment: grade screen + streak bonuses + Tusler accuracy per category reward mastery. Narrative: crisis framing makes abstract frameworks consequential.</td></tr>
+  </tbody>
+</table>
+
+<!-- 8. CONCEPT-TO-GAME MAPPING -->
+<h2 id="sec-concept">8. Concept-to-Game Mapping</h2>
+<table>
+  <thead><tr><th>PM Concept</th><th>Game Mechanic</th><th>Dynamic</th><th>Aesthetic</th><th>Rationale</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>Tusler risk classification (probability × impact 2×2 matrix)</td>
+      <td>Four-option classify step per crisis card. Crisis data panel shows three explicit metrics: Probability (%), Impact (severity label), Urgency (label) to force matrix reading rather than intuition.</td>
+      <td>Student reads crisis situation text + data panel → maps values to Tusler quadrant → selects category → immediate correct/wrong feedback with full explanation of the probability × impact logic.</td>
+      <td>Challenge + Discovery</td>
+      <td>The most common Chapter 8 exam failure is applying Tusler labels without reading both probability AND impact together. The data panel forces the student to use the matrix explicitly.</td>
+    </tr>
+    <tr>
+      <td>PMBOK §11 response strategies (Avoid / Mitigate / Transfer / Accept)</td>
+      <td>Four-option strategy selection step. Options are scenario-specific PM actions (not generic one-word labels) — e.g. 'Mitigate — Require the departing developer to deliver complete schema documentation and conduct 4 knowledge-transfer sessions before their last day'.</td>
+      <td>After Tusler classification, student selects strategy. Wrong selections reveal why that strategy is sub-optimal for this Tusler category and scenario context. Correct strategy is logged to the Strategy Tracker sidebar.</td>
+      <td>Strategy + Challenge</td>
+      <td>Students confuse Mitigate with Transfer and conflate Accept (monitored, with reserves) with passive neglect. Scenario-specific option labels force reasoning about PM context.</td>
+    </tr>
+    <tr>
+      <td>Mitigation specificity (GPPT D7 criterion)</td>
+      <td>Four-option mitigation step. Correct option is always the most specific, time-bounded, deliverable-focused action. Distractors: vague monitoring statements, budget-only responses, process-only responses.</td>
+      <td>Selecting a vague mitigation triggers a penalty and feedback: 'Generic mitigations score zero on the D7 rubric — GPPT D7 requires actions that are specific, time-bounded, and deliverable-focused.'</td>
+      <td>Accomplishment + Discovery</td>
+      <td>The D7 rubric penalises generic risk register entries. The game trains the specific vocabulary and structure of a professional mitigation action before students write their own risk registers.</td>
+    </tr>
+    <tr>
+      <td>Risk monitoring and control — consequence of inaction (PMBOK §11.7)</td>
+      <td>Project Health bar decreases on wrong answers and timeouts. Tiger/Alligator errors cause 10–15 HP damage; Puppy/Kitten errors cause 5 HP damage. Health reaching 0 = project failure.</td>
+      <td>Differential damage rate replicates that high-impact risks unmanaged cause proportionally more project damage. Students who consistently misclassify Tigers as Kittens see their health drain rapidly.</td>
+      <td>Sensation + Challenge</td>
+      <td>Students understand risk monitoring conceptually but do not feel its consequences. The health bar makes the differential cost of mismanaging high-severity risks immediately felt.</td>
+    </tr>
+    <tr>
+      <td>Risk monitoring as a continuous process (PMBOK §11.7)</td>
+      <td>Streak bonus multiplier: ×1.5 points awarded when the player answers 3+ consecutive decision steps correctly across scenarios. Streak resets to 0 on any wrong answer or timeout.</td>
+      <td>Sustained correct decision-making across multiple scenarios is rewarded compoundingly — mirroring the PMBOK principle that continuous risk vigilance across a project lifecycle yields compounding protective benefit.</td>
+      <td>Accomplishment + Challenge</td>
+      <td>PMBOK §11.7 emphasises that risk monitoring is not a one-time planning activity but a sustained process. The streak mechanic operationalises this behaviourally: continuous vigilance rewarded, monitoring lapses penalised.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- 9. NARRATIVE FRAMEWORK -->
+<h2 id="sec-narrative">9. Narrative Framework</h2>
+
+<h3>Narrative Theme</h3>
+<div class="info-box blue">
+  <p><em>"You are the newly appointed Project Manager of a high-stakes IT consultancy. Twelve clients. Twelve live crises. A broken legacy system, a departing lead developer, a regulatory bombshell, a payment gateway down at 3 AM, a zero-day CVE in production. Your decisions in the next 30 minutes determine whether your projects survive — or collapse in front of the client. The Crisis Cabinet is open. What do you do?"</em></p>
+</div>
+
+<h3>Narrative Arc (4 Acts)</h3>
+<table>
+  <thead><tr><th>Act</th><th>Phase</th><th>Scenarios</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Act 1</strong></td><td>Planning Phase</td><td>S1–S3</td><td>Stakes established. Early-phase risks where classification errors are recoverable but instructive. S1: Tiger (developer departure). S2: Alligator (regulatory change). S3: Puppy (scope creep).</td></tr>
+    <tr><td><strong>Act 2</strong></td><td>Executing Phase</td><td>S4–S6</td><td>Escalation. Real-time failures with immediate impact. S4: Tiger (payment gateway offline). S5: Puppy (standup overruns). S6: Alligator (zero-day CVE).</td></tr>
+    <tr><td><strong>Act 3</strong></td><td>Monitoring Phase</td><td>S7–S9</td><td>Live crises and budget emergencies. S7: Tiger (CPI 0.77 overrun). S8: Kitten (PDF formatting edge case — Accept trap). S9: Alligator (single-AZ cloud failure).</td></tr>
+    <tr><td><strong>Act 4</strong></td><td>Closing Phase</td><td>S10–S12</td><td>Final gauntlet. S10: Puppy (UAT sign-off delays). S11: Tiger (performance SLA breach at load test). S12: Kitten (broken documentation link).</td></tr>
+  </tbody>
+</table>
+
+<h3>Characters &amp; Story World</h3>
+<p><strong>The Player:</strong> PM protagonist — no avatar, the student IS the project manager. Each crisis card features a named IT system and a stakeholder in distress (hospital admin, fintech partner, university faculty, e-commerce client) to provide narrative context without NPC dialogue mechanics.</p>
+<p><strong>Story World:</strong> Dark-mode command center (Crisis Cabinet HQ): scanline overlay, monospace typography (Space Mono), blue accent lighting (#00d4ff), panel backgrounds (#111827). Evokes a high-pressure war room. Sidebar mission panels track live project metrics.</p>
+
+<!-- 10. SESSION FLOW -->
+<h2 id="sec-session">10. Gameplay Session Flow</h2>
+<table>
+  <thead><tr><th>Phase</th><th>Duration</th><th>Facilitator Actions</th><th>Player Actions</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>Facilitator intro + Splash screen</td>
+      <td>3 min</td>
+      <td>Distribute HTML file to all students via LMS or USB. Display Splash screen on projector. Explain narrative context: 'You are a PM in a crisis consultancy. 12 crises, 4 project phases, 45 minutes.' Point out the four mechanic icons.</td>
+      <td>Open crisis_cabinet.html. Read Splash screen: course tag (COM0463), narrative description, and four mechanics icons. Note Bloom level tags (Apply → Evaluate).</td>
+    </tr>
+    <tr>
+      <td>Briefing screen walkthrough</td>
+      <td>5 min</td>
+      <td>Lead class walkthrough of Tusler 2×2 matrix: ask verbal questions for each quadrant before students see the label. 'S2 — regulatory law change, 30% probability, full architecture rebuild if triggered — Alligator or Tiger?' Walk through all four strategy definitions. Confirm scoring rules are understood.</td>
+      <td>Read Tusler grid, strategy definitions, Bloom objectives, and scoring rules in the Briefing screen. Click 'Launch Simulation' when instructor signals.</td>
+    </tr>
+    <tr>
+      <td>Active gameplay — 12 crisis scenarios</td>
+      <td>30 min</td>
+      <td>Monitor class on own screen. Watch for high timeout rates on S4 (Payment Gateway — Tiger) and S8 (PDF border — Kitten, students over-mitigate). If &gt;50% of visible screens show wrong strategy on S4, pause briefly. Do not give answers during play.</td>
+      <td>Work through all 12 scenarios independently. Three decisions per scenario: classify → strategy → mitigate. Timer is live. Build streak for ×1.5 bonus. Read every feedback panel before clicking Next.</td>
+    </tr>
+    <tr>
+      <td>Results screen debrief</td>
+      <td>5 min</td>
+      <td>Ask 2–3 students to share Tusler accuracy breakdown. Display correct Tusler category for contested scenarios (S6 zero-day and S9 single-AZ most contested). Map D7 score to GPPT rubric: 'D7 ≥75% = Strong. Below 60% = revision needed before risk register submission.'</td>
+      <td>Review Results screen: letter grade, dimension scores (note D7 specifically), Tusler accuracy per category. Identify lowest-accuracy category as personal revision target.</td>
+    </tr>
+    <tr>
+      <td>Portfolio / reflection entry</td>
+      <td>2 min</td>
+      <td>Direct students to screenshot Results screen. Instruct them to add Crisis Cabinet D7 score as evidence in their GPPT portfolio submission for the D7 dimension.</td>
+      <td>Screenshot Results screen. Note D7 score and lowest Tusler category accuracy. Add to GPPT portfolio as D7 evidence artefact.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Introduction Text (displayed to students)</h3>
+<div class="info-box blue" style="font-size:.84rem">
+  <p><strong>Welcome to Crisis Cabinet — IT Project Risk Simulation.</strong></p>
+  <p><strong>Objective:</strong> You are a project manager. Twelve IT crises will arrive on your desk across four project phases. For each crisis, you must make three decisions: (1) Classify the risk using the Tusler framework (Tiger / Alligator / Puppy / Kitten), (2) Select the correct PMBOK response strategy (Avoid / Mitigate / Transfer / Accept), (3) Identify the most effective specific mitigation action.</p>
+  <p><strong>How it works:</strong> Each decision has a 45-second timer. Read the crisis situation and data panel (Probability / Impact / Urgency) carefully before answering. Wrong answers or timeouts damage your Project Health — Tiger and Alligator mistakes hurt more. Correct answers earn points. Build a streak of 3+ correct in a row for a ×1.5 bonus.</p>
+  <p><strong>Frameworks in play:</strong> PMBOK §11 Risk Management | Tusler (2006) probability × impact classification | Bloom's Revised Taxonomy (Apply L3 / Analyse L4 / Evaluate L5)</p>
+</div>
+
+<!-- 11. SCENARIOS -->
+<h2 id="sec-scenarios">11. Scenarios &amp; Activities</h2>
+
+<div class="info-box amber">
+  <strong>12 Scenarios across 4 PMBOK Phases.</strong> Each scenario contains 3 activity steps: (1) Tusler Classify, (2) Strategy Select, (3) Mitigation Select. Maximum 80 pts per scenario (30 + 20 + 30). Total possible: 960 pts.
+</div>
+
+<div class="card">
+  <div class="card-title">S1 — Key Developer Departure During Scoping <span class="tag amber">Tiger 🐯</span> <span class="tag blue">Planning</span></div>
+  <p><strong>Setup:</strong> Planning phase. Hospital appointment-booking system. Lead developer — only person who understands the legacy database schema — has accepted an offer at a fintech startup. Project kicks off in 3 weeks. Schema is undocumented.</p>
+  <p><strong>Objective:</strong> Classify as Tiger. Select Mitigate. Choose knowledge-transfer sessions + schema documentation as the specific mitigation.</p>
+  <p><strong>Win Condition:</strong> Tiger selected → Mitigate selected → 'Run 4 KT sessions AND create schema map with entity relationships, constraints, and stored procedures before developer leaves' selected</p>
+  <p><strong>Max Points:</strong> 80 | <strong>Difficulty:</strong> Standard | <strong>Duration:</strong> 3 min</p>
+  <table>
+    <thead><tr><th>Activity</th><th>Win Condition</th><th>Points</th><th>Lose Result</th><th>HP Damage</th></tr></thead>
+    <tbody>
+      <tr><td>ACT-01: Classify S1 risk as Tiger</td><td>Tiger selected</td><td>+30 pts</td><td>Alligator, Puppy, or Kitten selected</td><td>−12 HP</td></tr>
+      <tr><td>ACT-02: Select Mitigate strategy</td><td>Mitigate selected</td><td>+20 pts</td><td>Avoid, Transfer, or Accept selected</td><td>−5 HP</td></tr>
+      <tr><td>ACT-03: Select 4 KT sessions + schema map mitigation</td><td>Specific deliverable-focused option selected</td><td>+30 pts</td><td>Any vague or generic option selected</td><td>−8 HP</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="card">
+  <div class="card-title">S2 — Regulatory Framework Change on the Horizon <span class="tag red">Alligator 🐊</span> <span class="tag blue">Planning</span></div>
+  <p><strong>Setup:</strong> Planning phase. Fintech payment platform. Legal counsel flags government considering data-localisation legislation. 30% probability of passing in 18 months. If passed, AWS multi-region architecture becomes non-compliant overnight.</p>
+  <p><strong>Correct Strategy:</strong> Transfer (not Mitigate — key differentiation trap). Probability LOW × Impact HIGH = Alligator.</p>
+  <p><strong>Max Points:</strong> 80 | <strong>Difficulty:</strong> Standard</p>
+</div>
+
+<div class="card">
+  <div class="card-title">S3 — Scope Creep During Sprint Planning <span class="tag amber">Puppy 🐶</span> <span class="tag blue">Planning</span></div>
+  <p><strong>Tusler Category:</strong> Puppy — High probability (stakeholders regularly request additions), Low impact (each request is small; change control process is in place).</p>
+  <p><strong>Max Points:</strong> 80 | <strong>Difficulty:</strong> Standard</p>
+</div>
+
+<div class="card">
+  <div class="card-title">S4 — Payment Gateway Offline at 3 AM <span class="tag amber">Tiger 🐯</span> <span class="tag red">Executing</span></div>
+  <p><strong>Setup:</strong> Executing phase. E-commerce platform. Payment gateway unresponsive during peak traffic window. Revenue loss accumulating. On-call developer unreachable. Probability HIGH (confirmed incident) × Impact HIGH (revenue + reputation) = Tiger.</p>
+  <p><strong>Common Error:</strong> Students often select Transfer instead of Mitigate. This is the highest-error scenario — facilitator should monitor closely.</p>
+  <p><strong>Max Points:</strong> 80 | <strong>Difficulty:</strong> High</p>
+</div>
+
+<div class="card">
+  <div class="card-title">S5 — Daily Standup Overruns <span class="tag amber">Puppy 🐶</span> <span class="tag red">Executing</span></div>
+  <p><strong>Tusler Category:</strong> Puppy — High probability, Low impact. Mitigate with a timeboxing rule (15 minutes max, parking lot for extended discussions).</p>
+  <p><strong>Max Points:</strong> 80 | <strong>Difficulty:</strong> Standard</p>
+</div>
+
+<div class="card">
+  <div class="card-title">S6 — Zero-Day CVE in Production <span class="tag red">Alligator 🐊</span> <span class="tag red">Executing</span></div>
+  <p><strong>Tusler Category:</strong> Alligator — Low probability of exploitation (patch available; limited attack window), High impact (full RCE if exploited). Most contested scenario in class debrief.</p>
+  <p><strong>Max Points:</strong> 80 | <strong>Difficulty:</strong> High</p>
+</div>
+
+<div class="card">
+  <div class="card-title">S7 — CPI 0.77 Budget Overrun <span class="tag amber">Tiger 🐯</span> <span class="tag purple">Monitoring</span></div>
+  <p><strong>Setup:</strong> Monitoring phase. CPI 0.77 — project is spending 1.30 for every 1.00 of work delivered. Confirmed overrun (probability = 1.0). High impact (project viability at risk). Tiger — immediate, active response required.</p>
+  <p><strong>Max Points:</strong> 80 | <strong>Difficulty:</strong> High</p>
+</div>
+
+<div class="card">
+  <div class="card-title">S8 — PDF Rendering Border Issue <span class="tag green">Kitten 🐱</span> <span class="tag purple">Monitoring</span></div>
+  <p><strong>Setup:</strong> Monitoring phase. Confirmed cosmetic issue: export PDF shows a 1px border artefact on certain printers. Affects ~3% of print jobs. No functional impact. Probability CONFIRMED (1.0) × Impact NEGLIGIBLE (cosmetic only).</p>
+  <p><strong>Correct Strategy: Accept</strong> — not Mitigate. This is the key proportionality trap. Allocating sprint time to fix a 3% cosmetic issue is disproportionate.</p>
+  <p><strong>Common Error:</strong> Students over-mitigate Kitten risks. This scenario specifically tests risk proportionality judgment. Contrast with S12 where Mitigate is correct.</p>
+  <p><strong>Max Points:</strong> 80 | <strong>Difficulty:</strong> High (trap scenario)</p>
+</div>
+
+<div class="card">
+  <div class="card-title">S9 — Single-AZ Cloud Failure <span class="tag red">Alligator 🐊</span> <span class="tag purple">Monitoring</span></div>
+  <p><strong>Tusler Category:</strong> Alligator — Low probability (AWS AZ failure is rare: ~0.1% per year), High impact (complete service outage if triggered). Second most contested scenario.</p>
+  <p><strong>Max Points:</strong> 80 | <strong>Difficulty:</strong> High</p>
+</div>
+
+<div class="card">
+  <div class="card-title">S10 — UAT Sign-Off Delays <span class="tag amber">Puppy 🐶</span> <span class="tag green">Closing</span></div>
+  <p><strong>Tusler Category:</strong> Puppy — High probability (UAT delays are common), Low impact (buffer exists; acceptance criteria are clear). Mitigate with structured sign-off escalation.</p>
+  <p><strong>Max Points:</strong> 80 | <strong>Difficulty:</strong> Standard</p>
+</div>
+
+<div class="card">
+  <div class="card-title">S11 — Performance SLA Breach at Load Test <span class="tag amber">Tiger 🐯</span> <span class="tag green">Closing</span></div>
+  <p><strong>Setup:</strong> Closing phase. Final load test reveals response time 3.2s at 1,000 concurrent users — SLA requires ≤2s. Deployment deadline in 4 days. Probability CONFIRMED × Impact HIGH (contract penalty + go-live delay). Tiger.</p>
+  <p><strong>Max Points:</strong> 80 | <strong>Difficulty:</strong> High</p>
+</div>
+
+<div class="card">
+  <div class="card-title">S12 — Broken Documentation Link <span class="tag green">Kitten 🐱</span> <span class="tag green">Closing</span></div>
+  <p><strong>Setup:</strong> Closing phase. One internal wiki link in the handover documentation points to a deprecated page. Probability CONFIRMED (link is broken) × Impact NEGLIGIBLE (documentation only, feature works). Kitten.</p>
+  <p><strong>Correct Strategy: Mitigate</strong> — unlike S8 (Accept), a 15-minute fix in a 9-day window means Mitigate is proportionate. This tests whether students understand that Kitten does not always mean Accept — it means proportionate response.</p>
+  <p><strong>Max Points:</strong> 80 | <strong>Difficulty:</strong> Standard</p>
+</div>
+
+<!-- USER STORIES -->
+<h3>Gamified User Stories</h3>
+<table>
+  <thead><tr><th>ID</th><th>Role</th><th>Want</th><th>So That</th><th>Priority</th><th>Sprint</th></tr></thead>
+  <tbody>
+    <tr><td>US-CC-01</td><td>Student</td><td>Face a realistic IT project crisis and classify it using Tusler before choosing a response strategy</td><td>I practise the probability × impact framework under time pressure, not just in theory</td><td><span class="tag red">Must</span></td><td>Sprint 1</td></tr>
+    <tr><td>US-CC-02</td><td>Student</td><td>See my Tusler accuracy broken down by category (Tiger/Alligator/Puppy/Kitten) in the results screen</td><td>I can identify which category I misclassify most and target my revision</td><td><span class="tag red">Must</span></td><td>Sprint 1</td></tr>
+    <tr><td>US-CC-03</td><td>Student</td><td>Receive immediate explanatory feedback after each decision step</td><td>I understand why my choice was right or wrong in PM terms, not just whether I scored points</td><td><span class="tag red">Must</span></td><td>Sprint 1</td></tr>
+    <tr><td>US-CC-04</td><td>Student</td><td>Feel urgency through a countdown timer so the game replicates real project decision pressure</td><td>I develop the ability to make risk classification decisions quickly, as required in real PM roles</td><td><span class="tag red">Must</span></td><td>Sprint 2</td></tr>
+    <tr><td>US-CC-05</td><td>Instructor</td><td>Observe which PMBOK phase and Tusler category students struggle with most during the session</td><td>I can target the next lecture at the highest-error area</td><td><span class="tag amber">Should</span></td><td>Sprint 2</td></tr>
+  </tbody>
+</table>
+
+<!-- 12. SCORING SYSTEM & BADGES -->
+<h2 id="sec-scoring">12. Scoring System &amp; Badges</h2>
+<table>
+  <thead><tr><th>Component</th><th>Detail</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Basis</strong></td><td>Three-step decision chain per scenario: (1) Tusler classification = 30 pts, (2) Response strategy = 20 pts, (3) Specific mitigation = 30 pts. Maximum 80 pts per scenario × 12 scenarios = 960 pts maximum.</td></tr>
+    <tr><td><strong>Streak Bonus</strong></td><td>≥3 consecutive correct answers = ×1.5 multiplier on next points award (rounded to nearest integer). Best streak displayed in Results screen and Performance sidebar.</td></tr>
+    <tr><td><strong>Penalties</strong></td><td>Wrong answer: 0 pts for that decision step + health damage (Tiger/Alligator wrong: −10 to −15 HP; Puppy/Kitten wrong: −5 HP). Timeout: 0 pts + same health damage as wrong answer for that category. Streak resets to 0 on any wrong answer or timeout. No negative total score (health floor = 0; score floor = 0).</td></tr>
+  </tbody>
+</table>
+
+<h3>Badges</h3>
+<table>
+  <thead><tr><th>Badge</th><th>Trigger</th></tr></thead>
+  <tbody>
+    <tr><td>🎖 Risk Analyst</td><td>Complete all 12 scenarios</td></tr>
+    <tr><td>🐯 Tiger Tamer</td><td>All Tiger scenarios (S1/S4/S7/S11) correctly classified</td></tr>
+    <tr><td>🐊 Alligator Hunter</td><td>All Alligator scenarios (S2/S6/S9) correctly classified</td></tr>
+    <tr><td>⚖ Proportionate Responder</td><td>Correctly Accept S8 Kitten risk (anti-over-mitigation)</td></tr>
+    <tr><td>🔥 Streak Master</td><td>Best streak ≥5 consecutive correct decisions</td></tr>
+    <tr><td>🏆 Crisis Cabinet Champion</td><td>Score ≥850/960</td></tr>
+    <tr><td>⭐ Exceptional Risk Manager</td><td>Grade A+, score ≥90%</td></tr>
+  </tbody>
+</table>
+
+<h3>Grade Scale</h3>
+<table>
+  <thead><tr><th>Grade</th><th>Score Range</th><th>Descriptor</th></tr></thead>
+  <tbody>
+    <tr><td>A+</td><td>≥90%</td><td>Exceptional Risk Manager</td></tr>
+    <tr><td>A</td><td>80–89%</td><td>Expert Risk Manager</td></tr>
+    <tr><td>B</td><td>70–79%</td><td>Competent Risk Manager</td></tr>
+    <tr><td>C</td><td>60–69%</td><td>Developing Risk Manager</td></tr>
+    <tr><td>D</td><td>&lt;60%</td><td>Foundation Level — Revision Recommended</td></tr>
+  </tbody>
+</table>
+
+<!-- 13. SOCIAL & REWARDS -->
+<h2 id="sec-social">13. Social Interaction &amp; Rewards</h2>
+<p><strong>Social Rationale:</strong> Leaderboard is opt-in and anonymised by student ID to protect low performers (SDT Relatedness without threatening Autonomy). Class-level Tusler accuracy aggregate displayed by instructor on projector post-session — collective performance is shared, individual scores private. Peer discussion of contested scenarios (e.g. 'Why is S8 Accept and not Mitigate?') follows results debrief as a social learning moment aligned with SDT Relatedness.</p>
+
+<table>
+  <thead><tr><th>Feature</th><th>Available</th><th>Detail</th></tr></thead>
+  <tbody>
+    <tr><td>Leaderboard</td><td>✅ Yes (opt-in)</td><td>Overall Score | Tusler Classification Accuracy | Best Streak. Opt-in; anonymised by student ID. Reset per semester.</td></tr>
+    <tr><td>Analytics</td><td>✅ Yes</td><td>Phase 1: Manual — instructor collects Results screen screenshots. Phase 2: localStorage event logging with CSV export.</td></tr>
+    <tr><td>Forums / Clubs</td><td>❌ Phase 2</td><td>Post-session peer discussion via LMS forum (planned)</td></tr>
+    <tr><td>Notifications</td><td>❌ Phase 2</td><td>LMS push for replay reminders</td></tr>
+  </tbody>
+</table>
+
+<h3>Reward Tiers</h3>
+<table>
+  <thead><tr><th>Tier</th><th>Trigger</th><th>Reward</th></tr></thead>
+  <tbody>
+    <tr><td>🏆 Elite</td><td>Crisis Cabinet Champion (score ≥850/960, Grade A or A+)</td><td>3-point course bonus + digital certificate displayed in student portfolio + name on semester leaderboard (opt-in)</td></tr>
+    <tr><td>🎖 Professional</td><td>Risk Analyst (complete all 12 scenarios, Grade B or above)</td><td>1-point course bonus + participation credit for D7 dimension + 'Competent Risk Manager' digital certificate</td></tr>
+    <tr><td>✅ Access</td><td>Any completion (all 12 scenarios attempted, any grade)</td><td>D7 evidence logged in GPPT portfolio; 'Participated in Crisis Cabinet Simulation' certificate; eligible for retake at any time</td></tr>
+  </tbody>
+</table>
+
+<h3>UI Wireframes (Description)</h3>
+<p><strong>HUD Bar (top, fixed):</strong> Crisis Cabinet brand | Phase badge | Scenario counter (N/12) | Streak counter | Health bar (colour-coded: green→yellow→red) | Score (right-aligned).</p>
+<p><strong>Left sidebar:</strong> GPPT dimension bars (D1/D2/D3/D7/D8 with live % values) | Risk Register mini (category-tagged chips, last 8 risks) | Strategies Used chips (Avoid/Mitigate/Transfer/Accept, highlights when used).</p>
+<p><strong>Center:</strong> Crisis Card — header (phase badge + Tusler category badge + title + urgency) + body (situation text + 3-cell data panel: Probability/Impact/Urgency) + current decision step.</p>
+<p><strong>Right sidebar:</strong> Performance Panel (correct/wrong/accuracy/best streak/bonus pts) + per-category Tusler tracker + Feedback Log (last 5 decisions).</p>
+<p><strong>Results screen:</strong> Large letter grade (colour-coded by tier) + percentage + descriptor title. Tusler accuracy grid (2×2 card layout: Tiger/Alligator/Puppy/Kitten, colour-matched). GPPT dimension cards (D1/D2/D3/D7/D8): progress bar + percentage + feedback sentence. Action buttons: Review Rules | Play Again.</p>
+
+<!-- 14. EXECUTION LOG -->
+<h2 id="sec-execlog">14. Execution Log &amp; Analytics</h2>
+<p><strong>Analytics Platform:</strong> Phase 1: Manual — instructor collects Results screen screenshots/photos; cohort Tusler accuracy recorded in shared spreadsheet. Phase 2: localStorage event logging with CSV export button; optional LMS grade passback via xAPI.</p>
+<p><strong>Data Collection:</strong> Quantitative: (1) In-game Results screen data (score, grade, D7 score, Tusler accuracy per category). (2) Pre/post Tusler classification quiz. (3) GPPT D7 dimension scores from final GPPT submission (Week 14). Qualitative: (4) Exit ticket open response. (5) Instructor observation notes. <strong>Triangulation:</strong> game D7 score (immediate) vs quiz improvement (immediate) vs final GPPT D7 (4 weeks delayed) — three independent signals for Tusler competence transfer.</p>
+<table>
+  <thead><tr><th>Field</th><th>Type</th><th>Description</th><th>Example</th></tr></thead>
+  <tbody>
+    <tr><td>player_session_id</td><td>UUID</td><td>Anonymous session identifier (no PII collected)</td><td>a3f7-cc-2026</td></tr>
+    <tr><td>scenario_id</td><td>String</td><td>Crisis scenario identifier (S1–S12)</td><td>S7</td></tr>
+    <tr><td>tusler_selected</td><td>String</td><td>Tusler category selected by player</td><td>tiger</td></tr>
+    <tr><td>tusler_correct</td><td>Boolean</td><td>Whether Tusler classification matched correct answer</td><td>true</td></tr>
+    <tr><td>strategy_selected</td><td>String</td><td>Response strategy chosen</td><td>mitigate</td></tr>
+    <tr><td>strategy_correct</td><td>Boolean</td><td>Whether strategy matched correct answer</td><td>true</td></tr>
+    <tr><td>mitigation_index</td><td>Integer</td><td>Index of mitigation option selected (0–3)</td><td>0</td></tr>
+    <tr><td>mitigation_correct</td><td>Boolean</td><td>Whether mitigation matched correct answer</td><td>true</td></tr>
+    <tr><td>time_remaining_s</td><td>Integer</td><td>Seconds remaining when answer submitted (0 = timeout)</td><td>22</td></tr>
+    <tr><td>health_at_decision</td><td>Integer</td><td>Health bar value (0–100) when decision was made</td><td>75</td></tr>
+    <tr><td>streak_at_decision</td><td>Integer</td><td>Streak count at time of decision</td><td>3</td></tr>
+    <tr><td>bloom_level</td><td>String</td><td>Bloom taxonomy level of this scenario</td><td>Evaluate</td></tr>
+  </tbody>
+</table>
+
+<!-- 15. RISK REGISTER (TUSLER) -->
+<h2 id="sec-risks">15. Risk Register (Tusler Classification)</h2>
+<table>
+  <thead><tr><th>ID</th><th>Risk Title</th><th>Tusler</th><th>Prob</th><th>Impact</th><th>Preventive Action</th><th>Responsive Action</th><th>Owner</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>R-01</td>
+      <td>Students skip Tusler data panel and guess by intuition</td>
+      <td><span class="tag amber">Tiger 🐯</span></td>
+      <td>High</td>
+      <td>High</td>
+      <td>Data panel (3 cells: Probability %, Impact severity, Urgency label) is visually prominent. Tusler classification buttons display probability×impact sub-labels to reinforce matrix reading. Classify step has no skip option.</td>
+      <td>Post-game debrief identifies scenarios with highest timeout rate. Instructor re-runs highest-error scenario as verbal exercise if &gt;40% of class timed out on same scenario. Tusler per-category accuracy in Results screen highlights systematic skipping.</td>
+      <td>Educational Designer</td>
+    </tr>
+    <tr>
+      <td>R-02</td>
+      <td>Pattern-matching replaces genuine scenario reasoning (Mitigate always wins)</td>
+      <td><span class="tag red">Alligator 🐊</span></td>
+      <td>Low</td>
+      <td>High</td>
+      <td>S2 correct strategy is Transfer. S8 correct strategy is Accept. S12 correct strategy is Mitigate (contrasting S8). Strategy options are scenario-specific action labels, not generic one-word names. Multiple scenarios require different primary strategies across all 4 types.</td>
+      <td>If cohort median score &gt;850 in first attempt, instructor introduces Expert Mode (timer 25s, no sub-labels on Tusler buttons). Post-game debrief focuses on counter-intuitive scenarios (S8 Accept, S9 Alligator despite urgency).</td>
+      <td>COM0463 Instructor</td>
+    </tr>
+    <tr>
+      <td>R-03</td>
+      <td>Project Health reaches 0 early, demotivating students before all 12 scenarios are seen</td>
+      <td><span class="tag amber">Puppy 🐶</span></td>
+      <td>High</td>
+      <td>Low</td>
+      <td>Health damage calibrated by severity: Tiger/Alligator wrong = 10–15 HP, Puppy/Kitten wrong = 5 HP. 100 HP starting value allows 7–10 wrong answers before failure. Game-over screen shows all attempted scenarios with full Tusler accuracy breakdown.</td>
+      <td>On health = 0, results screen shows all attempted scenarios. Full replay available immediately. Instructor debrief treats health-0 outcomes as learning data. Consider increasing starting health to 120 HP if &gt;30% of pilot cohort hits 0 before S9.</td>
+      <td>Frontend Developer</td>
+    </tr>
+    <tr>
+      <td>R-04</td>
+      <td>Students do not connect game D7 score to GPPT risk register requirement</td>
+      <td><span class="tag green">Kitten 🐱</span></td>
+      <td>Low</td>
+      <td>Low</td>
+      <td>HUD sidebar shows D7 bar live during gameplay. Briefing screen states 'Final score feeds your D7 Risk Management dimension.' Results screen labels D7 score explicitly with rubric-aligned feedback. Mitigation feedback panels reference 'GPPT D7 rubric' by name.</td>
+      <td>Instructor debrief maps game D7 % directly to D7 rubric criterion during results screen walkthrough. Students instructed to screenshot Results screen as D7 evidence artefact for GPPT portfolio submission.</td>
+      <td>COM0463 Instructor</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- 16. SUPPORT TEAM -->
+<h2 id="sec-support">16. Support Team &amp; Facilitator</h2>
+<table>
+  <thead><tr><th>Role</th><th>Name</th><th>Responsibilities</th></tr></thead>
+  <tbody>
+    <tr><td>COM0463 Instructor</td><td>Yusuf Altunel</td><td>Scenario review and sign-off; Tusler classification answer key validation; PMBOK §11 alignment check; assessment rubric mapping; classroom deployment and debrief facilitation</td></tr>
+    <tr><td>Frontend Developer</td><td>Ferdaws Qaem</td><td>HTML/CSS/JS game engine; HUD, crisis cards, feedback panels, timer, health bar, streak mechanics, results screen; single-file build optimisation</td></tr>
+    <tr><td>Educational Designer</td><td>Abdelmagied Farhouda</td><td>Bloom taxonomy tagging per scenario; Kirkpatrick L1–L4 evaluation instrument design; session flow; GPPT dimension score mapping logic</td></tr>
+    <tr><td>QA / Student Pilot Tester</td><td>Mohamed Sallam</td><td>3-student pilot before classroom deployment: UI clarity testing, timer calibration, health damage balance, scenario ambiguity identification, answer key verification</td></tr>
+  </tbody>
+</table>
+
+<h3>Facilitator Guide</h3>
+<div class="info-box blue" style="font-size:.84rem">
+  <p><strong>Before session:</strong> Deploy HTML file to LMS or distribute via USB. Load on classroom projector. Confirm student access (5 min). Walk through Tusler 2×2 grid on Briefing screen verbally before students click Launch.</p>
+  <p><strong>During gameplay:</strong> Monitor for confusion at S4 (Payment Gateway Tiger — common wrong choice: Transfer) and S8 (PDF Kitten — common wrong choice: Mitigate). Pause after S4 if &gt;50% of visible screens show incorrect strategy. Do not give answers during play.</p>
+  <p><strong>After session:</strong> Lead 5-min Results screen debrief. Map D7 score to GPPT rubric out loud: 'D7 ≥75% is strong. Below 60% means revision before your risk register submission.' Collect class Tusler accuracy aggregate for lecture adjustment.</p>
+</div>
+
+<!-- 17. BLOOM'S LEARNING OUTCOMES -->
+<h2 id="sec-bloom">17. Learning Outcomes (Bloom's Revised Taxonomy)</h2>
+<table>
+  <thead><tr><th>Level</th><th>Learning Outcome</th><th>Game Activity</th><th>Assessment Method</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><span class="tag blue">L3 — Apply</span></td>
+      <td>Apply the Tusler probability × impact matrix to classify IT project risks as Tiger, Alligator, Puppy, or Kitten given a described crisis scenario and quantitative data metrics</td>
+      <td>Tusler classification decision step in each of the 12 crisis scenarios; crisis data panel provides explicit probability %, impact severity, and urgency labels</td>
+      <td>Tusler classification accuracy per category in Results screen: target ≥70% correct across all 12 scenarios. Pre/post Tusler classification quiz (5 written scenarios): target ≥20 percentage point improvement post-session.</td>
+    </tr>
+    <tr>
+      <td><span class="tag blue">L4 — Analyse</span></td>
+      <td>Analyse an IT project crisis to identify its root cause, affected project constraints (scope/schedule/budget/quality), and which PMBOK §11 response strategy (Avoid/Mitigate/Transfer/Accept) is most appropriate given the Tusler classification</td>
+      <td>Response strategy selection step in each of the 12 scenarios; scenario-specific option labels require analysis of PM context, not label pattern-matching; feedback panel explains why each alternative is sub-optimal</td>
+      <td>Strategy selection accuracy: ≥75% correct across all 12 scenarios. Post-game written scenario quiz: 3 unseen crisis scenarios with written strategy justification, scored against PMBOK §11 criteria.</td>
+    </tr>
+    <tr>
+      <td><span class="tag purple">L5 — Evaluate</span></td>
+      <td>Evaluate competing mitigation actions and justify why one specific, time-bounded, deliverable-focused action is superior to vague, disproportionate, or generic alternatives — demonstrating GPPT D7 mitigation specificity</td>
+      <td>Mitigation selection step in each of the 12 scenarios; feedback panels explicitly reference GPPT D7 rubric language; D7 bar in sidebar updates live</td>
+      <td>Mitigation accuracy ≥65% correct across all scenarios. D7 dimension score ≥75% in Results screen (cohort mean target). Written mitigation entries in student risk register (graded against D7 rubric 4 weeks post-session).</td>
+    </tr>
+    <tr>
+      <td><span class="tag purple">L5 — Evaluate</span></td>
+      <td>Evaluate whether a low-probability, low-impact (Kitten) risk warrants immediate mitigation or proportionate acceptance, demonstrating calibrated risk tolerance and avoiding the over-engineering anti-pattern</td>
+      <td>S8 Kitten scenario (PDF rendering edge case — rewards Accept over Mitigate) and S12 Kitten scenario (broken documentation link — rewards Mitigate as 15-minute fix is proportionate); contrasting the two tests contextual Evaluate judgment</td>
+      <td>S8 correct (Accept selected) AND S12 correct (Mitigate selected): demonstrates risk proportionality judgment. Both scenarios discussed in debrief to consolidate the principle.</td>
+    </tr>
+    <tr>
+      <td><span class="tag green">L6 — Create</span></td>
+      <td>Create a Tusler-compliant risk register entry for an unseen IT project scenario, specifying the Tusler category (with probability and impact justification), the appropriate PMBOK response strategy, and a specific time-bounded mitigation action that meets GPPT D7 specificity criteria</td>
+      <td>Post-session risk register assignment (direct transfer task): students apply Crisis Cabinet vocabulary and decision framework to write their own risk entries for their GPPT project</td>
+      <td>D7 rubric scoring of student-authored risk register entries 4 weeks post-session: entry must specify (a) Tusler category with justification, (b) correct PMBOK strategy label, (c) mitigation action rated 'Specific' on D7 rubric. Target: ≥80% of entries rated Specific or above (vs ≤40% baseline).</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- 18. KIRKPATRICK EVALUATION -->
+<h2 id="sec-kirkpatrick">18. Kirkpatrick Evaluation Plan</h2>
+<table>
+  <thead><tr><th>Level</th><th>Focus</th><th>Method &amp; Target</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><span class="tag green">L1 — Reaction</span></td>
+      <td>Student satisfaction &amp; perceived relevance</td>
+      <td>Post-session exit ticket (5-point Likert, administered immediately after Results screen debrief): (1) 'How well did Crisis Cabinet represent real IT project risk decisions?' (target mean ≥4.0/5.0); (2) 'Did the countdown timer make decisions feel more realistic?' (Yes/No + open comment); (3) 'Which scenario best prepared you for your risk register?' (open text). Collected anonymously via paper or LMS form.</td>
+    </tr>
+    <tr>
+      <td><span class="tag blue">L2 — Learning</span></td>
+      <td>Knowledge &amp; skill acquisition</td>
+      <td>Pre/post Tusler classification quiz (5 written scenarios, administered before Briefing screen and immediately after Results screen). Target: ≥20 percentage point improvement. Secondary: D7 dimension score in Results screen (target cohort mean ≥75%). Score comparison by Tusler category to identify persistent misclassification patterns.</td>
+    </tr>
+    <tr>
+      <td><span class="tag amber">L3 — Behaviour</span></td>
+      <td>Transfer to practice</td>
+      <td>Risk register quality assessment 4 weeks post-session: GPPT risk entries scored against D7 rubric (specificity label, strategy label correctness, mitigation action specificity). Target: ≥80% of entries rated 'Specific' or above vs ≤40% baseline from pre-gamification cohort. Assessed by instructor using standardised D7 rubric.</td>
+    </tr>
+    <tr>
+      <td><span class="tag red">L4 — Results</span></td>
+      <td>Organisational / academic outcomes</td>
+      <td>End-of-semester D7 dimension score in final GPPT submission (Week 14). Target: cohort mean D7 ≥75% vs ≤55% baseline from 2024–25 pre-gamification cohort. Longitudinal comparison across 2 semesters to establish trend. Measured by instructor at final submission grading.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- 19. KPIs & ASSESSMENT -->
+<h2 id="sec-kpis">19. KPIs &amp; Assessment</h2>
+<table>
+  <thead><tr><th>KPI</th><th>Baseline</th><th>Target</th><th>Measurement Method</th></tr></thead>
+  <tbody>
+    <tr><td>Tusler classification accuracy</td><td>42% (2024–25 pre-game Tusler quiz)</td><td>≥70% post-session</td><td>Pre/post quiz comparison, immediate post-session</td></tr>
+    <tr><td>D7 dimension score in GPPT submission</td><td>55% (2024–25 final GPPT cohort mean)</td><td>≥75% (Week 14 submission)</td><td>Instructor grading of final GPPT D7 fields</td></tr>
+    <tr><td>Risk register specificity</td><td>≤40% entries rated Specific (D7 rubric)</td><td>≥80% entries rated Specific</td><td>D7 rubric assessment 4 weeks post-session</td></tr>
+  </tbody>
+</table>
+
+<h3>Engagement Targets</h3>
+<table>
+  <thead><tr><th>Metric</th><th>Baseline</th><th>Target</th></tr></thead>
+  <tbody>
+    <tr><td>Baseline Engagement / Accuracy</td><td>42% (average Chapter 8 Tusler classification quiz score, pre-gamification COM0463 cohort, 2024–25)</td><td>≥70% Tusler classification accuracy post Crisis Cabinet session (all 4 categories combined)</td></tr>
+    <tr><td>Baseline D7 Score</td><td>55% (D7 dimension mean in final GPPT submission, 2024–25 COM0463 cohort)</td><td>≥75% cohort mean D7 score in final GPPT submission (Week 14 assessment)</td></tr>
+    <tr><td>Session Completion (Attrition)</td><td>—</td><td>&lt;5% incomplete sessions (all 12 scenarios reached before health = 0 or time limit)</td></tr>
+    <tr><td>Transfer Target</td><td>≤40% baseline</td><td>≥80% of student GPPT risk register entries rated 'Specific' on D7 rubric 4 weeks post-session</td></tr>
+  </tbody>
+</table>
+
+<h3>Continuous Improvement</h3>
+<p>Post-semester review: (1) Analyse per-scenario wrong-answer rates from instructor observation logs. Any scenario with &gt;60% wrong answer rate on classification step → revise data panel to make probability/impact clearer. (2) Add 2 new scenarios per academic year (rotating in, rotating out) to prevent answer-sharing between cohort years. (3) Pilot Expert Mode (25s timer, no sub-labels on Tusler buttons) in Semester 2 if cohort median score &gt;850 in first attempt. (4) Annual review of Tusler category distribution to ensure all 4 categories are represented at least 2× each across the 12 scenarios.</p>
+
+<!-- 20. TIMELINE -->
+<h2 id="sec-timeline">20. Timeline</h2>
+<table>
+  <thead><tr><th>Sprint</th><th>Phase</th><th>Dates</th><th>Duration</th><th>Key Milestones</th><th>Deliverables</th><th>Owner</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>TL-01</td>
+      <td>Sprint 1 — Design &amp; Content Authoring</td>
+      <td>2026-03-01 → 2026-03-21</td>
+      <td>3 weeks</td>
+      <td>
+        <ul>
+          <li>Scenario database complete: all 12 crisis scenarios authored with situation text, data panel values, Tusler answer key, strategy options, and mitigation options</li>
+          <li>Bloom taxonomy tags assigned and reviewed by instructor for all 12 scenarios</li>
+          <li>Answer key signed off by Yusuf Altunel against PMBOK §11 and Tusler (2006)</li>
+          <li>Wireframes finalised: HUD, crisis card, sidebar layout, results screen</li>
+          <li>Briefing screen content approved</li>
+        </ul>
+      </td>
+      <td>Scenario database (JSON), answer key document, signed-off wireframes</td>
+      <td>Educational Designer + COM0463 Instructor</td>
+    </tr>
+    <tr>
+      <td>TL-02</td>
+      <td>Sprint 2 — Development &amp; Internal Playtesting</td>
+      <td>2026-03-22 → 2026-04-19</td>
+      <td>4 weeks</td>
+      <td>
+        <ul>
+          <li>Playable single-file HTML build with all 12 scenarios, timer, health bar, streak mechanic, and feedback panels</li>
+          <li>All 5 GPPT dimension bars (D1/D2/D3/D7/D8) updating correctly in live HUD</li>
+          <li>Results screen displaying letter grade, Tusler accuracy per category, dimension breakdown</li>
+          <li>3-student pilot test completed: timer calibration verified, health damage balance confirmed, scenario ambiguity issues resolved</li>
+          <li>Instructor review session: answer key spot-check on 6 randomly selected scenarios</li>
+        </ul>
+      </td>
+      <td>crisis_cabinet.html (v1.0 release candidate), pilot test report, bug-fix log</td>
+      <td>Frontend Developer + QA Pilot Testers</td>
+    </tr>
+    <tr>
+      <td>TL-03</td>
+      <td>Sprint 3 — Classroom Deployment &amp; Evaluation</td>
+      <td>2026-04-20 → 2026-05-16</td>
+      <td>4 weeks</td>
+      <td>
+        <ul>
+          <li>Week 1: Pre-game Tusler classification quiz administered (baseline measurement)</li>
+          <li>Week 1: Crisis Cabinet deployed in COM0463 Week 8–9 class session (n≈40 students)</li>
+          <li>Week 1: Post-game exit ticket and immediate post-quiz collected</li>
+          <li>Week 2: Instructor completes cohort Tusler accuracy analysis from Results screen data</li>
+          <li>Week 4: D7 rubric assessment of student GPPT risk register entries (Kirkpatrick L3 measurement)</li>
+          <li>Week 14: Final GPPT D7 dimension scores collected for longitudinal outcome analysis (Kirkpatrick L4)</li>
+        </ul>
+      </td>
+      <td>Pre/post quiz comparison report, cohort Tusler accuracy summary, D7 rubric assessment results, Kirkpatrick L1–L4 evaluation report</td>
+      <td>COM0463 Instructor + Educational Designer</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- 21. FUTURE ENHANCEMENTS -->
+<h2 id="sec-future">21. Future Enhancements &amp; Continuous Improvement</h2>
+<ul>
+  <li><strong>Instructor scenario editor:</strong> GUI to add/edit crisis scenarios and answer keys without touching JS source code (Phase 2, Sprint 3)</li>
+  <li><strong>LMS grade passback:</strong> xAPI integration to send D7 score directly to Moodle/Canvas gradebook (Phase 2, Sprint 3)</li>
+  <li><strong>Multiplayer Crisis Duel:</strong> two students face the same scenario simultaneously; strategy selections revealed simultaneously after both submit (Phase 2, Sprint 4)</li>
+  <li><strong>Expert Mode:</strong> 25s timer, Tusler sub-labels removed from classify buttons — for revision sessions and advanced students (Phase 2, Sprint 2)</li>
+  <li><strong>Cohort analytics dashboard:</strong> aggregate Tusler accuracy heatmap by category across all students; per-scenario wrong-answer frequency chart (Phase 2, Sprint 3)</li>
+  <li><strong>Adaptive difficulty:</strong> if player scores &gt;90% on first 6 scenarios, timer reduces to 30s for scenarios 7–12 to maintain Flow channel (Phase 2, Sprint 4)</li>
+</ul>
+
+<!-- 22. DESIGN QUALITY SCORE -->
+<h2 id="sec-quality">22. Design Quality Score (GPPT REDO Assessment)</h2>
+<table>
+  <thead><tr><th>Dimension</th><th>Score</th><th>Weight</th><th>Weighted Pts</th></tr></thead>
+  <tbody>
+    <tr><td>D1: Pedagogy — Theory &amp; Bloom Alignment</td><td>90%</td><td>20%</td><td>18.0</td></tr>
+    <tr><td>D2: Integration — Game-Learning Link</td><td>88%</td><td>15%</td><td>13.2</td></tr>
+    <tr><td>D3: Motivation — Player Types &amp; Engagement</td><td>85%</td><td>15%</td><td>12.75</td></tr>
+    <tr><td>D7: Evaluation — KPIs &amp; Kirkpatrick</td><td>92%</td><td>15%</td><td>13.8</td></tr>
+    <tr><td>D4: Feasibility — Technical &amp; Deployment</td><td>95%</td><td>10%</td><td>9.5</td></tr>
+    <tr><td>D5: Ethics — Privacy &amp; Inclusion</td><td>88%</td><td>10%</td><td>8.8</td></tr>
+    <tr><td>D8: Risk — Tusler Risk Register</td><td>90%</td><td>5%</td><td>4.5</td></tr>
+    <tr><td>D6: Innovation — Novelty &amp; Quality</td><td>85%</td><td>10%</td><td>8.5</td></tr>
+    <tr><td><strong>Total</strong></td><td></td><td></td><td><strong>89.1%</strong></td></tr>
+    <tr><td><strong>Grade</strong></td><td><strong>A</strong></td><td colspan="2"><em>Expert Risk Management Game Design — Minor improvements may strengthen SDT Relatedness and Phase 2 planning.</em></td></tr>
+  </tbody>
+</table>
+<p style="font-size:.8em;color:#64748b;margin-top:8px">Assessed by GPPT v51 · Design Assurance v2 · GACT v6.5 · G4E v1.5 · Export: 2026-04-08</p>
+
+<hr style="margin:32px 0;border:none;border-top:1px solid #e2e8f0">
+
+<h3>References</h3>
+<ul style="font-size:.84rem;color:#475569">
+  <li>Anderson, L. W., &amp; Krathwohl, D. R. (Eds.). (2001). <em>A taxonomy for learning, teaching, and assessing: A revision of Bloom's taxonomy of educational objectives.</em> Longman.</li>
+  <li>Bloom, B. S. (Ed.). (1956). <em>Taxonomy of educational objectives: The classification of educational goals. Handbook I: Cognitive domain.</em> David McKay.</li>
+  <li>Csikszentmihalyi, M. (1990). <em>Flow: The psychology of optimal experience.</em> Harper &amp; Row.</li>
+  <li>Deci, E. L., &amp; Ryan, R. M. (1985). <em>Intrinsic motivation and self-determination in human behavior.</em> Plenum Press.</li>
+  <li>Hunicke, R., LeBlanc, M., &amp; Zubek, R. (2004). MDA: A formal approach to game design and game research. <em>Proceedings of the AAAI Workshop on Challenges in Game AI.</em></li>
+  <li>Project Management Institute. (2021). <em>A guide to the project management body of knowledge (PMBOK® Guide) — 7th edition.</em> PMI.</li>
+  <li>Tusler, L. A. (2006). Risk classification using probability and impact dimensions. <em>PM Risk Practitioner Series.</em></li>
+</ul>
+
+<p style="text-align:center;margin-top:28px;font-size:.8em;color:#94a3b8"><em>End of proposal — Crisis Cabinet: IT Project Risk Simulation (COM0463) — GPPT v51</em></p>
+
+</div><!-- .gppt-body -->
+</body>
+</html>

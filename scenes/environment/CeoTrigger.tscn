@@ -1,0 +1,58 @@
+[gd_scene load_steps=9 format=3 uid="uid://dsut02rc4yswr"]
+
+[ext_resource type="Script" uid="uid://boa2slvbgu2n0" path="res://scenes/environment/CeoTrigger.gd" id="1_jwyi4"]
+[ext_resource type="Texture2D" uid="uid://s6ow57vgwopo" path="res://assets/LimeZu_Assets/businessman/businessman1_idle_down.png" id="2_hebn2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_40m0d"]
+size = Vector2(54, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j8fgh"]
+atlas = ExtResource("2_hebn2")
+region = Rect2(0, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0vd3n"]
+atlas = ExtResource("2_hebn2")
+region = Rect2(16, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e7snn"]
+atlas = ExtResource("2_hebn2")
+region = Rect2(32, 0, 16, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pfft6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j8fgh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0vd3n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e7snn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tk81m"]
+radius = 7.0
+
+[node name="CeoTrigger" type="Area2D"]
+script = ExtResource("1_jwyi4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_40m0d")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -3)
+scale = Vector2(1.3125, 1.1875)
+sprite_frames = SubResource("SpriteFrames_pfft6")
+autoplay = "default"
+frame_progress = 0.626289
+
+[node name="StaticBody2D" type="StaticBody2D" parent="AnimatedSprite2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/StaticBody2D"]
+position = Vector2(0, -7)
+shape = SubResource("CircleShape2D_tk81m")

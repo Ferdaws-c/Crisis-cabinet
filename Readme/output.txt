@@ -1,0 +1,120 @@
+STUDENT ANNOUNCEMENT
+Gamification Project Proposal Tool (GPPT v53)
+
+
+⚠  Three Things to Know Before You Start
+
+
+
+
+
+What Is the Gamification Project Proposal Tool?
+The Gamification Project Proposal Tool (GPPT) is a structured, 12-step browser-based wizard that guides you through producing a complete, formally assessed gamification project proposal. It replaces blank-page proposal writing with an interactive environment that gives you immediate score feedback, dimension-level guidance, and a navigable map of every design decision you need to make.
+
+
+
+How to Use the Tool — Step by Step
+Open the file gppt_integrated_v51.html in any modern browser (Chrome, Firefox, Edge, Safari). No server, no install, no login required. The tool runs entirely in your browser.
+
+First Session
+Click "Start Building" on the welcome screen to begin a new proposal.
+Work through Steps 1–11 in order. Each step shows which scoring dimensions it affects (see the colored badges at the top of each step).
+Use the dimension bars in the sidebar to monitor your score as you work. Click any dimension bar to see score tips and navigate to contributing steps.
+Complete Step 12 (Game Summary) manually — it does not auto-fill.
+Click Export JSON and save the file before closing your browser.
+
+Returning Sessions
+Open gppt_integrated_v51.html in your browser.
+Click Import JSON on the welcome screen and select your saved file.
+Review the import preview and click Approve to reload your work.
+Continue from where you left off.
+
+Exporting Your Final Proposal
+When your proposal is complete, go to Step 12 and export in your required format:
+HTML — a self-contained file with a sidebar navigation, suitable for digital submission
+Word (.docx) — for LMS upload or printed submission
+Markdown — for version-control systems or plain-text submission
+JSON — for re-importing your work into GPPT in a future session
+Export your final proposal as both HTML (or Word) AND JSON. Keep the JSON as your working backup.
+
+Using the Worked Examples
+The tool includes 22 worked examples across your courses — 6 for SEN4012, 7 for COM0463, and 6 for COM4061. There are also 4 corporate examples (EduQuest Pro, OnboardQuest, LoyaltyQuest, AdherenceRPG) for reference. To load an example, click "Change Mode / Example" in the sidebar and select from the list.
+
+
+
+The 12 Steps — What You Fill In
+Each step contributes to one or more scoring dimensions. The table below shows what you complete in each step and which dimensions your entries affect.
+
+
+Steps 4 and 11 are the most critical — together they cover D1 (Pedagogical Alignment), D2 (Game-Learning Integration), D3 (Motivational Design), and D4 (Assessment & Evaluation).
+Step 10 is the only step that contributes to D7 (Risk Management). Do not skip it.
+
+
+The 8 Scoring Dimensions
+Your proposal is scored across 8 dimensions drawn from the GACT and G4E gamification assessment frameworks. Each dimension is scored from 0–100. Your overall score is the unweighted average of all 8 dimensions.
+
+
+Dimension × Step Matrix
+The table below shows which steps contribute to each dimension. A filled circle (●) means entries made in that step are scored by that dimension. Use this to plan your work and prioritise which steps matter most for your current score.
+
+Steps →    (columns 1–12)    ·    Dimensions ↓    ·    ● = this step contributes
+
+
+Grading Scale
+The scores shown in the tool are formative — they help you improve your proposal before submission. The grading scale below is the same scale used to present your GPPT score as a letter grade. Your final course grade is determined by your instructor, not by the tool.
+
+
+
+Worked Examples Included in the Tool
+The tool includes 22 worked examples (plus the Villager-Vampire demonstration proposal) across your three courses. Loading an example pre-fills all 94 fields — you can use this to see what a complete proposal looks like, and to understand how the scoring dimensions respond to specific design choices.
+
+Warning: your submitted proposal is checked for originality against all 22 examples. A similarity score above 65% will trigger a plagiarism alert.
+
+SEN4012 — Analysis of Algorithms — 6 examples
+Algorithm Fortress
+CodeCrypt Dungeon
+AlgoRhythm
+Complexity Wars
+Algorithm Detective
+SortQuest
+
+COM0463 — IT Project Management — 7 examples
+ScopeCraft
+Risk Dungeon
+Stakeholder Wars
+Iron Triangle Tycoon
+PM Chronicles
+Deadline Dash
+Villager-Vampire: Stakeholder Simulation
+
+COM4061 — System Analysis and Design — 6 examples
+Requirements Quest
+UML Arena
+Architecture Tycoon
+UI Design Studio
+Database Quest
+System Deploy Tycoon
+
+Corporate examples (EduQuest Pro, OnboardQuest, LoyaltyQuest, AdherenceRPG) — 4 examples for general reference only. Not aligned to IKU course syllabi.
+
+
+Technical Notes
+File size: approximately 2 MB. Works offline once downloaded. No server connection required.
+Supported browsers: Chrome 110+, Firefox 110+, Edge 110+, Safari 16+.
+Mobile: functional but the layout is optimised for laptop/desktop screens.
+The tool uses your browser's local storage to auto-save. If you clear browser data between sessions, you will lose unsaved work. Always export JSON.
+Accessibility: the tool uses standard HTML form elements and is navigable by keyboard.
+
+
+Note to Instructors / Teaching Assistants
+Please share the following information with students before they first use the tool:
+
+
+Assessment use
+The GPPT score is a formative quality indicator only. It is not a direct course grade. Instructors should use the exported HTML or Word proposal as the primary submission artefact. The score and dimension breakdown inside the exported document can be used as supporting evidence during marking.
+
+Originality check
+The JSON export includes an originality score and the closest matching example. A similarity score above 65% triggers an alert in the tool and is flagged in the export. Instructors can use this as a first-pass similarity check, supplemented by standard academic integrity procedures.
+
+
+GPPT v53  ·  Istanbul Kültür University  ·  Department of Computer Engineering  ·  2025–26

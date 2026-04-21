@@ -1,0 +1,84 @@
+[gd_scene load_steps=13 format=3 uid="uid://bkcq06ut10ho3"]
+
+[ext_resource type="Script" uid="uid://vs6m0vj5dx15" path="res://scenes/environment/InfoTrigger.gd" id="1_tmrc2"]
+[ext_resource type="Texture2D" uid="uid://bje1e4tdkndvs" path="res://assets/LimeZu_Assets/characters/Bob_idle_anim_16x16.png" id="2_tmrc2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5v4vu"]
+size = Vector2(120.25, 108.25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tvr7i"]
+atlas = ExtResource("2_tmrc2")
+region = Rect2(288, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5v4vu"]
+atlas = ExtResource("2_tmrc2")
+region = Rect2(304, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i2jx2"]
+atlas = ExtResource("2_tmrc2")
+region = Rect2(320, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qg2fu"]
+atlas = ExtResource("2_tmrc2")
+region = Rect2(336, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rmi6o"]
+atlas = ExtResource("2_tmrc2")
+region = Rect2(352, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e8ksf"]
+atlas = ExtResource("2_tmrc2")
+region = Rect2(368, 0, 16, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fa17r"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tvr7i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5v4vu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i2jx2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qg2fu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rmi6o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e8ksf")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_tmrc2"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tvr7i"]
+radius = 5.0
+height = 22.0
+
+[node name="InfoTrigger" type="Area2D"]
+script = ExtResource("1_tmrc2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(49.875, 25)
+shape = SubResource("RectangleShape2D_5v4vu")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-1, -11)
+scale = Vector2(1.29688, 1.5)
+sprite_frames = SubResource("SpriteFrames_fa17r")
+autoplay = "default"
+frame_progress = 0.925828
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_tmrc2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-1, -10)
+shape = SubResource("CapsuleShape2D_tvr7i")

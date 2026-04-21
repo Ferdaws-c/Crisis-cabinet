@@ -1,0 +1,79 @@
+[gd_scene load_steps=4 format=3 uid="uid://bjfb6qfcd2d3k"]
+
+[ext_resource type="Script" uid="uid://bkhnj8idgnl64" path="res://scenes/ui/GameHUD.gd" id="1_f41ut"]
+[ext_resource type="FontFile" uid="uid://bucqladehynoh" path="res://assets/Fonts/SpaceMono-Bold.ttf" id="2_3b1cv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f41ut"]
+bg_color = Color(0.1, 0.1, 0.15, 0.8)
+
+[node name="GameHUD" type="CanvasLayer"]
+script = ExtResource("1_f41ut")
+
+[node name="TopBar" type="PanelContainer" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_f41ut")
+
+[node name="Margin" type="MarginContainer" parent="TopBar"]
+layout_mode = 2
+
+[node name="MainRow" type="HBoxContainer" parent="TopBar/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 180
+
+[node name="PhaseContainer" type="HBoxContainer" parent="TopBar/Margin/MainRow"]
+layout_mode = 2
+
+[node name="PhaseLabelTitle" type="Label" parent="TopBar/Margin/MainRow/PhaseContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_3b1cv")
+
+[node name="PhaseValue" type="Label" parent="TopBar/Margin/MainRow/PhaseContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_3b1cv")
+
+[node name="StreakContainer" type="HBoxContainer" parent="TopBar/Margin/MainRow"]
+layout_mode = 2
+
+[node name="StreakLabelTitle" type="Label" parent="TopBar/Margin/MainRow/StreakContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_3b1cv")
+
+[node name="StreakValue" type="Label" parent="TopBar/Margin/MainRow/StreakContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_3b1cv")
+
+[node name="BudgetContainer" type="HBoxContainer" parent="TopBar/Margin/MainRow"]
+layout_mode = 2
+
+[node name="BudgetLabelTitle" type="Label" parent="TopBar/Margin/MainRow/BudgetContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_3b1cv")
+
+[node name="BudgetValue" type="Label" parent="TopBar/Margin/MainRow/BudgetContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_3b1cv")
+
+[node name="HPContainer" type="HBoxContainer" parent="TopBar/Margin/MainRow"]
+layout_mode = 2
+
+[node name="HPLabelTitle" type="Label" parent="TopBar/Margin/MainRow/HPContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_3b1cv")
+
+[node name="HPValue" type="Label" parent="TopBar/Margin/MainRow/HPContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_3b1cv")
+
+[node name="XPContainer" type="HBoxContainer" parent="TopBar/Margin/MainRow"]
+layout_mode = 2
+
+[node name="XPTitle" type="Label" parent="TopBar/Margin/MainRow/XPContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_3b1cv")
+
+[node name="XPValue" type="Label" parent="TopBar/Margin/MainRow/XPContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_3b1cv")

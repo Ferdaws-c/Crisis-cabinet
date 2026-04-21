@@ -1,0 +1,75 @@
+[gd_scene load_steps=11 format=3 uid="uid://dy6sxsscs5yrt"]
+
+[ext_resource type="Script" uid="uid://cqg1mx8cplc3n" path="res://scenes/environment/RoomDoor.gd" id="1_nqeia"]
+[ext_resource type="Texture2D" uid="uid://bxqrev5bkag8n" path="res://assets/LimeZu_Assets/coins-chests-etc-2-0.png" id="2_np1nw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qnq8j"]
+size = Vector2(54, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ady8a"]
+atlas = ExtResource("2_np1nw")
+region = Rect2(752, 400, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r66o3"]
+atlas = ExtResource("2_np1nw")
+region = Rect2(752, 400, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_is7li"]
+atlas = ExtResource("2_np1nw")
+region = Rect2(768, 400, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fdhs6"]
+atlas = ExtResource("2_np1nw")
+region = Rect2(784, 400, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kagwt"]
+atlas = ExtResource("2_np1nw")
+region = Rect2(800, 400, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7pw8u"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ady8a")
+}],
+"loop": true,
+"name": &"locked",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r66o3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_is7li")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fdhs6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kagwt")
+}],
+"loop": true,
+"name": &"unlocked",
+"speed": 3.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nqeia"]
+size = Vector2(68, 58)
+
+[node name="RoomDoor" type="StaticBody2D"]
+script = ExtResource("1_nqeia")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_qnq8j")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_7pw8u")
+animation = &"unlocked"
+frame_progress = 0.903139
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_nqeia")

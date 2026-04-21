@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cv6hh0kh8x1af"]
+
+[ext_resource type="Script" uid="uid://7exyfif7eorf" path="res://scenes/environment/SuddenTrigger.gd" id="1_a3ogy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lbhs7"]
+size = Vector2(212, 1)
+
+[node name="SuddenTrigger" type="Area2D"]
+script = ExtResource("1_a3ogy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_lbhs7")

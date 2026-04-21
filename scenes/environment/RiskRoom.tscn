@@ -1,0 +1,212 @@
+[gd_scene load_steps=28 format=3 uid="uid://btcsb2ft3ridk"]
+
+[ext_resource type="Script" uid="uid://co7tc2f37u1hp" path="res://scenes/environment/RiskRoom.gd" id="1_t8hp5"]
+[ext_resource type="Script" uid="uid://bb7t5wrralaop" path="res://scenes/environment/TuslerPad.gd" id="2_6baf7"]
+[ext_resource type="Texture2D" uid="uid://bxqrev5bkag8n" path="res://assets/LimeZu_Assets/coins-chests-etc-2-0.png" id="3_6baf7"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6baf7"]
+radius = 15.0333
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sjult"]
+atlas = ExtResource("3_6baf7")
+region = Rect2(192, 192, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_541ix"]
+atlas = ExtResource("3_6baf7")
+region = Rect2(208, 192, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i50vj"]
+atlas = ExtResource("3_6baf7")
+region = Rect2(224, 192, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ijhk"]
+atlas = ExtResource("3_6baf7")
+region = Rect2(240, 192, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cpmu5"]
+atlas = ExtResource("3_6baf7")
+region = Rect2(256, 192, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eh5vk"]
+atlas = ExtResource("3_6baf7")
+region = Rect2(272, 192, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ojb0w"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sjult")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_541ix")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i50vj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0ijhk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cpmu5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eh5vk")
+}],
+"loop": true,
+"name": &"Star",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sjult"]
+radius = 15.0333
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h607c"]
+atlas = ExtResource("3_6baf7")
+region = Rect2(192, 208, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lcexq"]
+atlas = ExtResource("3_6baf7")
+region = Rect2(208, 208, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_il0do"]
+atlas = ExtResource("3_6baf7")
+region = Rect2(224, 208, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4vx0v"]
+atlas = ExtResource("3_6baf7")
+region = Rect2(240, 208, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5djos"]
+atlas = ExtResource("3_6baf7")
+region = Rect2(256, 208, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_js6to"]
+atlas = ExtResource("3_6baf7")
+region = Rect2(272, 208, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_c736i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h607c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lcexq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_il0do")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4vx0v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5djos")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_js6to")
+}],
+"loop": true,
+"name": &"SilverStar",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_541ix"]
+radius = 15.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gskt2"]
+atlas = ExtResource("3_6baf7")
+region = Rect2(304, 368, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oa2i2"]
+atlas = ExtResource("3_6baf7")
+region = Rect2(320, 368, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bgh1c"]
+atlas = ExtResource("3_6baf7")
+region = Rect2(336, 368, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pnum6"]
+atlas = ExtResource("3_6baf7")
+region = Rect2(352, 368, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xtii5"]
+atlas = ExtResource("3_6baf7")
+region = Rect2(368, 368, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jkasy"]
+atlas = ExtResource("3_6baf7")
+region = Rect2(384, 368, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7a8ee"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gskt2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oa2i2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bgh1c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pnum6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xtii5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jkasy")
+}],
+"loop": true,
+"name": &"Gem",
+"speed": 5.0
+}]
+
+[node name="RiskRoom" type="Node2D"]
+z_index = 7
+script = ExtResource("1_t8hp5")
+
+[node name="TigerPad" type="Area2D" parent="."]
+script = ExtResource("2_6baf7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TigerPad"]
+position = Vector2(45, -29)
+shape = SubResource("CircleShape2D_6baf7")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="TigerPad"]
+position = Vector2(45, -29)
+sprite_frames = SubResource("SpriteFrames_ojb0w")
+animation = &"Star"
+autoplay = "Star"
+frame_progress = 0.31445
+
+[node name="AlligatorPad" type="Area2D" parent="."]
+script = ExtResource("2_6baf7")
+category = "alligator"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AlligatorPad"]
+position = Vector2(45, 33)
+shape = SubResource("CircleShape2D_sjult")
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="AlligatorPad"]
+position = Vector2(45, 33)
+sprite_frames = SubResource("SpriteFrames_c736i")
+animation = &"SilverStar"
+autoplay = "SilverStar"
+frame_progress = 0.377103
+
+[node name="PuppyPad" type="Area2D" parent="."]
+script = ExtResource("2_6baf7")
+category = "puppy"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PuppyPad"]
+position = Vector2(-29, -27)
+shape = SubResource("CircleShape2D_541ix")
+
+[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="PuppyPad"]
+position = Vector2(-29, -27)
+sprite_frames = SubResource("SpriteFrames_7a8ee")
+animation = &"Gem"
+autoplay = "Gem"
+frame_progress = 0.0714848

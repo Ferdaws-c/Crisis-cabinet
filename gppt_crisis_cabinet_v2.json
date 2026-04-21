@@ -1,0 +1,136 @@
+{
+  "scenarios": [
+    {
+      "id": "SC-01",
+      "title": "Tiger \u2014 Legacy DB Migration",
+      "prob": "85%",
+      "impact": "-$25,000",
+      "urgency": "High",
+      "lesson_text": "Before you can manage a project, you must first understand Risk (PMBOK \u00a711.2). A risk is an uncertain event. We use the 'Tusler Matrix' to classify risks by Probability and Impact. A High Probability and High Impact risk is classified as a 'Tiger'.\n\nWhen planning a response, 'Mitigation' is the strategy of taking proactive steps to reduce the threat's probability or impact before it happens. You cannot simply ignore or 'Accept' a Tiger.",
+      "setup": "The hospital booking system relies on a 15-year-old database. The vendor just announced end-of-life support exactly two weeks before our go-live date.",
+      "objective": "Mitigate",
+      "winCondition": "Implement correct action'Run parallel shadow databases and perform incremental syncs prior to cutoff'"
+    },
+    {
+      "id": "SC-02",
+      "title": "Puppy \u2014 UI Framework Deprecation",
+      "prob": "80%",
+      "impact": "-$5,000",
+      "urgency": "Low",
+      "lesson_text": "A 'Puppy' risk occurs with High Probability, but yields Low Individual Impact. They seem harmless at first, but accumulate into massive technical debt if ignored.\n\nHowever, the PMBOK teaches that sometimes 'Risk Acceptance' is the correct strategy. Accepting a risk means you write it in the risk register but do not spend current budget or sprint time trying to fix it right now, because the fix costs more than the damage.",
+      "setup": "Our open-source UI library is releasing a breaking version next month. Our current code works fine, but we will miss out on future patches.",
+      "objective": "Accept",
+      "winCondition": "Implement correct action'Document the technical debt and consciously schedule a refactor sprint for Q3'"
+    },
+    {
+      "id": "SC-03",
+      "title": "Alligator \u2014 Data Center Earthquake",
+      "prob": "5%",
+      "impact": "-$15,000",
+      "urgency": "Medium",
+      "lesson_text": "An 'Alligator' risk has a very Low Probability of occurring, but its Impact is absolutely catastrophic to the project's survival.\n\nSince you cannot prevent an earthquake (Avoid), and reducing the impact physically is too expensive (Mitigate), PMBOK \u00a711.5 recommends 'Risk Transfer'. Transferring shifts the financial penalty and responsibility to a third party, usually via insurance or SLAs.",
+      "setup": "Our primary private cloud servers are located in a high-seismic zone. A massive 8.0+ event would completely sever fiber lines.",
+      "objective": "Transfer",
+      "winCondition": "Implement correct action'Purchase multi-region failover insurance and negotiate SLA uptime penalties with the vendor'"
+    },
+    {
+      "id": "SC-04",
+      "title": "Tiger \u2014 Lead Developer Poached",
+      "prob": "90%",
+      "impact": "-$25,000",
+      "urgency": "Critical",
+      "lesson_text": "Welcome to the Executing Phase. When a severe risk physicalizes during operations, it is a live Tiger. \n\nEffective Risk Mitigation in the Executing phase must be highly specific according to the GPPT D7 rubric. Mitigation actions must be time-bounded, deliverable-focused, and highly actionable. Vague mitigations (like 'hope they stay') are unacceptable.",
+      "setup": "The fintech platform's lead cryptography engineer just handed in their two-week notice. All compliance logic is safely only in their head.",
+      "objective": "Mitigate",
+      "winCondition": "Implement correct action'Enforce 8 hours/day of mandatory pair programming and documentation generation until exit'"
+    },
+    {
+      "id": "SC-05",
+      "title": "Puppy \u2014 Scope Creep via Email",
+      "prob": "85%",
+      "impact": "-$5,000",
+      "urgency": "Medium",
+      "lesson_text": "During continuous operations, uncontrolled communication often creates compounding 'Puppy' risks. Small UI change requests bypass formal approval channels and quietly consume development hours.\n\nThe strongest PMBOK response strategy here is not Mitigation, but Risk Avoidance. Avoidance means eliminating the threat entirely by severing its root cause or altering the project management plan.",
+      "setup": "The client stakeholder keeps directly emailing small 'nice-to-have' UI changes directly to the junior developers.",
+      "objective": "Avoid",
+      "winCondition": "Implement correct action'Sever direct comms entirely; force all requests exclusively through the formal Change Control Board form'"
+    },
+    {
+      "id": "SC-06",
+      "title": "Kitten \u2014 Office Coffee Machine Broken",
+      "prob": "15%",
+      "impact": "-$1,000",
+      "urgency": "Low",
+      "lesson_text": "The Tusler Matrix classifies risks with Low Probability and Low Impact as 'Kittens'. These are minor cosmetic or trivial issues that rarely occur and cause no functional damage.\n\nThe mandatory strategy for Kittens is Risk Acceptance. A project manager who wastes precious budget or delays sprint deliverables trying to 'fix' a Kitten is misusing project resources.",
+      "setup": "The high-end espresso machine in the dev team's break area has broken down. Repair will take 3 days.",
+      "objective": "Accept",
+      "winCondition": "Implement correct action'Log the issue as a low-priority note and approve exactly $50 for a local coffee shop run fallback'"
+    },
+    {
+      "id": "SC-07",
+      "title": "Tiger \u2014 API Rate Limits Exceeded",
+      "prob": "95%",
+      "impact": "-$25,000",
+      "urgency": "Critical",
+      "lesson_text": "Welcome to the Monitoring Phase. PMBOK \u00a711.7 requires continuously tracking identified risks. During load testing, a massive systemic failure (Tiger) is observed.\n\nWhile Mitigation reduces damage, Risk Avoidance neutralizes it completely. Avoidance usually involves changing the architecture so the risk is mathematically impossible.",
+      "setup": "During beta testing, our third-party logistics API hits its hard rate limit every afternoon, actively crashing the system.",
+      "objective": "Avoid",
+      "winCondition": "Implement correct action'Design a local caching layer to eliminate 80% of live API calls completely, bypassing the limit mechanism'"
+    },
+    {
+      "id": "SC-08",
+      "title": "Alligator \u2014 New Privacy Legislation",
+      "prob": "15%",
+      "impact": "-$15,000",
+      "urgency": "Low",
+      "lesson_text": "A draft bill in the government (Low Probability of passing) could radically change encryption requirements right before launch, making the app illegal (High Impact - Alligator).\n\nYou cannot Avoid or Transfer government law. You must Mitigate by designing contingency fallbacks so the system is flexible enough to absorb the legal shock if it triggers.",
+      "setup": "A pending government privacy bill could outlaw the way our database currently stores user biometric data.",
+      "objective": "Mitigate",
+      "winCondition": "Implement correct action'Abstract the encryption layer into an isolated microservice module so it can be swapped rapidly if the law changes'"
+    },
+    {
+      "id": "SC-09",
+      "title": "Puppy \u2014 Minor Server Memory Leak",
+      "prob": "75%",
+      "impact": "-$5,000",
+      "urgency": "Low",
+      "lesson_text": "Monitoring tools show the staging server RAM usage creeping up by 1% daily. It is a High Probability (measurable) but Low Impact (resets on weekends) Puppy.\n\nAcceptance is an active strategy here. Until it threatens the SLA, acknowledging it but delaying the technical repair saves current-week velocity.",
+      "setup": "Monitoring graphs prove 1% daily RAM creep on Stage servers. It resets seamlessly on weekends.",
+      "objective": "Accept",
+      "winCondition": "Implement correct action'Schedule an automated nightly reboot script and log a Jira ticket for Q4 investigation'"
+    },
+    {
+      "id": "SC-10",
+      "title": "Alligator \u2014 Client Refuses Final Signoff",
+      "prob": "25%",
+      "impact": "-$15,000",
+      "urgency": "High",
+      "lesson_text": "Welcome to the project's Closing Phase. Delay patterns in User Acceptance Testing (UAT) are classic Risks. If the client refuses to sign the delivery, the massive final payout is locked (Alligator impact).\n\nMitigation relies heavily on documentation traces. The Requirements Traceability Matrix is your defensive weapon against arbitrary scope rejection.",
+      "setup": "The ERP system is fully delivered according to spec, but the key stakeholder demands a missing critical report and threatens to withhold payment.",
+      "objective": "Mitigate",
+      "winCondition": "Implement correct action'Produce the signed Requirements Traceability Matrix instantly and formally offer the report as a Phase 2 change request'"
+    },
+    {
+      "id": "SC-11",
+      "title": "Tiger \u2014 Data Corruption on Handover",
+      "prob": "85%",
+      "impact": "-$25,000",
+      "urgency": "Critical",
+      "lesson_text": "A confirmed crisis during the Closing Phase handover is a pure Tiger. When a risk materializes, its probability is 100%.\n\nSpecific Mitigation when dealing with late-stage software infrastructure requires precise technical fallbacks, not generalized communication apologies.",
+      "setup": "During the final transfer of ownership to ops, an unforeseen script error completely corrupts 5% of the live user authentication tokens.",
+      "objective": "Mitigate",
+      "winCondition": "Implement correct action'Execute immediate technical rollback to pre-handover snapshot and mandate automated password resets for affected token strata'"
+    },
+    {
+      "id": "SC-12",
+      "title": "Kitten \u2014 Typo in User Manual",
+      "prob": "20%",
+      "impact": "-$1,000",
+      "urgency": "Low",
+      "lesson_text": "Small cosmetic errors in final deliverables are classic Kitten risks. \n\nRisk Acceptance means prioritizing the broader project goal. It is universally incorrect to delay an entire product launch strictly to fix an isolated, non-functional cosmetic error.",
+      "setup": "The final PDF user guide has the old company logo incorrectly placed on page 42. All functional text is correct.",
+      "objective": "Accept",
+      "winCondition": "Implement correct action'Formally note the error in the project closure review document and automatically patch it in the next Q2 documentation update cycle'"
+    }
+  ]
+}

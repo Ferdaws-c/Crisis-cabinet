@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://performance_scene"]
+
+[ext_resource type="Script" uid="uid://performance_gd" path="res://scenes/ui/PerformanceReview.gd" id="1_perf"]
+
+[node name="PerformanceReview" type="CanvasLayer"]
+script = ExtResource("1_perf")
