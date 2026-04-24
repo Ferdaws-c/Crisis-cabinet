@@ -149,6 +149,7 @@ func break_streak() -> void:
 
 func mark_scenario_complete(passed: bool = true) -> void:
 	scenarios_completed += 1
+	var old_phase = current_phase
 	
 	if passed:
 		var base_xp = 110
@@ -161,16 +162,21 @@ func mark_scenario_complete(passed: bool = true) -> void:
 	if current_difficulty == "Easy": max_s = 4
 	elif current_difficulty == "Medium": max_s = 8
 	
+	var quarter = max_s / 4
 	if scenarios_completed >= max_s:
 		current_phase = "Finished"
-	elif scenarios_completed >= max_s * 0.75:
+	elif scenarios_completed >= quarter * 3:
 		current_phase = "Closing"
-	elif scenarios_completed >= max_s * 0.50:
+	elif scenarios_completed >= quarter * 2:
 		current_phase = "Monitoring"
-	elif scenarios_completed >= max_s * 0.25:
+	elif scenarios_completed >= quarter * 1:
 		current_phase = "Executing"
 	else:
 		current_phase = "Planning"
+	
+	if old_phase != current_phase:
+		print("PHASE TRANSITION: %s -> %s (Scenario %d/%d)" % [old_phase, current_phase, scenarios_completed, max_s])
+		
 	emit_signal("state_changed")
 
 func trigger_game_over(reason: String) -> void:

@@ -217,7 +217,6 @@ frame_progress = 0.791434
 
 [node name="StaticBody2D" type="StaticBody2D" parent="AlligatorPad"]
 position = Vector2(46, 47)
-scale = Vector2(1, 1)
 physics_material_override = SubResource("PhysicsMaterial_541ix")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AlligatorPad/StaticBody2D"]

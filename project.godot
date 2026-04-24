@@ -13,7 +13,7 @@ config_version=5
 config/name="Crisis Cabinet"
 config/description="A spatial 2D educational game covering IT Project Risk Management (COM0463) using PMBOK and Tusler frameworks."
 run/main_scene="uid://bsvcxwa1uov5q"
-config/features=PackedStringArray("4.4", "Forward Plus")
+config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="uid://cigy5w3w1y8ik"
 
 [autoload]
@@ -68,5 +68,6 @@ drink={
 2d_physics/layer_1="walls"
 
 [rendering]
-
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
 textures/canvas_textures/default_texture_filter=0

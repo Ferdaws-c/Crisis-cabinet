@@ -27,18 +27,23 @@ func _check_phase() -> void:
 	var phase_map = {"Executing": 1, "Monitoring": 2, "Closing": 3, "Finished": 4}
 	var current_phase_level = phase_map.get(GameManager.current_phase, 0)
 	
+	# Hard-polished logic: Map door role by Node Name to ensure difficulty-agnostic scaling
 	var required_phase_level = 1
-	if required_xp >= 500:
+	if "Ceo" in name:
 		required_phase_level = 4
-	elif required_xp >= 495:
+	elif "3" in name:
 		required_phase_level = 3
-	elif required_xp >= 330:
+	elif "2" in name:
 		required_phase_level = 2
-	elif required_xp <= 0:
+	elif "RoomDoor" in name:
+		required_phase_level = 1
+		
+	# Security check for tutorial doors (XP 0)
+	if required_xp <= 0:
 		if GameManager.has_read_info:
 			required_phase_level = 0
 		else:
-			required_phase_level = 99 # Hard lock until info is read
+			required_phase_level = 99 # Locked until briefing is done
 		
 	if current_phase_level >= required_phase_level:
 		_perform_unlock()

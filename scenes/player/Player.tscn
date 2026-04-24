@@ -286,3 +286,4 @@ position = Vector2(0, -10)
 scale = Vector2(1.375, 1.375)
 sprite_frames = SubResource("SpriteFrames_8qxvo")
 animation = &"walk_up"
+frame_progress = 0.636691

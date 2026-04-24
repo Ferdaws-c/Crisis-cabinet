@@ -117,8 +117,20 @@ func _ready() -> void:
 
 func _apply_panel_style() -> void:
 	if not popup_panel: return
+	
+	# Fallback: Procedurally add a solid ColorRect background
+	# This is much more reliable on Intel/Surface integrated graphics than StyleBoxFlat
+	var solid_bg = popup_panel.get_node_or_null("SolidBackground")
+	if not solid_bg:
+		solid_bg = ColorRect.new()
+		solid_bg.name = "SolidBackground"
+		solid_bg.color = Color(0.02, 0.05, 0.1, 1.0) # Solid dark navy
+		solid_bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		popup_panel.add_child(solid_bg)
+		popup_panel.move_child(solid_bg, 0)
+	
 	var style = StyleBoxFlat.new()
-	style.bg_color = Color(0.04, 0.05, 0.10, 0.97)
+	style.draw_center = false # Let the ColorRect do the filling
 	for corner in ["corner_radius_top_left","corner_radius_top_right",
 				   "corner_radius_bottom_left","corner_radius_bottom_right"]:
 		style.set(corner, 14)
@@ -460,6 +472,12 @@ func _show_feedback(is_correct: bool) -> void:
 		btn.grab_focus.call_deferred()
 
 func _scenario_done() -> void:
+	# Disable buttons immediately to prevent double-click counter skips
+	if feedback_container:
+		for child in feedback_container.get_children():
+			if child is Button:
+				child.disabled = true
+				
 	if popup_panel:
 		var tw = create_tween()
 		tw.tween_property(popup_panel, "modulate:a", 0.0, 0.4)
