@@ -1,0 +1,110 @@
+{
+  "npc_id": "alex",
+  "display_name": "Alex",
+  "role": "QA Lead",
+  "avatar_path": "res://assets/sprites/characters/alex/avatar.png",
+  "dialogues": {
+    "alex_station6_testing_framework_investigation": {
+      "context": "Station 6 investigation for testing framework incompatibility",
+      "tree": [
+        {
+          "id": "root",
+          "npc_text": "",
+          "choices": [
+            {
+              "text": "How long to fix the testing framework?",
+              "leads_to": "fix_timeline"
+            },
+            {
+              "text": "Can we test manually in the meantime?",
+              "leads_to": "manual_testing"
+            },
+            {
+              "text": "What if we just don't support the new OS version at launch?",
+              "leads_to": "drop_support"
+            }
+          ]
+        },
+        {
+          "id": "fix_timeline",
+          "npc_text": "If we update the framework ourselves, maybe a week. But there might be a new version already in beta that supports the new OS - I haven't checked yet.",
+          "choices": [
+            {
+              "text": "Can we test manually in the meantime?",
+              "leads_to": "manual_testing"
+            },
+            {
+              "text": "What if we just don't support the new OS version at launch?",
+              "leads_to": "drop_support"
+            },
+            {
+              "text": "Thanks, that's useful.",
+              "leads_to": "end"
+            }
+          ]
+        },
+        {
+          "id": "manual_testing",
+          "npc_text": "For core features, yes - but it'll take 3x as long and we'll miss edge cases. It's a stopgap, not a solution.",
+          "choices": [
+            {
+              "text": "How long to fix the testing framework?",
+              "leads_to": "fix_timeline"
+            },
+            {
+              "text": "What if we just don't support the new OS version at launch?",
+              "leads_to": "drop_support"
+            },
+            {
+              "text": "Understood. Thanks.",
+              "leads_to": "end"
+            }
+          ]
+        },
+        {
+          "id": "drop_support",
+          "npc_text": "We could - but it launched last week and adoption is already at 15%. For a banking app, not supporting the latest OS is a bad look.",
+          "choices": [
+            {
+              "text": "How long to fix the testing framework?",
+              "leads_to": "fix_timeline"
+            },
+            {
+              "text": "Can we test manually in the meantime?",
+              "leads_to": "manual_testing"
+            },
+            {
+              "text": "Got it. Thanks.",
+              "leads_to": "end"
+            }
+          ]
+        },
+        {
+          "id": "end",
+          "npc_text": "If we act quickly, we can protect the core release - but we shouldn't pretend this is nothing.",
+          "choices": []
+        }
+      ]
+    },
+    "alex_layer2_placeholder": {
+      "context": "Placeholder for Layer 2 Alex dialogue content",
+      "tree": [
+        {
+          "id": "root",
+          "npc_text": "",
+          "choices": []
+        }
+      ]
+    },
+    "alex_layer3_placeholder": {
+      "context": "Placeholder for Layer 3 Alex dialogue content",
+      "tree": [
+        {
+          "id": "root",
+          "npc_text": "",
+          "choices": []
+        }
+      ]
+    }
+  }
+}

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bsvcxwa1uov5q"]
+[gd_scene load_steps=4 format=3 uid="uid://bsvcxwa1uov5q"]
 
 [ext_resource type="Script" uid="uid://cfvoorp482ef1" path="res://scenes/ui/MainMenu.gd" id="1_6jbdy"]
 [ext_resource type="Texture2D" uid="uid://b1em0wp2fhqkh" path="res://assets/menu/Gemini_Generated_Image_i8cyr5i8cyr5i8cy.png" id="2_iwbf0"]
+[ext_resource type="Theme" uid="uid://cfg56v7wmrdn8" path="res://themes/game_theme.tres" id="3"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -10,6 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("3")
 script = ExtResource("1_6jbdy")
 
 [node name="TextureRect" type="TextureRect" parent="."]
@@ -46,21 +48,21 @@ alignment = 1
 max_length = 20
 
 [node name="PlayButton" type="Button" parent="VBoxContainer"]
-layout_mode = 2
 custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "START PROJECT"
 
 [node name="ScoreboardButton" type="Button" parent="VBoxContainer"]
-layout_mode = 2
 custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
 theme_override_font_sizes/font_size = 28
 text = "SCOREBOARD"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
-alignment = 1
 theme_override_constants/separation = 15
+alignment = 1
 
 [node name="EasyButton" type="Button" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2

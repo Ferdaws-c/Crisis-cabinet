@@ -1,0 +1,194 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/layer1/Station4_Matrix.gd" id="1"]
+[ext_resource type="Theme" path="res://themes/game_theme.tres" id="2"]
+
+[node name="Station4_Matrix" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2")
+script = ExtResource("1")
+
+[node name="DimBackground" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.65)
+
+[node name="ContentPanel" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(920, 680)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -460.0
+offset_top = -340.0
+offset_right = 460.0
+offset_bottom = 340.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ContentPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ContentPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="IntroContainer" type="VBoxContainer" parent="ContentPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="IntroText" type="RichTextLabel" parent="ContentPanel/MarginContainer/VBoxContainer/IntroContainer"]
+custom_minimum_size = Vector2(0, 320)
+layout_mode = 2
+fit_content = true
+scroll_active = false
+autowrap_mode = 3
+
+[node name="IntroContinue" type="Button" parent="ContentPanel/MarginContainer/VBoxContainer/IntroContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+custom_minimum_size = Vector2(180, 42)
+text = "Begin"
+
+[node name="EmptyMatrixContainer" type="VBoxContainer" parent="ContentPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 14
+visible = false
+
+[node name="MatrixPreview" type="VBoxContainer" parent="ContentPanel/MarginContainer/VBoxContainer/EmptyMatrixContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HeaderRow" type="HBoxContainer" parent="ContentPanel/MarginContainer/VBoxContainer/EmptyMatrixContainer/MatrixPreview"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="BlankCorner" type="Label" parent="ContentPanel/MarginContainer/VBoxContainer/EmptyMatrixContainer/MatrixPreview/HeaderRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(120, 0)
+text = "Probability \\ Impact"
+
+[node name="LowImpactLabel" type="Label" parent="ContentPanel/MarginContainer/VBoxContainer/EmptyMatrixContainer/MatrixPreview/HeaderRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Low Impact"
+horizontal_alignment = 1
+
+[node name="HighImpactLabel" type="Label" parent="ContentPanel/MarginContainer/VBoxContainer/EmptyMatrixContainer/MatrixPreview/HeaderRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "High Impact"
+horizontal_alignment = 1
+
+[node name="TopRow" type="HBoxContainer" parent="ContentPanel/MarginContainer/VBoxContainer/EmptyMatrixContainer/MatrixPreview"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ProbabilityHighLabel" type="Label" parent="ContentPanel/MarginContainer/VBoxContainer/EmptyMatrixContainer/MatrixPreview/TopRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(120, 140)
+text = "High\nProbability"
+vertical_alignment = 1
+horizontal_alignment = 1
+
+[node name="QuadrantTopLeft" type="PanelContainer" parent="ContentPanel/MarginContainer/VBoxContainer/EmptyMatrixContainer/MatrixPreview/TopRow"]
+custom_minimum_size = Vector2(280, 140)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="QuadrantTopRight" type="PanelContainer" parent="ContentPanel/MarginContainer/VBoxContainer/EmptyMatrixContainer/MatrixPreview/TopRow"]
+custom_minimum_size = Vector2(280, 140)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BottomRow" type="HBoxContainer" parent="ContentPanel/MarginContainer/VBoxContainer/EmptyMatrixContainer/MatrixPreview"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ProbabilityLowLabel" type="Label" parent="ContentPanel/MarginContainer/VBoxContainer/EmptyMatrixContainer/MatrixPreview/BottomRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(120, 140)
+text = "Low\nProbability"
+vertical_alignment = 1
+horizontal_alignment = 1
+
+[node name="QuadrantBottomLeft" type="PanelContainer" parent="ContentPanel/MarginContainer/VBoxContainer/EmptyMatrixContainer/MatrixPreview/BottomRow"]
+custom_minimum_size = Vector2(280, 140)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="QuadrantBottomRight" type="PanelContainer" parent="ContentPanel/MarginContainer/VBoxContainer/EmptyMatrixContainer/MatrixPreview/BottomRow"]
+custom_minimum_size = Vector2(280, 140)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PreviewContinue" type="Button" parent="ContentPanel/MarginContainer/VBoxContainer/EmptyMatrixContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+custom_minimum_size = Vector2(180, 42)
+text = "Place the risks"
+
+[node name="MatrixExerciseContainer" type="Control" parent="ContentPanel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 560)
+layout_mode = 2
+size_flags_vertical = 3
+visible = false
+
+[node name="MisplacementContainer" type="VBoxContainer" parent="ContentPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+visible = false
+
+[node name="MisplacementTitle" type="Label" parent="ContentPanel/MarginContainer/VBoxContainer/MisplacementContainer"]
+layout_mode = 2
+text = "Review"
+horizontal_alignment = 1
+
+[node name="MisplacementList" type="VBoxContainer" parent="ContentPanel/MarginContainer/VBoxContainer/MisplacementContainer"]
+custom_minimum_size = Vector2(0, 360)
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="MisplacementContinue" type="Button" parent="ContentPanel/MarginContainer/VBoxContainer/MisplacementContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+custom_minimum_size = Vector2(180, 42)
+text = "Continue"
+
+[node name="SummaryContainer" type="VBoxContainer" parent="ContentPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+visible = false
+
+[node name="FinalMatrixContainer" type="Control" parent="ContentPanel/MarginContainer/VBoxContainer/SummaryContainer"]
+custom_minimum_size = Vector2(0, 420)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SummaryText" type="RichTextLabel" parent="ContentPanel/MarginContainer/VBoxContainer/SummaryContainer"]
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+fit_content = true
+scroll_active = false
+autowrap_mode = 3
+
+[node name="SummaryContinue" type="Button" parent="ContentPanel/MarginContainer/VBoxContainer/SummaryContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+custom_minimum_size = Vector2(180, 42)
+text = "Continue"

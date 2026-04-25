@@ -1,0 +1,29 @@
+{
+  "dana_original": {
+    "name": "Dana",
+    "company": "SecurePay",
+    "avatar_path": "res://assets/sprites/characters/dana/avatar.png",
+    "budget_tolerance": "high",
+    "schedule_flexibility": "low",
+    "quality_standards": "high",
+    "scope_flexibility": "high"
+  },
+  "dana_shifted": {
+    "name": "Dana",
+    "company": "SecurePay",
+    "avatar_path": "res://assets/sprites/characters/dana/avatar.png",
+    "budget_tolerance": "low",
+    "schedule_flexibility": "medium",
+    "quality_standards": "very_high",
+    "scope_flexibility": "low"
+  },
+  "government_contrast": {
+    "name": "Government Agency",
+    "company": "Federal Compliance Bureau",
+    "avatar_path": "",
+    "budget_tolerance": "low",
+    "schedule_flexibility": "high",
+    "quality_standards": "very_high",
+    "scope_flexibility": "low"
+  }
+}

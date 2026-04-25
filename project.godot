@@ -18,7 +18,10 @@ config/icon="uid://cigy5w3w1y8ik"
 
 [autoload]
 
-GameManager="*res://autoloads/GameManager.gd"
+SignalBus="*res://scripts/autoload/SignalBus.gd"
+DataManager="*res://scripts/autoload/DataManager.gd"
+GameManager="*res://scripts/autoload/GameManager.gd"
+StyleConstants="*res://scripts/autoload/StyleConstants.gd"
 
 [display]
 

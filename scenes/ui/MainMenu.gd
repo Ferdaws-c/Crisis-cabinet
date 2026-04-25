@@ -58,7 +58,7 @@ func _on_play_pressed() -> void:
 	# Keep the selected difficulty, just ensure health/budget are maxed out
 	GameManager.reset_game(false)
 	# IMPORTANT: Make sure this path matches exactly where your Main map is saved!
-	get_tree().change_scene_to_file("res://scenes/levels/MainFacility.tscn")
+	get_tree().change_scene_to_file("res://scenes/layer1/TrainingWing.tscn")
 
 func _on_diff_selected(level: String) -> void:
 	GameManager.set_difficulty(level)

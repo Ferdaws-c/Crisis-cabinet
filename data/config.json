@@ -1,0 +1,10 @@
+{
+  "starting_contingency_budget": 50000,
+  "default_phase_capacity": 12,
+  "layer3_capacity_reduction": {
+    "stabilization": 10,
+    "growth": 10,
+    "due_diligence": 8,
+    "transition": 6
+  }
+}

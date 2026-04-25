@@ -1,0 +1,131 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/components/RippleEffect.gd" id="1"]
+[ext_resource type="Theme" path="res://themes/game_theme.tres" id="2"]
+
+[node name="RippleEffect" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+theme = ExtResource("2")
+
+[node name="DimBackground" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.65)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(980, 560)
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Impact Cascade"
+horizontal_alignment = 1
+
+[node name="StepsContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="HSeparator" type="HSeparator" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SummaryContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 18
+alignment = 1
+
+[node name="BudgetSummary" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/SummaryContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(140, 0)
+
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/SummaryContainer/BudgetSummary"]
+layout_mode = 2
+text = "Budget"
+horizontal_alignment = 1
+
+[node name="ValueLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/SummaryContainer/BudgetSummary"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "0"
+horizontal_alignment = 1
+
+[node name="ScheduleSummary" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/SummaryContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(140, 0)
+
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/SummaryContainer/ScheduleSummary"]
+layout_mode = 2
+text = "Schedule"
+horizontal_alignment = 1
+
+[node name="ValueLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/SummaryContainer/ScheduleSummary"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "0"
+horizontal_alignment = 1
+
+[node name="QualitySummary" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/SummaryContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(140, 0)
+
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/SummaryContainer/QualitySummary"]
+layout_mode = 2
+text = "Quality"
+horizontal_alignment = 1
+
+[node name="ValueLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/SummaryContainer/QualitySummary"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "0"
+horizontal_alignment = 1
+
+[node name="TrustSummary" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/SummaryContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(140, 0)
+
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/SummaryContainer/TrustSummary"]
+layout_mode = 2
+text = "Trust"
+horizontal_alignment = 1
+
+[node name="ValueLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/SummaryContainer/TrustSummary"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "0"
+horizontal_alignment = 1
+
+[node name="ContinueButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+custom_minimum_size = Vector2(180, 48)
+text = "Continue"

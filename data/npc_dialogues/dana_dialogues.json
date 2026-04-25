@@ -1,0 +1,148 @@
+{
+  "npc_id": "dana",
+  "display_name": "Dana",
+  "role": "CEO of SecurePay",
+  "avatar_path": "res://assets/sprites/characters/dana/avatar.png",
+  "dialogues": {
+    "dana_station3_client_priorities": {
+      "context": "Station 3 client priorities conversation",
+      "tree": [
+        {
+          "id": "root",
+          "npc_text": "",
+          "choices": [
+            {
+              "text": "What does success look like for SecurePay?",
+              "leads_to": "success_criteria"
+            },
+            {
+              "text": "How flexible is the budget?",
+              "leads_to": "budget_flexibility"
+            },
+            {
+              "text": "What about feature completeness?",
+              "leads_to": "feature_completeness"
+            },
+            {
+              "text": "How important is security and quality to you?",
+              "leads_to": "quality_importance"
+            }
+          ]
+        },
+        {
+          "id": "success_criteria",
+          "npc_text": "Simple - we need to be live before FinanceForward launches their app in March. If we're second to market, the whole project might as well not exist.",
+          "choices": [
+            {
+              "text": "How flexible is the budget?",
+              "leads_to": "budget_flexibility"
+            },
+            {
+              "text": "What about feature completeness?",
+              "leads_to": "feature_completeness"
+            },
+            {
+              "text": "How important is security and quality to you?",
+              "leads_to": "quality_importance"
+            },
+            {
+              "text": "Thanks, that gives me a clear picture.",
+              "leads_to": "end"
+            }
+          ]
+        },
+        {
+          "id": "budget_flexibility",
+          "npc_text": "We just closed a funding round. Money isn't the issue - time is. I'd rather spend an extra $50K and launch on time than save money and lose the window.",
+          "choices": [
+            {
+              "text": "What does success look like for SecurePay?",
+              "leads_to": "success_criteria"
+            },
+            {
+              "text": "What about feature completeness?",
+              "leads_to": "feature_completeness"
+            },
+            {
+              "text": "How important is security and quality to you?",
+              "leads_to": "quality_importance"
+            },
+            {
+              "text": "Thanks, that helps.",
+              "leads_to": "end"
+            }
+          ]
+        },
+        {
+          "id": "feature_completeness",
+          "npc_text": "Core features must work perfectly - payments, transfers, account management. The nice-to-haves? Those can wait for v2. I'd rather launch with fewer features than launch late with everything.",
+          "choices": [
+            {
+              "text": "What does success look like for SecurePay?",
+              "leads_to": "success_criteria"
+            },
+            {
+              "text": "How flexible is the budget?",
+              "leads_to": "budget_flexibility"
+            },
+            {
+              "text": "How important is security and quality to you?",
+              "leads_to": "quality_importance"
+            },
+            {
+              "text": "Thanks, understood.",
+              "leads_to": "end"
+            }
+          ]
+        },
+        {
+          "id": "quality_importance",
+          "npc_text": "It's banking. If there's a security breach in month one, we're finished. Quality on core features is non-negotiable.",
+          "choices": [
+            {
+              "text": "What does success look like for SecurePay?",
+              "leads_to": "success_criteria"
+            },
+            {
+              "text": "How flexible is the budget?",
+              "leads_to": "budget_flexibility"
+            },
+            {
+              "text": "What about feature completeness?",
+              "leads_to": "feature_completeness"
+            },
+            {
+              "text": "Thanks, that gives me what I need.",
+              "leads_to": "end"
+            }
+          ]
+        },
+        {
+          "id": "end",
+          "npc_text": "Good. Make the tradeoffs that protect the launch and the core product.",
+          "choices": []
+        }
+      ]
+    },
+    "dana_layer2_placeholder": {
+      "context": "Placeholder for Layer 2 dialogue content",
+      "tree": [
+        {
+          "id": "root",
+          "npc_text": "",
+          "choices": []
+        }
+      ]
+    },
+    "dana_layer3_placeholder": {
+      "context": "Placeholder for Layer 3 dialogue content",
+      "tree": [
+        {
+          "id": "root",
+          "npc_text": "",
+          "choices": []
+        }
+      ]
+    }
+  }
+}

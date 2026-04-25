@@ -1,0 +1,197 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/components/ClientProfileCard.gd" id="1"]
+[ext_resource type="Theme" path="res://themes/game_theme.tres" id="2"]
+
+[node name="ClientProfileCard" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+theme = ExtResource("2")
+
+[node name="DimBackground" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.65)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(860, 620)
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="AvatarContainer" type="CenterContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="AvatarTexture" type="TextureRect" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/AvatarContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(96, 96)
+stretch_mode = 5
+
+[node name="NameLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Character"
+horizontal_alignment = 1
+
+[node name="CompanyLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Company"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="StatsContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="BudgetRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StatsContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="StatLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StatsContainer/BudgetRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(170, 0)
+text = "Budget Tolerance"
+
+[node name="SelectorContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StatsContainer/BudgetRow"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="StatBar" type="ProgressBar" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StatsContainer/BudgetRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 100.0
+value = 0.0
+show_percentage = false
+
+[node name="LevelLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StatsContainer/BudgetRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(100, 0)
+text = "-"
+horizontal_alignment = 1
+
+[node name="ScheduleRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StatsContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="StatLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StatsContainer/ScheduleRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(170, 0)
+text = "Schedule Flexibility"
+
+[node name="SelectorContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StatsContainer/ScheduleRow"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="StatBar" type="ProgressBar" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StatsContainer/ScheduleRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 100.0
+value = 0.0
+show_percentage = false
+
+[node name="LevelLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StatsContainer/ScheduleRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(100, 0)
+text = "-"
+horizontal_alignment = 1
+
+[node name="QualityRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StatsContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="StatLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StatsContainer/QualityRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(170, 0)
+text = "Quality Standards"
+
+[node name="SelectorContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StatsContainer/QualityRow"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="StatBar" type="ProgressBar" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StatsContainer/QualityRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 100.0
+value = 0.0
+show_percentage = false
+
+[node name="LevelLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StatsContainer/QualityRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(100, 0)
+text = "-"
+horizontal_alignment = 1
+
+[node name="ScopeRow" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StatsContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="StatLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StatsContainer/ScopeRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(170, 0)
+text = "Scope Flexibility"
+
+[node name="SelectorContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StatsContainer/ScopeRow"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="StatBar" type="ProgressBar" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StatsContainer/ScopeRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 100.0
+value = 0.0
+show_percentage = false
+
+[node name="LevelLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StatsContainer/ScopeRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(100, 0)
+text = "-"
+horizontal_alignment = 1
+
+[node name="CorrectionLabel" type="RichTextLabel" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(760, 90)
+fit_content = true
+scroll_active = false
+autowrap_mode = 3
+visible = false
+
+[node name="SubmitButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+custom_minimum_size = Vector2(180, 48)
+text = "Confirm Profile"
+
+[node name="ContinueButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+custom_minimum_size = Vector2(180, 48)
+text = "Continue"
+visible = false

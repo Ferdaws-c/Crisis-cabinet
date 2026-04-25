@@ -1,0 +1,237 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/layer1/Station6_FullCycle.gd" id="1"]
+[ext_resource type="Theme" path="res://themes/game_theme.tres" id="2"]
+
+[node name="Station6_FullCycle" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2")
+script = ExtResource("1")
+
+[node name="DimBackground" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.65)
+
+[node name="ContentPanel" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(980, 760)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -490.0
+offset_top = -380.0
+offset_right = 490.0
+offset_bottom = 380.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ContentPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ContentPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="StepLabel" type="Label" parent="ContentPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Step 1 of 7"
+horizontal_alignment = 1
+
+[node name="ScenarioText" type="RichTextLabel" parent="ContentPanel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 110)
+layout_mode = 2
+fit_content = true
+scroll_active = false
+autowrap_mode = 3
+
+[node name="HintContainer" type="HBoxContainer" parent="ContentPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="HintLabel" type="Label" parent="ContentPanel/MarginContainer/VBoxContainer/HintContainer"]
+layout_mode = 2
+visible = false
+autowrap_mode = 3
+horizontal_alignment = 1
+
+[node name="Step1Container" type="VBoxContainer" parent="ContentPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Question" type="Label" parent="ContentPanel/MarginContainer/VBoxContainer/Step1Container"]
+layout_mode = 2
+text = "Is this a project risk?"
+horizontal_alignment = 1
+
+[node name="ButtonsRow" type="HBoxContainer" parent="ContentPanel/MarginContainer/VBoxContainer/Step1Container"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 12
+
+[node name="YesButton" type="Button" parent="ContentPanel/MarginContainer/VBoxContainer/Step1Container/ButtonsRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(120, 42)
+text = "Yes"
+
+[node name="NoButton" type="Button" parent="ContentPanel/MarginContainer/VBoxContainer/Step1Container/ButtonsRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(120, 42)
+text = "No"
+
+[node name="Step2Container" type="VBoxContainer" parent="ContentPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+visible = false
+
+[node name="Question" type="Label" parent="ContentPanel/MarginContainer/VBoxContainer/Step2Container"]
+layout_mode = 2
+text = "How likely is this to cause problems?"
+horizontal_alignment = 1
+
+[node name="ZoneButtons" type="HBoxContainer" parent="ContentPanel/MarginContainer/VBoxContainer/Step2Container"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 10
+
+[node name="LowBtn" type="Button" parent="ContentPanel/MarginContainer/VBoxContainer/Step2Container/ZoneButtons"]
+layout_mode = 2
+custom_minimum_size = Vector2(120, 42)
+text = "Low"
+
+[node name="MediumBtn" type="Button" parent="ContentPanel/MarginContainer/VBoxContainer/Step2Container/ZoneButtons"]
+layout_mode = 2
+custom_minimum_size = Vector2(120, 42)
+text = "Medium"
+
+[node name="HighBtn" type="Button" parent="ContentPanel/MarginContainer/VBoxContainer/Step2Container/ZoneButtons"]
+layout_mode = 2
+custom_minimum_size = Vector2(120, 42)
+text = "High"
+
+[node name="Step3Container" type="VBoxContainer" parent="ContentPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+visible = false
+
+[node name="ProfileCardContainer" type="Control" parent="ContentPanel/MarginContainer/VBoxContainer/Step3Container"]
+custom_minimum_size = Vector2(0, 250)
+layout_mode = 2
+
+[node name="ImpactGrid" type="GridContainer" parent="ContentPanel/MarginContainer/VBoxContainer/Step3Container"]
+layout_mode = 2
+columns = 5
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+
+[node name="SubmitImpact" type="Button" parent="ContentPanel/MarginContainer/VBoxContainer/Step3Container"]
+layout_mode = 2
+size_flags_horizontal = 4
+custom_minimum_size = Vector2(180, 42)
+text = "Submit Impact"
+disabled = true
+
+[node name="Step4Container" type="Control" parent="ContentPanel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 450)
+layout_mode = 2
+visible = false
+
+[node name="Step5Container" type="VBoxContainer" parent="ContentPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+visible = false
+
+[node name="ButtonsRow" type="HBoxContainer" parent="ContentPanel/MarginContainer/VBoxContainer/Step5Container"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 12
+
+[node name="TalkToAlexButton" type="Button" parent="ContentPanel/MarginContainer/VBoxContainer/Step5Container/ButtonsRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(140, 42)
+text = "Talk to Alex"
+
+[node name="SkipAlexButton" type="Button" parent="ContentPanel/MarginContainer/VBoxContainer/Step5Container/ButtonsRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(140, 42)
+text = "Skip for now"
+
+[node name="AlexStatus" type="Label" parent="ContentPanel/MarginContainer/VBoxContainer/Step5Container"]
+layout_mode = 2
+autowrap_mode = 3
+horizontal_alignment = 1
+
+[node name="Step6Container" type="VBoxContainer" parent="ContentPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+visible = false
+
+[node name="StrategyButtons" type="HBoxContainer" parent="ContentPanel/MarginContainer/VBoxContainer/Step6Container"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 10
+
+[node name="AnalysisText" type="RichTextLabel" parent="ContentPanel/MarginContainer/VBoxContainer/Step6Container"]
+custom_minimum_size = Vector2(0, 180)
+layout_mode = 2
+fit_content = true
+scroll_active = false
+autowrap_mode = 3
+
+[node name="Step6Continue" type="Button" parent="ContentPanel/MarginContainer/VBoxContainer/Step6Container"]
+layout_mode = 2
+size_flags_horizontal = 4
+custom_minimum_size = Vector2(180, 42)
+text = "Continue"
+visible = false
+
+[node name="Step7Container" type="VBoxContainer" parent="ContentPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+visible = false
+
+[node name="DebriefTitle" type="Label" parent="ContentPanel/MarginContainer/VBoxContainer/Step7Container"]
+layout_mode = 2
+text = "Full Assessment Debrief"
+horizontal_alignment = 1
+
+[node name="DebriefSections" type="VBoxContainer" parent="ContentPanel/MarginContainer/VBoxContainer/Step7Container"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="FinalMessage" type="RichTextLabel" parent="ContentPanel/MarginContainer/VBoxContainer/Step7Container"]
+custom_minimum_size = Vector2(0, 110)
+layout_mode = 2
+fit_content = true
+scroll_active = false
+autowrap_mode = 3
+
+[node name="CompleteContinue" type="Button" parent="ContentPanel/MarginContainer/VBoxContainer/Step7Container"]
+layout_mode = 2
+size_flags_horizontal = 4
+custom_minimum_size = Vector2(200, 42)
+text = "Enter the Project"
+
+[node name="ComponentContainer" type="Control" parent="ContentPanel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HintTimer" type="Timer" parent="."]
+wait_time = 8.0
+one_shot = true

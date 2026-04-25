@@ -1,0 +1,72 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/hud/HUD.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/hud/HealthDashboard.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/hud/ResourceBar.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://scenes/hud/RiskRegisterPanel.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://scenes/hud/RiskMatrixHUD.tscn" id="5"]
+[ext_resource type="Theme" path="res://themes/game_theme.tres" id="6"]
+
+[node name="HUD" type="CanvasLayer"]
+layer = 10
+script = ExtResource("1")
+
+[node name="TopBar" type="PanelContainer" parent="."]
+offset_right = 1280.0
+offset_bottom = 36.0
+theme = ExtResource("6")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TopBar"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="PhaseLabel" type="Label" parent="TopBar/HBoxContainer"]
+layout_mode = 2
+text = "Planning Phase"
+
+[node name="SpacerControl" type="Control" parent="TopBar/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HealthDashboard" parent="TopBar/HBoxContainer" instance=ExtResource("2")]
+layout_mode = 2
+
+[node name="VSeparator" type="VSeparator" parent="TopBar/HBoxContainer"]
+layout_mode = 2
+
+[node name="ResourceBar" parent="TopBar/HBoxContainer" instance=ExtResource("3")]
+layout_mode = 2
+
+[node name="ToggleButtonsContainer" type="VBoxContainer" parent="."]
+offset_left = 8.0
+offset_top = 48.0
+offset_right = 48.0
+offset_bottom = 120.0
+theme_override_constants/separation = 8
+
+[node name="RegisterToggleButton" type="Button" parent="ToggleButtonsContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "REG"
+
+[node name="MatrixToggleButton" type="Button" parent="ToggleButtonsContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "MAP"
+
+[node name="RiskRegisterPanel" parent="." instance=ExtResource("4")]
+offset_top = 40.0
+offset_bottom = 720.0
+theme = ExtResource("6")
+
+[node name="RiskMatrixHUD" parent="." instance=ExtResource("5")]
+theme = ExtResource("6")
+
+[node name="OverlayContainer" type="Control" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2

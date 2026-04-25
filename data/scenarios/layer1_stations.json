@@ -1,0 +1,739 @@
+{
+  "phase": "stations",
+  "layer": 1,
+  "narrative_intro": "You've just been made PM for SecurePay - a mobile banking app that needs to launch in 4 months with a $200K budget. Your first job: figure out what could go wrong.",
+  "stations": {
+    "station_1": {
+      "title": "What Is a Risk?",
+      "learning_objective": "The player learns to distinguish genuine project risks from general problems, inconveniences, or certainties. They learn that a risk has three components: a cause, an uncertain event, and an impact on at least one project objective (scope, time, cost, quality).",
+      "summary_text": "A project risk = an uncertain event, rooted in a cause, that could affect your project's scope, time, cost, or quality.",
+      "statements": [
+        {
+          "id": "s1_01",
+          "statement": "The lead developer has been interviewing at other companies.",
+          "correct_answer": "project_risk",
+          "why": "Uncertain event (may leave), impacts schedule and quality",
+          "chain": {
+            "cause": "Developer is dissatisfied and exploring options.",
+            "event": "Developer resigns mid-sprint.",
+            "effect": "3 weeks of knowledge lost. Replacement hiring adds $15K and 4 weeks to the schedule.",
+            "conclusion": "This is a risk because the event is uncertain and the effect touches project objectives - in this case, cost and schedule.",
+            "severity": "high"
+          }
+        },
+        {
+          "id": "s1_02",
+          "statement": "The office Wi-Fi was slow yesterday.",
+          "correct_answer": "not_a_risk",
+          "why": "Past event, no ongoing project impact, not uncertain",
+          "chain": {
+            "cause": "ISP had a service interruption.",
+            "event": "Wi-Fi was slow for a few hours.",
+            "effect": "No measurable impact on project deliverables, timeline, or budget.",
+            "conclusion": "This already happened and didn't affect the project. A risk looks forward at uncertain events that could change your project's outcome.",
+            "severity": "low"
+          }
+        },
+        {
+          "id": "s1_03",
+          "statement": "The client's CEO mentioned they might want to add cryptocurrency support.",
+          "correct_answer": "project_risk",
+          "why": "Uncertain scope change, impacts cost, schedule, and scope",
+          "chain": {
+            "cause": "The client's CEO is considering expanding the product vision.",
+            "event": "A cryptocurrency support request is added after planning is underway.",
+            "effect": "Cost, schedule, and scope all expand because the team must design, build, and validate an additional feature set.",
+            "conclusion": "This is a risk because the event is uncertain and the effect touches multiple project objectives - cost, schedule, and scope.",
+            "severity": "high"
+          }
+        },
+        {
+          "id": "s1_04",
+          "statement": "The team uses a programming language none of them have used before.",
+          "correct_answer": "project_risk",
+          "why": "Increases probability of defects and delays, impacts quality and schedule",
+          "chain": {
+            "cause": "The team lacks experience with the chosen programming language.",
+            "event": "Implementation takes longer than expected and avoidable defects are introduced.",
+            "effect": "Quality drops and the schedule slips while the team learns on the job.",
+            "conclusion": "This is a risk because the event is uncertain and the effect touches project objectives - especially quality and schedule.",
+            "severity": "medium"
+          }
+        },
+        {
+          "id": "s1_05",
+          "statement": "The government already passed a new banking data regulation that takes effect in 2 months.",
+          "correct_answer": "not_a_risk",
+          "why": "Not uncertain - it's a certainty. It's a constraint or issue to manage, not a risk",
+          "chain": {
+            "cause": "Government regulation passed.",
+            "event": "Regulation takes effect - this WILL happen, there is no uncertainty.",
+            "effect": "You must comply. This is a constraint, not a risk.",
+            "conclusion": "If it's guaranteed to happen, it's not a risk - it's a fact you plan around. Risks live in the space of 'might happen.' However, the risk might be: 'We might not achieve compliance in time.'",
+            "severity": "medium"
+          },
+          "secondary_risk_chain": {
+            "cause": "Team unfamiliar with new regulation.",
+            "event": "Compliance features built incorrectly.",
+            "effect": "App fails regulatory review, launch delayed.",
+            "conclusion": "This is the actual risk version: the regulation itself is certain, but your ability to meet it successfully is not.",
+            "severity": "high"
+          }
+        }
+      ]
+    },
+    "station_2": {
+      "title": "Probability",
+      "learning_objective": "The player learns to assess how likely a risk is to occur using evidence and project context, not gut feeling. They learn that probability sits on a spectrum and that certain factors increase or decrease it.",
+      "intro_prompt": "Now that you know what risks look like on SecurePay, let's figure out which ones are most likely to actually happen.",
+      "debrief_message": "Probability isn't a guess - it's a judgment built on evidence. When you assess risk in a real project, you'll look at historical data, team experience, project conditions, and industry patterns.",
+      "risks": [
+        {
+          "id": "s2_01",
+          "risk_event": "A meteor destroys the data center.",
+          "correct_zone": "low",
+          "key_evidence": "Statistically near-impossible; included to calibrate the low end",
+          "evidence": {
+            "increases": [
+              "A meteor strike is physically possible in the broadest sense."
+            ],
+            "decreases": [
+              "Statistically near-impossible in the life of this project.",
+              "There is no project-specific condition making a meteor strike more likely.",
+              "This example exists mainly to calibrate the low end of the scale."
+            ],
+            "conclusion": "This sits firmly in Low probability. The event is technically possible, but there is no meaningful evidence suggesting it is likely during SecurePay.",
+            "assessed_level": "low"
+          }
+        },
+        {
+          "id": "s2_02",
+          "risk_event": "The client requests scope changes after the first demo.",
+          "correct_zone": "high",
+          "key_evidence": "Industry data shows this happens in ~70-80% of IT projects",
+          "evidence": {
+            "increases": [
+              "Client hasn't seen working software yet.",
+              "Banking apps have complex compliance layers that surface late.",
+              "First demos almost always generate feedback and changes."
+            ],
+            "decreases": [
+              "Requirements document was signed off.",
+              "That alone is weak evidence compared with the normal pattern after first demos."
+            ],
+            "conclusion": "In IT projects, significant scope change requests after the first client demo happen more often than not. Historical patterns and the specific conditions of SecurePay both point to High probability. Key lesson: probability assessment should be driven by evidence and historical patterns, not instinct.",
+            "assessed_level": "high"
+          }
+        },
+        {
+          "id": "s2_03",
+          "risk_event": "A critical third-party API has breaking changes in a new release.",
+          "correct_zone": "medium",
+          "key_evidence": "Common but unpredictable; depends on vendor release cycles",
+          "evidence": {
+            "increases": [
+              "Third-party vendors do ship breaking changes.",
+              "Critical APIs evolve on release cycles outside your control.",
+              "Integration dependencies make vendor updates relevant to SecurePay."
+            ],
+            "decreases": [
+              "Breaking changes are not guaranteed in every release.",
+              "Vendors often provide advance notice and migration windows."
+            ],
+            "conclusion": "This is Medium probability: common enough to plan around, but still dependent on vendor timing and release behavior rather than being inevitable.",
+            "assessed_level": "medium"
+          }
+        },
+        {
+          "id": "s2_04",
+          "risk_event": "A key team member takes extended sick leave.",
+          "correct_zone": "medium",
+          "key_evidence": "Possible for any team; neither certain nor negligible",
+          "evidence": {
+            "increases": [
+              "Any project team can lose availability unexpectedly.",
+              "A small or specialized team feels absence more sharply.",
+              "Extended leave is a realistic people risk on any multi-month project."
+            ],
+            "decreases": [
+              "There is no direct evidence that a specific team member is about to take leave.",
+              "It is not common enough to classify as High without stronger signals."
+            ],
+            "conclusion": "This belongs in Medium probability. It is realistic and worth planning for, but there is not enough evidence to treat it as highly likely right now.",
+            "assessed_level": "medium"
+          }
+        },
+        {
+          "id": "s2_05",
+          "risk_event": "The project goes over budget.",
+          "correct_zone": "high",
+          "key_evidence": "Industry stats show majority of IT projects exceed initial budgets",
+          "evidence": {
+            "increases": [
+              "Industry stats show most IT projects exceed their initial budgets.",
+              "SecurePay has a fixed 4-month deadline, which often drives costly acceleration.",
+              "Compliance, integration, and rework risks make overruns more likely."
+            ],
+            "decreases": [
+              "A defined budget does give the team a target to manage against."
+            ],
+            "conclusion": "Budget overrun belongs in High probability. Historical patterns plus the conditions of a fast, compliance-heavy fintech project both point in the same direction.",
+            "assessed_level": "high"
+          }
+        }
+      ]
+    },
+    "station_3": {
+      "title": "Impact and Client Priorities",
+      "learning_objective": "The player learns that impact has four dimensions (cost, schedule, quality, scope), that the same risk can hit multiple dimensions, and - critically - that different clients weight these dimensions differently. Impact assessment is always relative to stakeholder priorities.",
+      "conversation": {
+        "npc_id": "dana",
+        "dialogue_id": "dana_station3_client_priorities"
+      },
+      "client_profile": {
+        "name": "Dana",
+        "company": "SecurePay",
+        "avatar_path": "res://assets/sprites/characters/dana/avatar.png",
+        "budget_tolerance": "high",
+        "schedule_flexibility": "low",
+        "quality_standards": "high",
+        "scope_flexibility": "high"
+      },
+      "profile_correction_lines": {
+        "budget_tolerance": "Remember what Dana said: 'Money isn't the issue - time is.' That suggests her budget tolerance is high, not low.",
+        "schedule_flexibility": "Dana said the project needs to be live before FinanceForward launches in March. That means schedule flexibility is low.",
+        "quality_standards": "Dana said banking security is non-negotiable. That means quality standards are high.",
+        "scope_flexibility": "Dana said the nice-to-haves can wait for v2. That means scope flexibility is high."
+      },
+      "impact_risks": [
+        {
+          "id": "s3_risk_a",
+          "title": "Lead developer resigns.",
+          "expected_impact": {
+            "cost": "medium",
+            "schedule": "high",
+            "quality": "medium",
+            "scope": "low_medium"
+          },
+          "ripple_steps": [
+            {
+              "description": "Developer leaves. Immediate knowledge gap.",
+              "dimension": "schedule",
+              "delta": "+3 weeks",
+              "delta_value": -15
+            },
+            {
+              "description": "You post the job. Recruitment takes 2 weeks, costs $8K.",
+              "dimension": "budget",
+              "delta": "+$8K",
+              "delta_value": -8
+            },
+            {
+              "description": "New developer starts. Onboarding and codebase learning: 4 weeks at reduced output.",
+              "dimension": "schedule",
+              "delta": "+4 weeks",
+              "delta_value": -10
+            },
+            {
+              "description": "Under time pressure, some features are simplified.",
+              "dimension": "scope",
+              "delta": "Adjusted",
+              "delta_value": -5
+            }
+          ],
+          "comparison_feedback": "You rated cost as Low, but the ripple shows recruitment, onboarding, and reduced productivity add up to roughly $30K - that's Medium for a $200K project."
+        },
+        {
+          "id": "s3_risk_b",
+          "title": "Third-party payment API delayed by 3 weeks.",
+          "expected_impact": {
+            "cost": "low",
+            "schedule": "high",
+            "quality": "low",
+            "scope": "medium"
+          },
+          "ripple_steps": [
+            {
+              "description": "The payment integration slips because the vendor API is not ready.",
+              "dimension": "schedule",
+              "delta": "+3 weeks",
+              "delta_value": -15
+            },
+            {
+              "description": "The team burns time coordinating with the vendor and replanning dependencies.",
+              "dimension": "budget",
+              "delta": "+$5K indirect cost",
+              "delta_value": -5
+            },
+            {
+              "description": "The API quality itself remains the vendor's responsibility.",
+              "dimension": "quality",
+              "delta": "Minimal direct hit",
+              "delta_value": -2
+            },
+            {
+              "description": "Some launch payment features may need to be deferred.",
+              "dimension": "scope",
+              "delta": "Reduced launch scope",
+              "delta_value": -8
+            }
+          ],
+          "comparison_feedback": "This risk is dangerous mostly because payment integration sits on the critical path. Even if direct cost is low, Dana cannot absorb the schedule hit."
+        },
+        {
+          "id": "s3_risk_c",
+          "title": "Compliance review reveals that the app needs additional security features.",
+          "expected_impact": {
+            "cost": "medium_high",
+            "schedule": "medium",
+            "quality": "none_low",
+            "scope": "low"
+          },
+          "ripple_steps": [
+            {
+              "description": "The compliance review identifies missing security controls.",
+              "dimension": "quality",
+              "delta": "Improves long-term product quality",
+              "delta_value": 0
+            },
+            {
+              "description": "Additional security features require development time and possibly third-party tools.",
+              "dimension": "budget",
+              "delta": "+$20K to +$35K",
+              "delta_value": -15
+            },
+            {
+              "description": "The schedule absorbs the extra implementation and review work.",
+              "dimension": "schedule",
+              "delta": "+2 to 3 weeks",
+              "delta_value": -10
+            },
+            {
+              "description": "The feature set changes to accommodate required controls.",
+              "dimension": "scope",
+              "delta": "Managed scope change",
+              "delta_value": -4
+            }
+          ],
+          "comparison_feedback": "This is a good reminder that not every 'quality-related' event reduces quality. Here, the compliance findings improve the product, but they still create schedule and budget pressure."
+        }
+      ],
+      "priority_lens": {
+        "cost_overlay": "Cost impact: Medium - but Dana's budget tolerance is High -> This hurts, but Dana can absorb it.",
+        "schedule_overlay": "Schedule impact: High - and Dana's schedule flexibility is Low -> This is a critical threat. Dana cannot afford schedule slips.",
+        "conclusion": "The same risk on a different project - one with a tight budget but a flexible deadline - would flip entirely. Impact assessment without knowing your stakeholder's priorities is incomplete."
+      },
+      "contrast_client_profile": {
+        "name": "Government Agency",
+        "company": "Federal Compliance Bureau",
+        "avatar_path": "",
+        "budget_tolerance": "low",
+        "schedule_flexibility": "high",
+        "quality_standards": "very_high",
+        "scope_flexibility": "low"
+      }
+    },
+    "station_4": {
+      "title": "The Risk Matrix",
+      "learning_objective": "The player learns how probability and impact combine into a severity classification using a 2x2 risk matrix. They learn the four severity categories (using the fire metaphor system) and understand the strategic meaning of each category - not just its label, but what it tells you about how to prioritize.",
+      "risks_to_place": [
+        {
+          "id": "s4_01",
+          "title": "Client requests scope changes after first demo",
+          "probability": "high",
+          "impact": "low",
+          "correct_quadrant": "campfire"
+        },
+        {
+          "id": "s4_02",
+          "title": "Lead developer resigns",
+          "probability": "medium_high",
+          "impact": "high",
+          "correct_quadrant": "wildfire"
+        },
+        {
+          "id": "s4_03",
+          "title": "Meteor destroys data center",
+          "probability": "low",
+          "impact": "high",
+          "correct_quadrant": "volcano"
+        },
+        {
+          "id": "s4_04",
+          "title": "Project goes slightly over initial budget estimate",
+          "probability": "high",
+          "impact": "low",
+          "correct_quadrant": "campfire"
+        }
+      ],
+      "borderline_note": "This risk sits between Campfire and Wildfire - reasonable people might classify it either way. When in doubt in real projects, round up - treat borderline cases as the more severe category.",
+      "category_descriptions": {
+        "wildfire": {
+          "name": "Wildfire",
+          "probability": "high",
+          "impact": "high",
+          "color": "deep_red_orange",
+          "visual": "Spreading, aggressive fire consuming a landscape",
+          "strategic_meaning": "Immediate, aggressive action required. These risks are almost certain to happen and will cause serious damage. Ignoring a Wildfire guarantees project failure. Always your top priority.",
+          "reveal_text": "This is a Wildfire - it's already spreading, and it burns everything in its path. In your project, this means it's likely to happen and will hit where it hurts most. You deal with Wildfires first, aggressively, and with real resources. Never ignore a Wildfire."
+        },
+        "volcano": {
+          "name": "Volcano",
+          "probability": "low",
+          "impact": "high",
+          "color": "dark_orange_amber",
+          "visual": "Dormant mountain with a faint glow at the summit",
+          "strategic_meaning": "Dormant but catastrophic if it erupts. You might go the whole project without it triggering - but if it does, recovery is extremely difficult. Always have a contingency plan, even if you don't actively mitigate.",
+          "reveal_text": "This is a Volcano - quiet right now, maybe for the whole project. But if it erupts, the damage is massive and recovery is slow. You can't prevent a Volcano, but you can prepare. Always have a contingency plan for these."
+        },
+        "campfire": {
+          "name": "Campfire",
+          "probability": "high",
+          "impact": "low",
+          "color": "yellow_warm_amber",
+          "visual": "Small controlled fire in a ring of stones",
+          "strategic_meaning": "Constantly burning, but manageable. These risks will happen repeatedly - minor delays, small bugs, routine scope questions. Individually they're small, but if you let too many campfires burn unattended, the smoke (cumulative effect) becomes a problem. Manage them efficiently without over-investing.",
+          "reveal_text": "This is a Campfire - always burning, never dangerous on its own. Small delays, minor cost bumps, routine issues. Manage them with lightweight processes and don't over-invest. But watch out - too many unattended Campfires create smoke that obscures your view of real threats."
+        },
+        "spark": {
+          "name": "Spark",
+          "probability": "low",
+          "impact": "low",
+          "color": "light_yellow_gray",
+          "visual": "A single small spark that flickers and fades",
+          "strategic_meaning": "Barely worth worrying about. Log it, note it, move on. Spending significant resources on Sparks means you're taking budget and attention away from Wildfires and Volcanoes.",
+          "reveal_text": "This is a Spark - might ignite, probably won't, and even if it does, it's small. Log it and move on. The biggest risk with Sparks is wasting time on them when Wildfires need your attention."
+        }
+      },
+      "matrix_summary": "This is your risk matrix - the single most important tool in risk management. It turns a messy list of worries into a clear priority map. Wildfires first, then Volcanoes, then Campfires, then Sparks. Every risk you encounter from here on out, your first job is to put it on this matrix."
+    },
+    "station_5": {
+      "title": "Response Strategies",
+      "learning_objective": "The player learns the four PMBOK risk response strategies (Avoid, Mitigate, Transfer, Accept), understands what each one does in practice, learns to evaluate tradeoffs between strategies, and experiences how investigating a risk through conversation can change the optimal response.",
+      "scenario": "The third-party payment API might not be ready in time for the SecurePay launch.",
+      "investigation": {
+        "npc_id": "jordan",
+        "dialogue_id": "jordan_station5_payment_api_investigation"
+      },
+      "response_options": {
+        "avoid": {
+          "description": "Remove the dependency on the external API entirely.",
+          "action": "Build payment functionality in-house.",
+          "ripple_steps": [
+            {
+              "description": "6-8 weeks of development added.",
+              "dimension": "schedule",
+              "delta": "Launch date missed",
+              "delta_value": -25
+            },
+            {
+              "description": "PCI compliance scope added.",
+              "dimension": "budget",
+              "delta": "+$60K",
+              "delta_value": -20
+            },
+            {
+              "description": "Scope increases significantly because the team now owns payment infrastructure.",
+              "dimension": "scope",
+              "delta": "Significantly increased",
+              "delta_value": -15
+            },
+            {
+              "description": "Risk is eliminated - no dependency on any vendor.",
+              "dimension": "risk",
+              "delta": "Fully removed",
+              "delta_value": 20
+            }
+          ],
+          "summary_text": "The risk is gone, but the cure is worse than the disease for this project. Dana's schedule constraint makes this option impractical."
+        },
+        "mitigate": {
+          "description": "Start integrating the backup API (PaySecure) in parallel.",
+          "action": "Assign a developer to integrate PaySecure alongside the primary API.",
+          "ripple_steps": [
+            {
+              "description": "2 weeks of developer time on parallel integration.",
+              "dimension": "budget",
+              "delta": "+$15K",
+              "delta_value": -8
+            },
+            {
+              "description": "If primary API is late, you switch to PaySecure with minimal delay.",
+              "dimension": "schedule",
+              "delta": "Protected",
+              "delta_value": 15
+            },
+            {
+              "description": "If primary API arrives on time, the backup work is partially wasted.",
+              "dimension": "budget",
+              "delta": "Sunk cost but acceptable",
+              "delta_value": -4
+            }
+          ],
+          "summary_text": "The risk is significantly reduced. You spend money to buy schedule protection - a reasonable trade given Dana's priorities."
+        },
+        "transfer": {
+          "description": "Outsource the entire payment module to a specialist vendor with an SLA.",
+          "action": "Contract a payment integration firm with guaranteed delivery by a fixed date.",
+          "ripple_steps": [
+            {
+              "description": "Vendor contract: $40K with delivery guarantee.",
+              "dimension": "budget",
+              "delta": "+$40K",
+              "delta_value": -15
+            },
+            {
+              "description": "Delivery risk shifts to the vendor - if they're late, contract penalties apply.",
+              "dimension": "schedule",
+              "delta": "Protected contractually",
+              "delta_value": 12
+            },
+            {
+              "description": "You lose direct control over code quality and integration details.",
+              "dimension": "quality",
+              "delta": "Partially reduced",
+              "delta_value": -8
+            }
+          ],
+          "summary_text": "The risk is transferred but not eliminated. If the vendor fails, contract disputes take time. You've traded project risk for vendor risk."
+        },
+        "accept": {
+          "description": "Monitor the situation and act only if the API is actually late.",
+          "action": "Do nothing now. Check in with the vendor weekly.",
+          "ripple_steps": [
+            {
+              "description": "No immediate cost or effort.",
+              "dimension": "budget",
+              "delta": "$0",
+              "delta_value": 0
+            },
+            {
+              "description": "If API arrives on time: best outcome - no money or effort wasted.",
+              "dimension": "schedule",
+              "delta": "No change",
+              "delta_value": 5
+            },
+            {
+              "description": "If API is late: you're scrambling with no backup. 3-4 week delay likely.",
+              "dimension": "schedule",
+              "delta": "Potentially devastating",
+              "delta_value": -20
+            }
+          ],
+          "summary_text": "Acceptance is a valid strategy when the risk is low-impact or when response costs exceed the potential damage. Here, the potential schedule damage is severe - pure acceptance is a gamble."
+        }
+      },
+      "tradeoff_analysis": {
+        "mitigate": "You chose Mitigate. Given Dana's priorities (low schedule flexibility, high budget tolerance), spending $15K to protect the launch date is a strong match. You're spending in a dimension the client can absorb (cost) to protect a dimension they can't (schedule). However, note that the residual risk isn't zero - if both APIs fail, you'd need a contingency. A thorough PM might pair Mitigate with Accept for the residual risk.",
+        "accept": "You chose Accept - which means you're betting the API arrives on time. If it does, this was the most efficient choice. But remember Dana's profile: she has near-zero schedule tolerance. Acceptance means you're gambling with the dimension she cares about most. In practice, most PMs would at least Mitigate alongside Acceptance for a risk this impactful.",
+        "avoid": "You chose Avoid - building in-house eliminates the dependency entirely, which is attractive. But look at the ripple: 6-8 weeks of extra work and a missed launch date. For Dana, missing March is project failure. Avoidance works best when the cost of avoidance is less than the cost of the risk itself.",
+        "transfer": "You chose Transfer - shifting the risk to a vendor with contractual guarantees. This is a valid and professional approach. The trade-off is cost ($40K) and reduced control over quality. For Dana, the cost is acceptable, but you'll want to monitor the vendor carefully since your quality reputation is still on the line."
+      },
+      "strategy_reference_summary": [
+        {
+          "strategy": "avoid",
+          "description": "Change the plan to eliminate the risk.",
+          "best_used_when": "Best when the risk is severe and the plan change is affordable."
+        },
+        {
+          "strategy": "mitigate",
+          "description": "Take action to reduce probability or impact.",
+          "best_used_when": "Best when you can reduce the risk to an acceptable level at a reasonable cost."
+        },
+        {
+          "strategy": "transfer",
+          "description": "Shift the risk to a third party.",
+          "best_used_when": "Best when someone else can manage the risk better than you, and the cost of transfer is justified."
+        },
+        {
+          "strategy": "accept",
+          "description": "Acknowledge the risk and prepare to deal with it if it happens.",
+          "best_used_when": "Best when the risk is low-impact, or when all response options cost more than the potential damage."
+        }
+      ]
+    },
+    "station_6": {
+      "title": "Putting It All Together",
+      "learning_objective": "The player completes one full risk assessment cycle independently - from identification through response strategy selection - using all skills learned in Stations 1-5.",
+      "scenario": "Your QA lead just told you: the automated testing framework isn't compatible with the new mobile OS version that just released. The tests aren't running, and without them, you can't verify that the app works on the latest devices.",
+      "correct_answers": {
+        "identification": "yes",
+        "probability": "medium_high",
+        "impact": {
+          "cost": "medium",
+          "schedule": "medium_high",
+          "quality": "high",
+          "scope": "low"
+        },
+        "matrix_category": "wildfire"
+      },
+      "cause_event_effect_chain": {
+        "cause": "The automated testing framework is not compatible with the newly released mobile OS.",
+        "event": "The team cannot reliably test SecurePay on the latest devices before launch.",
+        "effect": "Quality confidence drops, rework risk rises, and schedule pressure increases because testing sits on the critical path.",
+        "conclusion": "This is a project risk because the failure impact is uncertain, but it could directly affect quality and schedule.",
+        "severity": "high"
+      },
+      "probability_evidence": {
+        "increases": [
+          "The incompatibility is already confirmed.",
+          "Testing sits on the critical path for release readiness.",
+          "A new OS version often introduces behavior changes on live devices."
+        ],
+        "decreases": [
+          "The actual impact on live app behavior is still uncertain.",
+          "There may already be a beta framework update that solves the issue."
+        ],
+        "conclusion": "Medium-High probability fits this situation. The incompatibility is real, but the full downstream impact is not guaranteed yet.",
+        "assessed_level": "medium_high"
+      },
+      "impact_ripple_steps": [
+        {
+          "description": "The testing framework fails on the new OS and automated coverage disappears.",
+          "dimension": "quality",
+          "delta": "Verification confidence drops sharply",
+          "delta_value": -15
+        },
+        {
+          "description": "The team spends time diagnosing compatibility issues and rerunning affected tests.",
+          "dimension": "schedule",
+          "delta": "+1 to 2 weeks",
+          "delta_value": -12
+        },
+        {
+          "description": "Framework fixes and potential rework consume development effort.",
+          "dimension": "budget",
+          "delta": "+$10K to +$20K",
+          "delta_value": -8
+        },
+        {
+          "description": "Scope does not fundamentally change, but confidence in delivery drops.",
+          "dimension": "scope",
+          "delta": "Low direct impact",
+          "delta_value": -3
+        }
+      ],
+      "investigation": {
+        "npc_id": "alex",
+        "dialogue_id": "alex_station6_testing_framework_investigation"
+      },
+      "response_options": {
+        "avoid": {
+          "description": "Do not support the new OS version at launch.",
+          "ripple_steps": [
+            {
+              "description": "The team removes the compatibility target for the newly released OS.",
+              "dimension": "schedule",
+              "delta": "Immediate schedule relief",
+              "delta_value": 10
+            },
+            {
+              "description": "Roughly 15% of early adopters cannot use the app properly at launch.",
+              "dimension": "quality",
+              "delta": "Perceived product quality drops",
+              "delta_value": -15
+            },
+            {
+              "description": "Stakeholder confidence is hit because a banking app is expected to support current devices.",
+              "dimension": "stakeholder_trust",
+              "delta": "Reputation risk",
+              "delta_value": -12
+            }
+          ],
+          "summary_text": "Avoidance protects the immediate schedule, but for a banking app the market and reputation cost of skipping the latest OS is severe."
+        },
+        "mitigate": {
+          "description": "Update the framework and run manual testing on core flows in parallel until full automation is restored.",
+          "ripple_steps": [
+            {
+              "description": "The QA team spends a week updating the framework while prioritizing core manual tests.",
+              "dimension": "schedule",
+              "delta": "Contained delay",
+              "delta_value": -5
+            },
+            {
+              "description": "Manual testing covers critical banking features while automation catches up.",
+              "dimension": "quality",
+              "delta": "Quality protected on the most important paths",
+              "delta_value": 10
+            },
+            {
+              "description": "Extra QA effort and tooling work add moderate cost.",
+              "dimension": "budget",
+              "delta": "+$12K",
+              "delta_value": -6
+            }
+          ],
+          "summary_text": "Mitigation balances schedule protection with Dana's non-negotiable quality expectations. It is the strongest textbook response."
+        },
+        "transfer": {
+          "description": "Bring in a mobile QA specialist vendor to handle compatibility testing on the new OS.",
+          "ripple_steps": [
+            {
+              "description": "A specialist vendor is contracted to accelerate device testing.",
+              "dimension": "budget",
+              "delta": "+$20K",
+              "delta_value": -10
+            },
+            {
+              "description": "Schedule pressure reduces because compatibility coverage is outsourced.",
+              "dimension": "schedule",
+              "delta": "Moderate protection",
+              "delta_value": 8
+            },
+            {
+              "description": "Internal control over test depth and defect interpretation drops somewhat.",
+              "dimension": "quality",
+              "delta": "Partial control loss",
+              "delta_value": -4
+            }
+          ],
+          "summary_text": "Transfer is defensible, but it trades internal quality control for speed and external expertise."
+        },
+        "accept": {
+          "description": "Keep shipping work moving and address testing gaps only if defects show up.",
+          "ripple_steps": [
+            {
+              "description": "No immediate cost or reallocation is required.",
+              "dimension": "budget",
+              "delta": "$0",
+              "delta_value": 0
+            },
+            {
+              "description": "Unverified behavior on the latest OS remains in the release path.",
+              "dimension": "quality",
+              "delta": "High residual uncertainty",
+              "delta_value": -15
+            },
+            {
+              "description": "Any discovered issue late in the cycle creates reactive schedule slippage.",
+              "dimension": "schedule",
+              "delta": "Potential late delay",
+              "delta_value": -12
+            }
+          ],
+          "summary_text": "Acceptance is risky here because it gambles directly with quality, the dimension Dana treats as non-negotiable."
+        }
+      },
+      "hint_texts": {
+        "identification": "Think about the three parts - cause, uncertain event, and effect on project objectives.",
+        "probability": "What evidence do you have? What patterns from similar projects apply?",
+        "impact": "Check all four dimensions. And check Dana's profile - which dimensions matter most to her?",
+        "matrix": "Where does this risk sit on the probability and impact axes?",
+        "response": "Remember what you learned from Jordan - investigating first helps. What did Alex tell you?"
+      },
+      "debrief": {
+        "sections": [
+          "The Cause -> Event -> Effect chain for this risk",
+          "The probability assessment with evidence",
+          "The impact ratings with ripple effects",
+          "The matrix placement with the fire category",
+          "The chosen strategy with tradeoff analysis",
+          "What the textbook response would look like"
+        ],
+        "textbook_response": "The textbook response is Mitigate: update the framework, check the beta version Alex mentioned, and use manual testing as a stopgap on core features until automation is restored.",
+        "final_message": "You've just completed a full risk assessment cycle - the same process a real project manager uses every time a new risk is identified. You'll be doing this throughout the rest of the game, but now the stakes will be higher and the risks will be more complex. Ready?"
+      }
+    }
+  }
+}

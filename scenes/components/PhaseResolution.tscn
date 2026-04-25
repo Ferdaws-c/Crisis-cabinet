@@ -1,0 +1,125 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/components/PhaseResolution.gd" id="1"]
+[ext_resource type="Theme" path="res://themes/game_theme.tres" id="2"]
+
+[node name="PhaseResolution" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+theme = ExtResource("2")
+
+[node name="DimBackground" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.65)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(1080, 760)
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="PhaseLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Phase Resolution"
+horizontal_alignment = 1
+
+[node name="RiskProcessingContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="RiskTitleLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/RiskProcessingContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Risk"
+horizontal_alignment = 1
+
+[node name="ProbabilityInfo" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/RiskProcessingContainer"]
+layout_mode = 2
+autowrap_mode = 3
+text = "Modified probability: 0%"
+horizontal_alignment = 1
+
+[node name="RollAnimation" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/RiskProcessingContainer"]
+layout_mode = 2
+theme_override_constants/separation = 18
+alignment = 1
+
+[node name="RollLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/RiskProcessingContainer/RollAnimation"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Rolling..."
+
+[node name="ResultLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/RiskProcessingContainer/RollAnimation"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = ""
+
+[node name="RollExplanation" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/RiskProcessingContainer"]
+layout_mode = 2
+autowrap_mode = 3
+text = ""
+
+[node name="PhaseSummaryContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 14
+visible = false
+
+[node name="SummaryTitle" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/PhaseSummaryContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Phase Summary"
+horizontal_alignment = 1
+
+[node name="TriggeredList" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/PhaseSummaryContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ResolvedList" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/PhaseSummaryContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SpawnedList" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/PhaseSummaryContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="HealthChangesSummary" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/PhaseSummaryContainer"]
+layout_mode = 2
+autowrap_mode = 3
+text = ""
+
+[node name="ContinueButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+custom_minimum_size = Vector2(220, 48)
+text = "Continue to next phase"
+visible = false

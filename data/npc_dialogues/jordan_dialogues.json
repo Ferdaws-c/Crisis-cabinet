@@ -1,0 +1,233 @@
+{
+  "npc_id": "jordan",
+  "display_name": "Jordan",
+  "role": "Senior Developer",
+  "avatar_path": "res://assets/sprites/characters/jordan/avatar.png",
+  "dialogues": {
+    "jordan_station5_payment_api_investigation": {
+      "context": "Station 5 investigation for payment API delay risk",
+      "tree": [
+        {
+          "id": "root",
+          "npc_text": "",
+          "choices": [
+            {
+              "text": "How likely is the API delay?",
+              "leads_to": "likelihood"
+            },
+            {
+              "text": "Is there an alternative API we could use?",
+              "leads_to": "alternative"
+            },
+            {
+              "text": "What happens if we just wait for the original API?",
+              "leads_to": "wait"
+            },
+            {
+              "text": "Could we build our own payment system?",
+              "leads_to": "build_ourselves"
+            }
+          ]
+        },
+        {
+          "id": "likelihood",
+          "npc_text": "I talked to the vendor last week. They said they're 'on track,' but they've said that before and missed by three weeks. I'd say 50/50.",
+          "choices": [
+            {
+              "text": "Is there an alternative API we could use?",
+              "leads_to": "alternative"
+            },
+            {
+              "text": "What happens if we just wait for the original API?",
+              "leads_to": "wait"
+            },
+            {
+              "text": "Could we build our own payment system?",
+              "leads_to": "build_ourselves"
+            },
+            {
+              "text": "Thanks, that's enough for now.",
+              "leads_to": "end"
+            }
+          ]
+        },
+        {
+          "id": "alternative",
+          "npc_text": "There's PaySecure - it's more expensive but it's stable and available right now. We'd need about two weeks to integrate it.",
+          "choices": [
+            {
+              "text": "How likely is the API delay?",
+              "leads_to": "likelihood"
+            },
+            {
+              "text": "What happens if we just wait for the original API?",
+              "leads_to": "wait"
+            },
+            {
+              "text": "Could we build our own payment system?",
+              "leads_to": "build_ourselves"
+            },
+            {
+              "text": "Got it. Thanks.",
+              "leads_to": "end"
+            }
+          ]
+        },
+        {
+          "id": "wait",
+          "npc_text": "If it comes on time, great - no extra cost. If it doesn't, we're looking at a 3-4 week delay, and that kills our March launch.",
+          "choices": [
+            {
+              "text": "How likely is the API delay?",
+              "leads_to": "likelihood"
+            },
+            {
+              "text": "Is there an alternative API we could use?",
+              "leads_to": "alternative"
+            },
+            {
+              "text": "Could we build our own payment system?",
+              "leads_to": "build_ourselves"
+            },
+            {
+              "text": "Thanks, that helps.",
+              "leads_to": "end"
+            }
+          ]
+        },
+        {
+          "id": "build_ourselves",
+          "npc_text": "Technically yes, but that's 6-8 weeks of work and we'd need to handle PCI compliance ourselves. That's a whole different project.",
+          "choices": [
+            {
+              "text": "How likely is the API delay?",
+              "leads_to": "likelihood"
+            },
+            {
+              "text": "Is there an alternative API we could use?",
+              "leads_to": "alternative"
+            },
+            {
+              "text": "What happens if we just wait for the original API?",
+              "leads_to": "wait"
+            },
+            {
+              "text": "Understood. Thanks.",
+              "leads_to": "end"
+            }
+          ]
+        },
+        {
+          "id": "end",
+          "npc_text": "Whatever we do, we shouldn't let the payment path decide the whole launch for us.",
+          "choices": []
+        }
+      ]
+    },
+    "jordan_morale_hint": {
+      "context": "Offhand mention hinting at PLAN-H1",
+      "tree": [
+        {
+          "id": "root",
+          "npc_text": "Oh, one more thing - the team's been putting in extra hours to prep. I hope that's not going to be the norm. People are already looking tired.",
+          "choices": [
+            {
+              "text": "I'll keep an eye on workload.",
+              "leads_to": "end"
+            },
+            {
+              "text": "We'll need that pace for a while.",
+              "leads_to": "end_dismiss"
+            }
+          ]
+        },
+        {
+          "id": "end",
+          "npc_text": "Appreciated. A tired team makes more mistakes - just saying.",
+          "choices": []
+        },
+        {
+          "id": "end_dismiss",
+          "npc_text": "...Right. Well, just keep it in mind.",
+          "choices": []
+        }
+      ]
+    },
+    "jordan_plan01_investigate": {
+      "context": "Investigation for PLAN-01",
+      "tree": [
+        {
+          "id": "root",
+          "npc_text": "",
+          "choices": [
+            {
+              "text": "How likely is it that they'll leave?",
+              "leads_to": "likelihood"
+            },
+            {
+              "text": "How critical are they to the project?",
+              "leads_to": "criticality"
+            },
+            {
+              "text": "Is there anything we can do to keep them?",
+              "leads_to": "retention"
+            }
+          ]
+        },
+        {
+          "id": "likelihood",
+          "npc_text": "They've been interviewing actively. I'd say it's more likely than not - maybe 60-40 they leave within the month.",
+          "choices": [
+            {
+              "text": "How critical are they to the project?",
+              "leads_to": "criticality"
+            },
+            {
+              "text": "Thanks, that's helpful.",
+              "leads_to": "end"
+            }
+          ]
+        },
+        {
+          "id": "criticality",
+          "npc_text": "They built the entire payment module architecture. If they leave, nobody else knows how the transaction routing works. We'd be reverse-engineering our own code.",
+          "choices": [
+            {
+              "text": "Is there anything we can do?",
+              "leads_to": "retention"
+            },
+            {
+              "text": "That's concerning. Thanks.",
+              "leads_to": "end"
+            }
+          ]
+        },
+        {
+          "id": "retention",
+          "npc_text": "A retention bonus might help - or a role change. They've mentioned wanting to lead a team, not just write code. That might be worth more to them than money.",
+          "choices": [
+            {
+              "text": "Good to know. Thanks.",
+              "leads_to": "end"
+            }
+          ]
+        },
+        {
+          "id": "end",
+          "npc_text": "Let me know what you decide. I'll keep an eye on the situation.",
+          "choices": []
+        }
+      ]
+    },
+    "jordan_layer3_placeholder": {
+      "context": "Placeholder for additional Jordan dialogue content",
+      "tree": [
+        {
+          "id": "root",
+          "npc_text": "",
+          "choices": []
+        }
+      ]
+    }
+  }
+}

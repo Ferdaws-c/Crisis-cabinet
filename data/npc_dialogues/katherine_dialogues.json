@@ -1,0 +1,7 @@
+{
+  "npc_id": "katherine",
+  "display_name": "Katherine",
+  "role": "MidBank Integration Director",
+  "avatar_path": "res://assets/sprites/characters/katherine/avatar.png",
+  "dialogues": {}
+}

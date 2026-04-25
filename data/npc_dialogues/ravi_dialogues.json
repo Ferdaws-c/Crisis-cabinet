@@ -1,0 +1,7 @@
+{
+  "npc_id": "ravi",
+  "display_name": "Ravi",
+  "role": "Junior Developer",
+  "avatar_path": "res://assets/sprites/characters/ravi/avatar.png",
+  "dialogues": {}
+}

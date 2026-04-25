@@ -1,0 +1,7 @@
+{
+  "npc_id": "morgan",
+  "display_name": "Morgan",
+  "role": "Project Sponsor",
+  "avatar_path": "res://assets/sprites/characters/morgan/avatar.png",
+  "dialogues": {}
+}

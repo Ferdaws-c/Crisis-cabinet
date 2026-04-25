@@ -1,0 +1,83 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/components/NPCDialogue.gd" id="1"]
+[ext_resource type="Theme" path="res://themes/game_theme.tres" id="2"]
+
+[node name="NPCDialogue" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+theme = ExtResource("2")
+
+[node name="DimBackground" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.65)
+
+[node name="DialoguePanel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -240.0
+
+[node name="MarginContainer" type="MarginContainer" parent="DialoguePanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="HBoxContainer" type="HBoxContainer" parent="DialoguePanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="AvatarContainer" type="VBoxContainer" parent="DialoguePanel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(110, 0)
+theme_override_constants/separation = 8
+
+[node name="AvatarTexture" type="TextureRect" parent="DialoguePanel/MarginContainer/HBoxContainer/AvatarContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(80, 80)
+stretch_mode = 5
+
+[node name="NameLabel" type="Label" parent="DialoguePanel/MarginContainer/HBoxContainer/AvatarContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "NPC"
+horizontal_alignment = 1
+
+[node name="RoleLabel" type="Label" parent="DialoguePanel/MarginContainer/HBoxContainer/AvatarContainer"]
+layout_mode = 2
+text = "Role"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="VSeparator" type="VSeparator" parent="DialoguePanel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="ContentContainer" type="VBoxContainer" parent="DialoguePanel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="DialogueText" type="RichTextLabel" parent="DialoguePanel/MarginContainer/HBoxContainer/ContentContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+fit_content = true
+scroll_active = false
+autowrap_mode = 3
+
+[node name="ChoicesContainer" type="VBoxContainer" parent="DialoguePanel/MarginContainer/HBoxContainer/ContentContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8

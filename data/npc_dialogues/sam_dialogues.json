@@ -1,0 +1,7 @@
+{
+  "npc_id": "sam",
+  "display_name": "Sam",
+  "role": "Vendor Contact",
+  "avatar_path": "res://assets/sprites/characters/sam/avatar.png",
+  "dialogues": {}
+}
