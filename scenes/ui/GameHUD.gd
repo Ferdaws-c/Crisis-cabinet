@@ -6,6 +6,7 @@ var project_board: PanelContainer
 
 var log_list: VBoxContainer
 var acc_labels: Dictionary = {}
+var global_prompt: Label
 
 @onready var hp_label = find_child("HPValue", true, false)
 @onready var budget_label = find_child("BudgetValue", true, false)
@@ -54,18 +55,21 @@ func _ready() -> void:
 	
 	# Create the mathematically isolated objective marker
 	minimap_marker = Panel.new()
-	minimap_marker.size = Vector2(8, 8)
+	minimap_marker.size = Vector2(16, 16) # Much bolder size
 	minimap_marker.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	
 	var marker_style = StyleBoxFlat.new()
 	marker_style.bg_color = Color(1.0, 0.1, 0.1, 1.0) # Bright red
+	marker_style.border_color = Color(1.0, 0.9, 0.2, 1.0) # Bold yellow border
+	marker_style.border_width_left = 2; marker_style.border_width_top = 2
+	marker_style.border_width_right = 2; marker_style.border_width_bottom = 2
 	for c in ["corner_radius_top_left","corner_radius_top_right","corner_radius_bottom_left","corner_radius_bottom_right"]:
-		marker_style.set(c, 8) # Makes it perfectly circular
+		marker_style.set(c, 16) # Perfectly circular
 	minimap_marker.add_theme_stylebox_override("panel", marker_style)
 	
 	var pulse = create_tween().set_loops()
-	pulse.tween_property(minimap_marker, "modulate:a", 0.0, 0.3)
-	pulse.tween_property(minimap_marker, "modulate:a", 1.0, 0.3)
+	pulse.tween_property(minimap_marker, "modulate:a", 0.2, 0.4)
+	pulse.tween_property(minimap_marker, "modulate:a", 1.0, 0.2)
 	
 	# Godot 4 Layout Fix: A pure Control will block the PanelContainer from violently stretching the 8x8 circle!
 	var marker_canvas = Control.new()
@@ -74,6 +78,34 @@ func _ready() -> void:
 	mm_panel.add_child(marker_canvas)
 	
 	self.add_child(mm_panel)
+	
+	# Procedural Interaction Prompt
+	global_prompt = Label.new()
+	global_prompt.text = "PRESS [ SPACE ] TO INTERACT"
+	global_prompt.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	global_prompt.add_theme_font_size_override("font_size", 16)
+	global_prompt.add_theme_color_override("font_color", Color(1.0, 0.9, 0.2)) # High visibility yellow
+	
+	var pb = StyleBoxFlat.new()
+	pb.bg_color = Color(0.05, 0.05, 0.1, 0.9)
+	pb.border_color = Color(0.3, 0.6, 1.0, 0.8)
+	pb.border_width_left = 2; pb.border_width_top = 2
+	pb.border_width_right = 2; pb.border_width_bottom = 2
+	pb.set_corner_radius_all(6)
+	pb.content_margin_left = 20
+	pb.content_margin_right = 20
+	pb.content_margin_top = 10
+	pb.content_margin_bottom = 10
+	global_prompt.add_theme_stylebox_override("normal", pb)
+	
+	global_prompt.set_anchors_preset(Control.PRESET_BOTTOM_RIGHT)
+	global_prompt.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	global_prompt.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	global_prompt.offset_right = -30
+	global_prompt.offset_bottom = -285 # Just above the 240px minimap + 30px offset
+	global_prompt.hide()
+	
+	self.add_child(global_prompt)
 	
 	# Procedurally create a solid black cinematic overlay that fades away
 	var fade_rect = ColorRect.new()
@@ -140,13 +172,13 @@ func _process(_delta: float) -> void:
 					# Map Real Space -> UI Space
 					var world_offset = target_node.global_position - player.global_position
 					var ui_offset = world_offset * minimap_cam.zoom.x
-					var map_center = Vector2(120, 120) - Vector2(5, 5) # 240/2 minus half-size
+					var map_center = Vector2(120, 120) - Vector2(8, 8) # 240/2 minus half-size
 					
 					var raw_pos = map_center + ui_offset
 					
 					# Clamp to screen boundary safely
-					raw_pos.x = clamp(raw_pos.x, 8, 232)
-					raw_pos.y = clamp(raw_pos.y, 8, 232)
+					raw_pos.x = clamp(raw_pos.x, 8, 216)
+					raw_pos.y = clamp(raw_pos.y, 8, 216)
 					
 					minimap_marker.position = raw_pos
 					minimap_marker.show()
@@ -155,6 +187,10 @@ func _process(_delta: float) -> void:
 
 func _on_state_changed() -> void:
 	_update_ui()
+
+func show_interaction_prompt(show: bool) -> void:
+	if global_prompt:
+		global_prompt.visible = show
 
 func _update_ui() -> void:
 	if hp_label: hp_label.text = str(GameManager.schedule_days) + " Days Left ⏱️"
