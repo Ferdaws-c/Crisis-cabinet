@@ -1,0 +1,884 @@
+{
+  "gppt_version": "2.0.0",
+  "exported_at": "2026-05-05T18:40:02.179Z",
+  "state": {
+    "ideaBrief": {
+      "title": "Crisis Cabinet: IT Project Risk Management Simulation",
+      "domain": "IT Project Management — PMBOK Chapter 11 Risk Management",
+      "audience": "3rd and 4th year Computer Engineering students (COM0463)",
+      "coreMetaphor": "The player sits in a crisis cabinet as the project manager of an IT project, judging each crisis as a Tiger, Alligator, Puppy, or Kitten and choosing the most professional response.",
+      "successVision": "Students finish the simulation able to classify project risks by probability and impact, choose mitigation, avoidance, transfer, or acceptance, and explain how poor prioritization can collapse an IT project."
+    },
+    "projectTitle": "Crisis Cabinet: IT Project Risk Management Simulation",
+    "organisation": "Department of Computer Engineering, Istanbul Kültür University",
+    "courseCode": "COM0463",
+    "domain": "IT Project Risk Management — PMBOK Chapter 11 & Tusler Risk Matrix",
+    "deliverableArea": "Windows PC educational simulation game (Godot 4.4.1, GL Compatibility renderer)",
+    "proposalDate": "2026-05-05",
+    "startDate": "2026-05-23",
+    "teamMembers": [
+      {
+        "name": "Ferdaws",
+        "surname": "Qaem",
+        "email": "2300001530@stu.iku.edu.tr",
+        "role": "Lead Developer / Programmer"
+      },
+      {
+        "name": "Abdelmagied",
+        "surname": "Farhouda",
+        "email": "abod3zv@gmail.com",
+        "role": "Game Designer"
+      },
+      {
+        "name": "Mohamed",
+        "surname": "Sallam",
+        "email": "2300000497@stu.iku.edu.tr",
+        "role": "Tester"
+      }
+    ],
+    "problemStatement": "Many IT project management students understand risk management theory but struggle to apply it in real project scenarios. Studies and industry reports often show that more than 60% of IT projects face budget, schedule, or scope problems because risks are identified too late or handled with the wrong response strategy. Crisis Cabinet solves this by giving students an interactive simulation where they classify risks by probability and impact, then choose suitable PMBOK-based responses.",
+    "targetPopulation": "Third-year Computer Engineering students taking COM0463, approximately 40–60 students.",
+    "successCriteria": [
+      "At least 80% of players correctly classify risks as Tiger, Alligator, Puppy, or Kitten by the end of the game.",
+      "At least 75% of players choose the correct risk response strategy in final scenarios.",
+      "At least 70% of players complete the project without reaching 0% Contingency HP.",
+      "At least 70% of players complete the project without running out of budget.",
+      "Average post-game quiz scores improve by at least 20% compared with the pre-game quiz."
+    ],
+    "bloomOutcomes": [
+      {
+        "level": "L1",
+        "bloom_k": 1,
+        "outcome": "Recall the four Tusler Matrix risk animals: Tiger, Alligator, Puppy, and Kitten.",
+        "activity": "Review the risk animal cards before starting the first scenario.",
+        "assessment": "Short matching question about each risk animal and its probability-impact meaning."
+      },
+      {
+        "level": "L2",
+        "outcome": "Explain how probability and impact determine the severity of an IT project risk.",
+        "bloom_k": 2,
+        "activity": "Compare sample risks and discuss why some are more dangerous than others.",
+        "assessment": "Written explanation of why a Tiger risk is more urgent than a Kitten risk."
+      },
+      {
+        "level": "L3",
+        "outcome": "Choose mitigation, avoidance, transfer, or acceptance for a given project risk scenario.",
+        "activity": "Play scenarios and select the best risk response strategy for each case.",
+        "bloom_k": 3,
+        "assessment": "In-game decision score based on correct strategy selection."
+      },
+      {
+        "bloom_k": 4,
+        "level": "L4",
+        "outcome": "Compare different risk scenarios and identify which ones threaten budget, schedule, or contingency HP most.",
+        "activity": "Analyze several crisis cards and rank them by urgency.",
+        "assessment": "Scenario ranking task checked against the Tusler Matrix logic."
+      },
+      {
+        "level": "L5",
+        "outcome": "Judge whether a selected risk response was effective based on the game audit and project outcome.",
+        "activity": "Review the failure audit after a failed or weak game run.",
+        "assessment": "Reflection paragraph explaining which response should have been selected.",
+        "bloom_k": 5
+      },
+      {
+        "level": "L6",
+        "outcome": "Design a simple risk response plan for an IT project using PMBOK and Tusler Matrix principles.",
+        "bloom_k": 6,
+        "activity": "Create a mini risk plan for a new IT project scenario.",
+        "assessment": "Rubric-based review of the student’s risk categories and response strategies."
+      }
+    ],
+    "theories": [
+      "sdt",
+      "mda",
+      "fogg",
+      "flow",
+      "tusler",
+      "bartle",
+      "kirkpatrick",
+      "hexad",
+      "bloom",
+      "octalysis"
+    ],
+    "narrativeTheme": "Crisis Cabinet places the learner in the role of a project manager leading a critical IT delivery through a tense cabinet-room simulation. Every meeting reveals a new risk animal from the Tusler Matrix: Tigers, Alligators, Puppies, and Kittens become memorable metaphors for probability-impact analysis. The story begins in Planning, where uncertain requirements and vendor choices are still preventable, then escalates into Executing and Monitoring, where developer resignations, security vulnerabilities, flaky tests, and stakeholder change requests threaten budget, schedule, and contingency reserves. The design uses Self-Determination Theory by giving autonomy in classification and response choices, competence through immediate feedback and failure audits, and relatedness through realistic stakeholders, developers, clients, and managers. It applies Mechanics-Dynamics-Aesthetics by connecting scenario cards, resource bars, streaks, and audits to strategic tension, responsibility, and mastery. Bloom Taxonomy is embedded from recall of risk animals to creation of a new risk response plan. HEXAD player types shape rewards for achievers, social learners, and reflective players; Octalysis supports accomplishment, avoidance of project failure, ownership of resources, and unpredictability of crises. The Fogg Behavior Model supports simple decisions at the exact crisis moment, Flow Theory balances difficulty across project phases, Bartle-style achiever and explorer motivations support progression, Kirkpatrick four-level evaluation measures reaction, learning, behaviour transfer, and project-level results, and Tusler risk logic gives the game its central professional framework.",
+    "gameOverview": "Crisis Cabinet is a single-player educational simulation for COM0463 IT Project Management. The player manages a software project from Planning to Closing while classifying risk scenarios using the Tusler Matrix and selecting a PMBOK-style response: mitigation, avoidance, transfer, or acceptance. Correct decisions protect Contingency HP, budget, schedule progress, and streak score. Wrong decisions reduce resources and trigger a failure audit that explains the violated risk management principle.",
+    "sdtAutonomy": "Players are given meaningful choices in each crisis scenario. They can decide how to classify risks and choose between mitigation, avoidance, transfer, and acceptance instead of following one fixed path.",
+    "sdtCompetence": "The game supports competence by giving immediate feedback after every decision. Scores, streaks, HP changes, and failure audits help players understand what they did correctly or incorrectly.",
+    "sdtRelatedness": "The crisis cabinet theme makes players feel connected to a real project team. Scenarios represent realistic stakeholders, developers, clients, and managers affected by risk decisions.",
+    "hexad": {
+      "Achiever": 30,
+      "Disruptor": 5,
+      "FreeSpirit": 10,
+      "Philanthropist": 15,
+      "Player": 20,
+      "Socialiser": 20
+    },
+    "rewardStructure": {
+      "startingResources": "Players start with a budget based on difficulty (Easy: , Medium: , Hard: ) and a 120-day schedule. Contingency HP is 100.",
+      "costRules": "Wrong answers do not deduct points (losePoints = 0), but deduct heavily from the project Budget and Schedule Days, simulating real PM overhead.",
+      "scoreRules": "Score is 0-100. Budget Conservation = max(0, budget)/max * 50. Performance = (XP/maxXP) * 50. Late Penalty = -1 pt per late day. Player scores are published to a live global internet leaderboard powered by SilentWolf.",
+      "streakRules": "Correct consecutive answers build a streak. XP is multiplied by (1.0 + (streak * 0.1)). A wrong answer breaks the streak to 0.",
+      "feedbackRules": "Immediate feedback on every scenario. Game Over (Audit Report) if HP hits 0. CEO provides final performance review at the end.",
+      "elite": "Elite PM Tier (Score >= 85): Receives a Gold medal (🥇) on the top-10 leaderboard and a glowing CEO commendation.",
+      "professional": "Professional PM Tier (Score 60-84): Receives a Silver/Bronze medal (if top 3) and standard passing CEO debrief.",
+      "access": "Trainee Tier (Score < 60): Receives an Audit Report highlighting failure areas and recommending re-playing on Easy mode."
+    },
+    "octalysis": {
+      "epicMeaning": 0.7,
+      "development": 0.8,
+      "accomplishment": 0.8,
+      "empowerment": 0.8,
+      "ownership": 0.8,
+      "social": 0.8,
+      "scarcity": 0.8,
+      "unpredictability": 0.8,
+      "avoidance": 0.8
+    },
+    "mechanics": [
+      "Risk scenario cards with probability and impact information.",
+      "Tusler Matrix classification: Tiger, Alligator, Puppy, and Kitten.",
+      "Risk response selection: mitigation, avoidance, transfer, and acceptance.",
+      "Contingency HP, budget, and schedule phase bars updated after each decision.",
+      "Failure audit explaining which project management principle was violated."
+    ],
+    "conceptMappings": [
+      {
+        "concept": "Risk probability",
+        "gameElement": "Likelihood label and scenario clues",
+        "learningPurpose": "Students learn that frequent risks require proactive attention even when each instance seems small."
+      },
+      {
+        "concept": "Risk impact",
+        "gameElement": "HP, budget, schedule, and technical debt consequences",
+        "learningPurpose": "Students see that high-impact risks can threaten the whole project even when probability is low."
+      },
+      {
+        "concept": "Tusler Matrix",
+        "gameElement": "Tiger, Alligator, Puppy, and Kitten risk animals",
+        "learningPurpose": "Students convert probability-impact combinations into memorable prioritization categories."
+      },
+      {
+        "concept": "Mitigation",
+        "gameElement": "Actions such as backups, code reviews, extra testing, and communication plans",
+        "learningPurpose": "Students practice reducing probability or impact before a risk becomes a crisis."
+      },
+      {
+        "concept": "Avoidance",
+        "gameElement": "Changing scope, removing unstable features, or replacing a risky plan",
+        "learningPurpose": "Students learn when changing the project plan is better than accepting a severe risk."
+      },
+      {
+        "concept": "Transfer",
+        "gameElement": "Insurance, vendor SLA, cloud provider responsibility, or contract protection",
+        "learningPurpose": "Students learn how responsibility for low-probability but catastrophic events can be shifted."
+      },
+      {
+        "concept": "Acceptance",
+        "gameElement": "Choosing not to spend resources on trivial risks",
+        "learningPurpose": "Students learn that not every risk deserves expensive action."
+      },
+      {
+        "concept": "Contingency reserve",
+        "gameElement": "Contingency HP bar",
+        "learningPurpose": "Students experience reserve depletion when risk responses are late or inappropriate."
+      },
+      {
+        "concept": "Technical debt",
+        "gameElement": "Hidden penalty from repeated Puppy risks",
+        "learningPurpose": "Students understand that small repeated changes can accumulate into maintainability problems."
+      },
+      {
+        "concept": "Lessons learned",
+        "gameElement": "Failure audit and final project report",
+        "learningPurpose": "Students reflect on decision quality and connect gameplay outcomes to project-management principles."
+      }
+    ],
+    "mdaAnalysis": {
+      "mechanics": "Players read IT project risk scenarios, classify them by probability and impact, select a PMBOK risk response strategy, and manage contingency HP, budget, schedule phase, score, and streak.",
+      "dynamics": "The game creates decision pressure because wrong responses reduce HP or budget, while correct responses build streaks and move the project from Planning to Closing. Players learn by seeing immediate consequences.",
+      "aesthetics": "The intended experience is strategic tension, responsibility, and mastery. Players should feel like project managers making meaningful decisions during a crisis cabinet meeting."
+    },
+    "scenarios": [
+      {
+        "id": "S01",
+        "gameId": "SC-01",
+        "phase": "Planning",
+        "tuslerCategory": "Tiger",
+        "title": "Tiger — Legacy DB Migration",
+        "probability": "85%",
+        "impact": "-$25,000",
+        "urgency": "High",
+        "setup": "The hospital booking system relies on a 15-year-old database. The vendor just announced end-of-life support exactly two weeks before our go-live date.",
+        "lessonText": "Before you can manage a project, you must first understand Risk (PMBOK §11.2). A risk is an uncertain event. We use the 'Tusler Matrix' to classify risks by Probability and Impact. A High Probability and High Impact risk is classified as a 'Tiger'.\n\nWhen planning a response, 'Mitigation' is the strategy of taking proactive steps to reduce the threat's probability or impact before it happens. You cannot simply ignore or 'Accept' a Tiger.",
+        "correctStrategy": "Mitigate",
+        "winCondition": "Implement correct action'Run parallel shadow databases and perform incremental syncs prior to cutoff'"
+      },
+      {
+        "id": "S02",
+        "gameId": "SC-02",
+        "phase": "Planning",
+        "tuslerCategory": "Puppy",
+        "title": "Puppy — UI Framework Deprecation",
+        "probability": "80%",
+        "impact": "-$5,000",
+        "urgency": "Low",
+        "setup": "Our open-source UI library is releasing a breaking version next month. Our current code works fine, but we will miss out on future patches.",
+        "lessonText": "A 'Puppy' risk occurs with High Probability, but yields Low Individual Impact. They seem harmless at first, but accumulate into massive technical debt if ignored.\n\nHowever, the PMBOK teaches that sometimes 'Risk Acceptance' is the correct strategy. Accepting a risk means you write it in the risk register but do not spend current budget or sprint time trying to fix it right now, because the fix costs more than the damage.",
+        "correctStrategy": "Accept",
+        "winCondition": "Implement correct action'Document the technical debt and consciously schedule a refactor sprint for Q3'"
+      },
+      {
+        "id": "S03",
+        "gameId": "SC-03",
+        "phase": "Planning",
+        "tuslerCategory": "Alligator",
+        "title": "Alligator — Data Center Earthquake",
+        "probability": "5%",
+        "impact": "-$15,000",
+        "urgency": "Medium",
+        "setup": "Our primary private cloud servers are located in a high-seismic zone. A massive 8.0+ event would completely sever fiber lines.",
+        "lessonText": "An 'Alligator' risk has a very Low Probability of occurring, but its Impact is absolutely catastrophic to the project's survival.\n\nSince you cannot prevent an earthquake (Avoid), and reducing the impact physically is too expensive (Mitigate), PMBOK §11.5 recommends 'Risk Transfer'. Transferring shifts the financial penalty and responsibility to a third party, usually via insurance or SLAs.",
+        "correctStrategy": "Transfer",
+        "winCondition": "Implement correct action'Purchase multi-region failover insurance and negotiate SLA uptime penalties with the vendor'"
+      },
+      {
+        "id": "S04",
+        "gameId": "SC-04",
+        "phase": "Executing",
+        "tuslerCategory": "Tiger",
+        "title": "Tiger — Lead Developer Poached",
+        "probability": "90%",
+        "impact": "-$25,000",
+        "urgency": "Critical",
+        "setup": "The fintech platform's lead cryptography engineer just handed in their two-week notice. All compliance logic is safely only in their head.",
+        "lessonText": "Welcome to the Executing Phase. When a severe risk physicalizes during operations, it is a live Tiger. \n\nEffective Risk Mitigation in the Executing phase must be highly specific according to the GPPT D7 rubric. Mitigation actions must be time-bounded, deliverable-focused, and highly actionable. Vague mitigations (like 'hope they stay') are unacceptable.",
+        "correctStrategy": "Mitigate",
+        "winCondition": "Implement correct action'Enforce 8 hours/day of mandatory pair programming and documentation generation until exit'"
+      },
+      {
+        "id": "S05",
+        "gameId": "SC-05",
+        "phase": "Executing",
+        "tuslerCategory": "Puppy",
+        "title": "Puppy — Scope Creep via Email",
+        "probability": "85%",
+        "impact": "-$5,000",
+        "urgency": "Medium",
+        "setup": "The client stakeholder keeps directly emailing small 'nice-to-have' UI changes directly to the junior developers.",
+        "lessonText": "During continuous operations, uncontrolled communication often creates compounding 'Puppy' risks. Small UI change requests bypass formal approval channels and quietly consume development hours.\n\nThe strongest PMBOK response strategy here is not Mitigation, but Risk Avoidance. Avoidance means eliminating the threat entirely by severing its root cause or altering the project management plan.",
+        "correctStrategy": "Avoid",
+        "winCondition": "Implement correct action'Sever direct comms entirely; force all requests exclusively through the formal Change Control Board form'"
+      },
+      {
+        "id": "S06",
+        "gameId": "SC-06",
+        "phase": "Executing",
+        "tuslerCategory": "Kitten",
+        "title": "Kitten — Office Coffee Machine Broken",
+        "probability": "15%",
+        "impact": "-$1,000",
+        "urgency": "Low",
+        "setup": "The high-end espresso machine in the dev team's break area has broken down. Repair will take 3 days.",
+        "lessonText": "The Tusler Matrix classifies risks with Low Probability and Low Impact as 'Kittens'. These are minor cosmetic or trivial issues that rarely occur and cause no functional damage.\n\nThe mandatory strategy for Kittens is Risk Acceptance. A project manager who wastes precious budget or delays sprint deliverables trying to 'fix' a Kitten is misusing project resources.",
+        "correctStrategy": "Accept",
+        "winCondition": "Implement correct action'Log the issue as a low-priority note and approve exactly $50 for a local coffee shop run fallback'"
+      },
+      {
+        "id": "S07",
+        "gameId": "SC-07",
+        "phase": "Monitoring",
+        "tuslerCategory": "Tiger",
+        "title": "Tiger — API Rate Limits Exceeded",
+        "probability": "95%",
+        "impact": "-$25,000",
+        "urgency": "Critical",
+        "setup": "During beta testing, our third-party logistics API hits its hard rate limit every afternoon, actively crashing the system.",
+        "lessonText": "Welcome to the Monitoring Phase. PMBOK §11.7 requires continuously tracking identified risks. During load testing, a massive systemic failure (Tiger) is observed.\n\nWhile Mitigation reduces damage, Risk Avoidance neutralizes it completely. Avoidance usually involves changing the architecture so the risk is mathematically impossible.",
+        "correctStrategy": "Avoid",
+        "winCondition": "Implement correct action'Design a local caching layer to eliminate 80% of live API calls completely, bypassing the limit mechanism'"
+      },
+      {
+        "id": "S08",
+        "gameId": "SC-08",
+        "phase": "Monitoring",
+        "tuslerCategory": "Alligator",
+        "title": "Alligator — New Privacy Legislation",
+        "probability": "15%",
+        "impact": "-$15,000",
+        "urgency": "Low",
+        "setup": "A pending government privacy bill could outlaw the way our database currently stores user biometric data.",
+        "lessonText": "A draft bill in the government (Low Probability of passing) could radically change encryption requirements right before launch, making the app illegal (High Impact - Alligator).\n\nYou cannot Avoid or Transfer government law. You must Mitigate by designing contingency fallbacks so the system is flexible enough to absorb the legal shock if it triggers.",
+        "correctStrategy": "Mitigate",
+        "winCondition": "Implement correct action'Abstract the encryption layer into an isolated microservice module so it can be swapped rapidly if the law changes'"
+      },
+      {
+        "id": "S09",
+        "gameId": "SC-09",
+        "phase": "Monitoring",
+        "tuslerCategory": "Puppy",
+        "title": "Puppy — Minor Server Memory Leak",
+        "probability": "75%",
+        "impact": "-$5,000",
+        "urgency": "Low",
+        "setup": "Monitoring graphs prove 1% daily RAM creep on Stage servers. It resets seamlessly on weekends.",
+        "lessonText": "Monitoring tools show the staging server RAM usage creeping up by 1% daily. It is a High Probability (measurable) but Low Impact (resets on weekends) Puppy.\n\nAcceptance is an active strategy here. Until it threatens the SLA, acknowledging it but delaying the technical repair saves current-week velocity.",
+        "correctStrategy": "Accept",
+        "winCondition": "Implement correct action'Schedule an automated nightly reboot script and log a Jira ticket for Q4 investigation'"
+      },
+      {
+        "id": "S10",
+        "gameId": "SC-10",
+        "phase": "Closing",
+        "tuslerCategory": "Alligator",
+        "title": "Alligator — Client Refuses Final Signoff",
+        "probability": "25%",
+        "impact": "-$15,000",
+        "urgency": "High",
+        "setup": "The ERP system is fully delivered according to spec, but the key stakeholder demands a missing critical report and threatens to withhold payment.",
+        "lessonText": "Welcome to the project's Closing Phase. Delay patterns in User Acceptance Testing (UAT) are classic Risks. If the client refuses to sign the delivery, the massive final payout is locked (Alligator impact).\n\nMitigation relies heavily on documentation traces. The Requirements Traceability Matrix is your defensive weapon against arbitrary scope rejection.",
+        "correctStrategy": "Mitigate",
+        "winCondition": "Implement correct action'Produce the signed Requirements Traceability Matrix instantly and formally offer the report as a Phase 2 change request'"
+      },
+      {
+        "id": "S11",
+        "gameId": "SC-11",
+        "phase": "Closing",
+        "tuslerCategory": "Tiger",
+        "title": "Tiger — Data Corruption on Handover",
+        "probability": "85%",
+        "impact": "-$25,000",
+        "urgency": "Critical",
+        "setup": "During the final transfer of ownership to ops, an unforeseen script error completely corrupts 5% of the live user authentication tokens.",
+        "lessonText": "A confirmed crisis during the Closing Phase handover is a pure Tiger. When a risk materializes, its probability is 100%.\n\nSpecific Mitigation when dealing with late-stage software infrastructure requires precise technical fallbacks, not generalized communication apologies.",
+        "correctStrategy": "Mitigate",
+        "winCondition": "Implement correct action'Execute immediate technical rollback to pre-handover snapshot and mandate automated password resets for affected token strata'"
+      },
+      {
+        "id": "S12",
+        "gameId": "SC-12",
+        "phase": "Closing",
+        "tuslerCategory": "Kitten",
+        "title": "Kitten — Typo in User Manual",
+        "probability": "20%",
+        "impact": "-$1,000",
+        "urgency": "Low",
+        "setup": "The final PDF user guide has the old company logo incorrectly placed on page 42. All functional text is correct.",
+        "lessonText": "Small cosmetic errors in final deliverables are classic Kitten risks. \n\nRisk Acceptance means prioritizing the broader project goal. It is universally incorrect to delay an entire product launch strictly to fix an isolated, non-functional cosmetic error.",
+        "correctStrategy": "Accept",
+        "winCondition": "Implement correct action'Formally note the error in the project closure review document and automatically patch it in the next Q2 documentation update cycle'"
+      }
+    ],
+    "gamePhases": [
+      {
+        "name": "Planning",
+        "rounds": "1–3",
+        "focus": "Identify theoretical and early-stage risks before the project starts.",
+        "typicalRisks": [
+          "unclear requirements",
+          "vendor dependency",
+          "minor documentation issue"
+        ],
+        "playerGoal": "Build a risk-aware plan without wasting budget on low-value problems.",
+        "exitCondition": "Complete three planning scenarios with HP and budget above 0."
+      },
+      {
+        "name": "Executing",
+        "rounds": "4–7",
+        "focus": "Handle live team, technical, vendor, and scope crises during active development.",
+        "typicalRisks": [
+          "developer resignation",
+          "unstable feature",
+          "small change requests",
+          "disaster recovery"
+        ],
+        "playerGoal": "Protect delivery while keeping contingency reserves available for critical events.",
+        "exitCondition": "Complete four executing scenarios and avoid hard failure."
+      },
+      {
+        "name": "Monitoring",
+        "rounds": "8–10",
+        "focus": "Track active risks, respond to warning signs, and prevent small problems from accumulating.",
+        "typicalRisks": [
+          "security vulnerability",
+          "flaky CI tests",
+          "minor UI mismatch"
+        ],
+        "playerGoal": "Use feedback, monitoring, and corrective action to keep the project under control.",
+        "exitCondition": "Complete three monitoring scenarios and maintain manageable technical debt."
+      },
+      {
+        "name": "Closing",
+        "rounds": "11–12",
+        "focus": "Secure the release, review outcomes, and capture lessons learned.",
+        "typicalRisks": [
+          "deployment rollback gap",
+          "skipped retrospective"
+        ],
+        "playerGoal": "Finish the project with remaining HP and budget and produce a learning report.",
+        "exitCondition": "Complete two closing scenarios and receive the final project report."
+      }
+    ],
+    "userStories": [
+      {
+        "id": "US01",
+        "role": "As a project management student",
+        "want": "I want to classify IT project risks using the Tusler Matrix",
+        "soThat": "So that I can understand probability and impact prioritization",
+        "acc": "Given a risk scenario, when I classify it as Tiger, Alligator, Puppy, or Kitten, then the game gives feedback on my choice."
+      },
+      {
+        "id": "US02",
+        "role": "As a player",
+        "want": "I want to choose a response strategy for each risk",
+        "soThat": "So that I can practice mitigation, avoidance, transfer, and acceptance decisions",
+        "acc": "Given a scenario, when I choose a risk response, then HP, budget, technical debt, score, and streak update based on my decision."
+      },
+      {
+        "id": "US03",
+        "role": "As a student",
+        "want": "I want to see a failure audit when I lose",
+        "soThat": "So that I can understand which project management principle I violated",
+        "acc": "Given my project fails, when the game ends, then I receive an audit explaining my major mistakes and the better response strategy."
+      },
+      {
+        "id": "US04",
+        "role": "As an instructor",
+        "want": "I want students to receive measurable scores",
+        "soThat": "So that I can evaluate their understanding of risk management concepts",
+        "acc": "Given a student completes the game, when the session ends, then the final score, best streak, completed phase, and remaining resources are shown."
+      },
+      {
+        "id": "US05",
+        "role": "As a developer",
+        "want": "I want the game to present phase-appropriate risks",
+        "soThat": "So that planning, executing, monitoring, and closing risks feel realistic",
+        "acc": "Given the player advances through the project, when the phase changes, then the game presents risks that match the current project lifecycle phase."
+      },
+      {
+        "id": "US06",
+        "role": "As an instructor",
+        "want": "I want anonymous learning analytics",
+        "soThat": "So that I can measure class progress without collecting unnecessary personal data",
+        "acc": "Given a session ends, when results are stored, then only anonymous or optional student-ID-based scores and decision logs are saved."
+      }
+    ],
+    "frs": [
+      {
+        "id": "FR1",
+        "description": "The system shall present risk scenarios with probability and impact values and ask the player to classify each risk using the Tusler Matrix."
+      },
+      {
+        "id": "FR2",
+        "description": "The system shall allow the player to choose one of four risk response strategies: mitigation, avoidance, transfer, or acceptance."
+      },
+      {
+        "id": "FR3",
+        "description": "The system shall update contingency HP, budget, schedule phase, score, technical debt, and streak after every player decision."
+      },
+      {
+        "id": "FR4",
+        "description": "The system shall organize scenarios by project lifecycle phase: Planning, Executing, Monitoring, and Closing."
+      },
+      {
+        "id": "FR5",
+        "description": "The system shall provide immediate feedback explaining the correct risk animal, the best response strategy, and the project-management principle behind the result."
+      },
+      {
+        "id": "FR6",
+        "description": "The system shall apply different penalties for different risk types, including hard HP losses for Tigers and Alligators, accumulated technical debt for Puppies, and budget waste for over-managed Kittens."
+      },
+      {
+        "id": "FR7",
+        "description": "The system shall calculate score, XP, and streak multipliers based on correct classifications and response strategies."
+      },
+      {
+        "id": "FR8",
+        "description": "The system shall end the game in failure if Contingency HP or budget reaches 0."
+      },
+      {
+        "id": "FR9",
+        "description": "The system shall generate a failure audit or final success report explaining the player's strongest and weakest risk-management decisions."
+      },
+      {
+        "id": "FR10",
+        "description": "The system shall store anonymous gameplay logs for learning analytics, including scenario choices, classifications, responses, resource changes, and completion status."
+      }
+    ],
+    "nfrs": [
+      {
+        "id": "NFR1",
+        "attr": "Performance",
+        "desc": "The game should load each scenario and decision result quickly enough to maintain flow.",
+        "target": "95% of scenario transitions complete in under 2 seconds."
+      },
+      {
+        "id": "NFR2",
+        "attr": "Usability",
+        "desc": "The interface should clearly show risk category, response options, feedback, and resource bars without requiring additional training.",
+        "target": "At least 80% of test users complete the first scenario without help."
+      },
+      {
+        "id": "NFR3",
+        "attr": "Privacy",
+        "desc": "The game should not collect sensitive personal data and should store only anonymous learning progress, score data, and optional student ID for class evaluation.",
+        "target": "No personal identifiers are required beyond optional student ID for class evaluation."
+      },
+      {
+        "id": "NFR4",
+        "attr": "Security",
+        "desc": "The game should protect stored gameplay logs and avoid storing passwords, private messages, or unnecessary identifiers.",
+        "target": "100% of stored records use anonymous or pseudonymous identifiers, and no sensitive personal data is stored."
+      },
+      {
+        "id": "NFR5",
+        "attr": "Reliability",
+        "desc": "The game should preserve progress during one session and prevent invalid resource values after decisions.",
+        "target": "No valid gameplay path causes negative HP, negative budget, missing score, or broken phase progression."
+      },
+      {
+        "id": "NFR6",
+        "attr": "Accessibility",
+        "desc": "The game should be playable with readable text, clear contrast, and animal labels that are not dependent on color alone.",
+        "target": "All risk categories are shown using both animal name and probability-impact labels."
+      }
+    ],
+    "gameDuration": "One classroom play session lasts approximately 15–20 minutes: 2 minutes for tutorial/risk animal review, 10–14 minutes for 12 scenario decisions, and 3–4 minutes for the final report, failure audit, or reflection.",
+    "sessionSteps": [
+      {
+        "step": 1,
+        "name": "Intro briefing",
+        "description": "The player receives the role of project manager and sees the objective: finish the IT project without losing HP or budget."
+      },
+      {
+        "step": 2,
+        "name": "Risk animal review",
+        "description": "The game explains Tiger, Alligator, Puppy, and Kitten using probability-impact examples."
+      },
+      {
+        "step": 3,
+        "name": "Scenario presentation",
+        "description": "The player reads a phase-specific IT project risk card with probability and impact clues."
+      },
+      {
+        "step": 4,
+        "name": "Tusler classification",
+        "description": "The player classifies the risk as Tiger, Alligator, Puppy, or Kitten."
+      },
+      {
+        "step": 5,
+        "name": "Risk response decision",
+        "description": "The player chooses mitigation, avoidance, transfer, or acceptance."
+      },
+      {
+        "step": 6,
+        "name": "Feedback and resource update",
+        "description": "The game updates HP, budget, schedule phase, score, streak, and technical debt, then explains the result."
+      },
+      {
+        "step": 7,
+        "name": "Progression or audit",
+        "description": "The player advances to the next phase if resources remain; otherwise, the game opens the failure audit."
+      },
+      {
+        "step": 8,
+        "name": "Final report",
+        "description": "At Closing, the game displays final score, best streak, remaining resources, accuracy, and learning recommendations."
+      }
+    ],
+    "kpis": [
+      {
+        "level": "L1",
+        "metric": "Student reaction and perceived usefulness",
+        "method": "Post-session Likert survey plus one open reflection question immediately after gameplay.",
+        "target": "Average rating of at least 4.0 out of 5."
+      },
+      {
+        "level": "L2",
+        "metric": "Tusler Matrix classification learning",
+        "method": "Pre/post quiz comparing accuracy for Tiger, Alligator, Puppy, and Kitten scenarios within the same lab session.",
+        "target": "At least 20% average improvement and 80% final classification accuracy."
+      },
+      {
+        "level": "L2",
+        "metric": "Risk response strategy learning",
+        "method": "In-game decision log measuring correct mitigation, avoidance, transfer, and acceptance choices in final scenarios.",
+        "target": "At least 75% correct response strategy accuracy in final scenarios."
+      },
+      {
+        "level": "L3",
+        "metric": "Behaviour transfer to later project work",
+        "method": "Rubric review of the next COM0463 risk register assignment two weeks after gameplay.",
+        "target": "At least 70% of students correctly prioritise probability-impact risks in their own project plan."
+      },
+      {
+        "level": "L3",
+        "metric": "Use of failure audit feedback",
+        "method": "Reflection paragraph scored for whether students revise an incorrect response strategy after the audit.",
+        "target": "At least 75% of weak or failed runs identify a corrected response in the reflection."
+      },
+      {
+        "level": "L4",
+        "metric": "Course-level project planning quality",
+        "method": "Compare final project proposal risk sections with previous cohort baseline and instructor rubric scores.",
+        "target": "At least 15% improvement in average risk-management rubric score compared with baseline."
+      },
+      {
+        "level": "L4",
+        "metric": "Project survival outcome inside the simulation",
+        "method": "Aggregate anonymous gameplay logs for completion without reaching 0% Contingency HP or 0 budget.",
+        "target": "At least 70% of players complete the project successfully."
+      }
+    ],
+    "logPrivacy": "The game will store only gameplay logs, selected risk responses, score, HP, budget, phase progress, technical debt, completion status, and anonymous learning analytics. It will not record sensitive personal data, private messages, passwords, or unnecessary identifiers. Logs will be used only for evaluation, debugging, and learning improvement.",
+    "dataCollectionPlan": "Collected data will include scenario choices, risk classifications, response strategies, score, streak count, HP changes, budget changes, technical debt changes, phase completion, completion status, failure reason, and pre/post quiz results. Data will be stored anonymously where possible, or linked only to an optional student ID when required for class evaluation. The instructor will review aggregated results to measure learning outcomes and improve game balance.",
+    "tuslerRisks": [
+      {
+        "id": "R-01",
+        "category": "Tiger",
+        "animal": "Tiger",
+        "prob": "High",
+        "probability": "High",
+        "impact": "High",
+        "risk": "Lead developer resigns before integration milestone and project knowledge is concentrated in one person.",
+        "mitigation": "Run weekly knowledge-transfer sessions, require deployment documentation, pair critical tasks, and maintain a backup developer list."
+      },
+      {
+        "id": "R-02",
+        "category": "Alligator",
+        "animal": "Alligator",
+        "prob": "Low",
+        "probability": "Low",
+        "impact": "High",
+        "risk": "A rare cloud/data-center outage could make the game or project environment unavailable during evaluation.",
+        "mitigation": "Transfer availability responsibility to a cloud provider with SLA terms and keep offline scenario cards as a contingency plan."
+      },
+      {
+        "id": "R-03",
+        "category": "Puppy",
+        "animal": "Puppy",
+        "prob": "High",
+        "probability": "High",
+        "impact": "Low",
+        "risk": "Small UI and wording changes appear frequently and may create minor schedule drag if handled one by one.",
+        "mitigation": "Batch small requests into a weekly change window and reserve only one short UI-polish task per sprint."
+      },
+      {
+        "id": "R-04",
+        "category": "Kitten",
+        "animal": "Kitten",
+        "prob": "Low",
+        "probability": "Low",
+        "impact": "Low",
+        "risk": "A cosmetic typo or minor color mismatch appears in non-critical game text before final submission.",
+        "mitigation": "Accept during gameplay and record it in a normal proofreading checklist instead of spending emergency budget."
+      },
+      {
+        "id": "R-05",
+        "category": "Tiger",
+        "animal": "Tiger",
+        "prob": "High",
+        "probability": "High",
+        "impact": "High",
+        "risk": "Students misunderstand the difference between risk classification and risk response, causing repeated wrong decisions.",
+        "mitigation": "Add a tutorial round, animal reference cards, immediate feedback, and a short retry before scored scenarios begin."
+      }
+    ],
+    "supportTeam": [
+      {
+        "role": "Instructor / Product Owner",
+        "responsibilities": "Approves learning outcomes, validates PMBOK/Tusler alignment, reviews assessment results, and facilitates classroom reflection."
+      },
+      {
+        "role": "Game Designer",
+        "responsibilities": "Designs scenario cards, feedback messages, risk animal presentation, and balancing of HP, budget, score, and streaks."
+      },
+      {
+        "role": "Programmer",
+        "responsibilities": "Implements the game logic, UI, phase progression, scoring engine, resource bars, and local or anonymous data storage."
+      },
+      {
+        "role": "Tester",
+        "responsibilities": "Checks scenario correctness, validates scoring/resource updates, tests usability, and reports bugs."
+      },
+      {
+        "role": "AI Monitoring Agent",
+        "responsibilities": "Assists with reviewing logs, identifying balance problems, suggesting feedback text, and checking consistency of learning analytics."
+      }
+    ],
+    "facilitatorRole": "The facilitator introduces the learning objective, explains the four risk animals and four response strategies, observes gameplay without giving answers, and leads a short debrief after the final report. During the debrief, the facilitator asks students to explain one correct decision, one mistake, and one PMBOK/Tusler principle they will remember.",
+    "wf_dash": "Dashboard workflow: The player dashboard displays current phase, Contingency HP, budget points, schedule progress, technical debt, score, streak, and the current scenario card. After each decision, the dashboard animates resource changes and shows immediate feedback. The instructor view can summarize class-level averages for accuracy, completion, and common mistakes.",
+    "wf_asset": "Asset workflow: Required assets include risk animal icons for Tiger, Alligator, Puppy, and Kitten; scenario card templates; phase badges for Planning, Executing, Monitoring, and Closing; HP/budget/schedule bars; response buttons; feedback popups; audit report screens; and short quiz/reflection templates. Assets should use clear labels so learning does not depend only on images or colors.",
+    "wf_portfolio": "Portfolio workflow: The final project portfolio should include the proposal, scenario database, game rules, UI screenshots or prototype link, test plan, learning analytics sample, pre/post quiz, failure audit examples, and a reflection explaining how the game teaches IT project risk management.",
+    "inScope": "The project includes a digital single-player educational simulation game; Tusler Matrix classification; PMBOK-style response choices; Planning, Executing, Monitoring, and Closing phases; Contingency HP, budget, schedule, score, streak, and technical debt systems; 12 scenario cards; immediate feedback; failure audit; final report; anonymous learning logs; and a short pre/post assessment. The classroom compassion model is in scope: losePoints=0 for course grading, no punitive academic points are removed for failed runs, and failure becomes a structured learning audit.",
+    "outScope": "The project does not include multiplayer competition, real financial transactions, collection of sensitive personal data, or grading students negatively for failed simulation attempts. It also excludes full enterprise deployment, advanced AI scenario generation, and integration with university LMS systems in the first prototype.",
+    "whyMotivation": "Crisis Cabinet motivates students by turning abstract IT project risk management into a meaningful project survival challenge. Autonomy comes from choosing classifications and responses; competence comes from feedback, streaks, and audits; relatedness comes from realistic project stakeholders and team consequences.",
+    "howEthics": "The game uses anonymous gameplay logs, optional student ID only for class evaluation, and clear consent before data collection. The compassion model states losePoints=0 for course grading: failed simulations reduce only in-game resources and always provide a failure audit, replay opportunity, and reflection prompt. Rewards include an access tier for all participants so the system supports learning rather than exclusion."
+  },
+  "_audit": {
+    "sysLog": [
+      {
+        "ts": "2026-05-05T18:40:00.363Z",
+        "level": "L2",
+        "msg": "GPPT v2.0.10 booting",
+        "ctx": {}
+      },
+      {
+        "ts": "2026-05-05T18:40:00.561Z",
+        "level": "L2",
+        "msg": "Ontology loaded: 38 Components / 5 Bonuses / 3 Penalties",
+        "ctx": {}
+      },
+      {
+        "ts": "2026-05-05T18:40:01.280Z",
+        "level": "L2",
+        "msg": "Recompute: 0.0/800 in 6.6ms (119 steps)",
+        "ctx": {
+          "trigger": "boot"
+        }
+      },
+      {
+        "ts": "2026-05-05T18:40:01.286Z",
+        "level": "L2",
+        "msg": "GPPT v2.0.10 ready",
+        "ctx": {
+          "scoringMethods": 40
+        }
+      },
+      {
+        "ts": "2026-05-05T18:40:01.831Z",
+        "level": "L5",
+        "msg": "Uncaught error: Uncaught SyntaxError: Failed to execute 'open' on 'XMLHttpRequest': Invalid URL",
+        "ctx": {
+          "file": "(unknown)",
+          "line": 1,
+          "col": 1266,
+          "stack": "SyntaxError: Failed to execute 'open' on 'XMLHttpRequest': Invalid URL |     at sendTimingInfo (<anonymous>:1:1266)"
+        }
+      },
+      {
+        "ts": "2026-05-05T18:40:02.172Z",
+        "level": "L2",
+        "msg": "Recompute: 800.0/800 in 2.7ms (130 steps)",
+        "ctx": {
+          "trigger": "final_html_export"
+        }
+      }
+    ],
+    "changeLog": [],
+    "lastEvaluation": {
+      "totalScore": 800,
+      "dimensionScores": {
+        "D1": {
+          "dim": "D1",
+          "componentSum": 100,
+          "bonus": 0,
+          "penalty": 0,
+          "raw": 100,
+          "score": 100,
+          "componentCount": 4
+        },
+        "D2": {
+          "dim": "D2",
+          "componentSum": 100,
+          "bonus": 0,
+          "penalty": 0,
+          "raw": 100,
+          "score": 100,
+          "componentCount": 5
+        },
+        "D3": {
+          "dim": "D3",
+          "componentSum": 100,
+          "bonus": 0,
+          "penalty": 0,
+          "raw": 100,
+          "score": 100,
+          "componentCount": 4
+        },
+        "D4": {
+          "dim": "D4",
+          "componentSum": 100,
+          "bonus": 0,
+          "penalty": 0,
+          "raw": 100,
+          "score": 100,
+          "componentCount": 6
+        },
+        "D5": {
+          "dim": "D5",
+          "componentSum": 100,
+          "bonus": 0,
+          "penalty": 0,
+          "raw": 100,
+          "score": 100,
+          "componentCount": 7
+        },
+        "D6": {
+          "dim": "D6",
+          "componentSum": 100,
+          "bonus": 0,
+          "penalty": 0,
+          "raw": 100,
+          "score": 100,
+          "componentCount": 4
+        },
+        "D7": {
+          "dim": "D7",
+          "componentSum": 100,
+          "bonus": 10,
+          "penalty": 0,
+          "raw": 110,
+          "score": 100,
+          "componentCount": 3
+        },
+        "D8": {
+          "dim": "D8",
+          "componentSum": 100,
+          "bonus": 0,
+          "penalty": 0,
+          "raw": 100,
+          "score": 100,
+          "componentCount": 5
+        }
+      },
+      "evaluationId": "eval_mosz3s6x",
+      "evaluatedAt": "2026-05-05T18:40:02.172Z",
+      "logCount": 130
+    },
+    "scoreHistory": [
+      {
+        "ts": "2026-05-05T18:40:01.280Z",
+        "total": 0,
+        "dimScores": {
+          "D1": 0,
+          "D2": 0,
+          "D3": 0,
+          "D4": 0,
+          "D5": 0,
+          "D6": 0,
+          "D7": 0,
+          "D8": 0
+        },
+        "trigger": "boot"
+      },
+      {
+        "ts": "2026-05-05T18:40:02.172Z",
+        "total": 800,
+        "dimScores": {
+          "D1": 100,
+          "D2": 100,
+          "D3": 100,
+          "D4": 100,
+          "D5": 100,
+          "D6": 100,
+          "D7": 100,
+          "D8": 100
+        },
+        "trigger": "final_html_export"
+      }
+    ],
+    "patchedAt": "2026-05-05T22:48:00Z",
+    "patchNote": "Patched to align with Crisis Cabinet v1.0 final game build: real scenarios, correct team members, actual scoring system."
+  }
+}

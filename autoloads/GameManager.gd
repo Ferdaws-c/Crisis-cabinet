@@ -39,6 +39,11 @@ var timer_enabled: bool = true
 signal state_changed
 
 func _ready() -> void:
+	SilentWolf.configure({
+		"api_key": "xHgFTL1PCKN3hUge8BV061Dvuv4Vzdu47I69NXMg",
+		"game_id": "crisiscabinet",
+		"log_level": 1
+	})
 	low_budget_threshold = int(budget * 0.20) # 20%
 	load_scenarios()
 
@@ -162,7 +167,7 @@ func mark_scenario_complete(passed: bool = true) -> void:
 	if current_difficulty == "Easy": max_s = 4
 	elif current_difficulty == "Medium": max_s = 8
 	
-	var quarter = max_s / 4
+	var quarter: int = int(float(max_s) / 4.0)
 	if scenarios_completed >= max_s:
 		current_phase = "Finished"
 	elif scenarios_completed >= quarter * 3:
@@ -217,7 +222,29 @@ func save_high_score() -> void:
 	has_saved_score = true
 	var scores = get_high_scores()
 	
-	var composite_score = point_score + int(budget / 10.0) + xp_score - int(total_play_time * 5)
+	var max_budget_val = 200000.0
+	var max_s = 4.0
+	if current_difficulty == "Medium":
+		max_budget_val = 150000.0
+		max_s = 8.0
+	elif current_difficulty == "Hard":
+		max_budget_val = 100000.0
+		max_s = 12.0
+		
+	var safe_budget = max(0, budget)
+	var budget_score = (float(safe_budget) / max_budget_val) * 50.0
+	
+	var xp_max = max_s * 110.0 * 1.5
+	var xp_pct = clamp(float(xp_score) / xp_max, 0.0, 1.0)
+	var perf_score = xp_pct * 50.0
+	
+	var composite_score = int(budget_score + perf_score)
+	
+	# Penalise for missing the deadline
+	if schedule_days < 0:
+		composite_score -= abs(schedule_days)
+		
+	composite_score = clamp(composite_score, 0, 100)
 	
 	scores.append({
 		"name": current_player_name, 
@@ -227,9 +254,19 @@ func save_high_score() -> void:
 		"xp": xp_score,
 		"time": total_play_time
 	})
+	
+	# Push to SilentWolf Cloud Database
+	var metadata = {
+		"diff": current_difficulty,
+		"budget": budget,
+		"xp": xp_score,
+		"time": total_play_time
+	}
+	SilentWolf.Scores.save_score(current_player_name, composite_score, "main", metadata)
+	
 	# Sort descending by score
 	scores.sort_custom(func(a, b): return a["score"] > b["score"])
-	# Keep top 10
+	# Keep top 10 locally
 	if scores.size() > 10:
 		scores = scores.slice(0, 10)
 	var f = FileAccess.open("user://scoreboard.json", FileAccess.WRITE)

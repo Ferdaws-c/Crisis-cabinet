@@ -32,7 +32,7 @@ func _on_body_exited(body: Node2D) -> void:
 		is_player_on_pad = false
 		_set_prompt(false)
 
-func _set_prompt(show: bool) -> void:
+func _set_prompt(is_visible: bool) -> void:
 	var hud = get_tree().get_first_node_in_group("hud")
 	if hud and hud.has_method("show_interaction_prompt"):
-		hud.show_interaction_prompt(show)
+		hud.show_interaction_prompt(is_visible)

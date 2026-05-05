@@ -188,9 +188,9 @@ func _process(_delta: float) -> void:
 func _on_state_changed() -> void:
 	_update_ui()
 
-func show_interaction_prompt(show: bool) -> void:
+func show_interaction_prompt(is_visible: bool) -> void:
 	if global_prompt:
-		global_prompt.visible = show
+		global_prompt.visible = is_visible
 
 func _update_ui() -> void:
 	if hp_label: hp_label.text = str(GameManager.schedule_days) + " Days Left ⏱️"

@@ -124,18 +124,7 @@ func _build_scoreboard_ui() -> void:
 	
 	vbox.add_child(HSeparator.new())
 	
-	var clear_btn = Button.new()
-	clear_btn.text = "🗑 CLEAR LEADERBOARD"
-	clear_btn.custom_minimum_size = Vector2(0, 40)
-	clear_btn.add_theme_color_override("font_color", Color(1.0, 0.4, 0.4))
-	clear_btn.pressed.connect(func():
-		var f = FileAccess.open("user://scoreboard.json", FileAccess.WRITE)
-		f.store_string("[]")
-		f.close()
-		_on_scoreboard_pressed()
-	)
-	vbox.add_child(clear_btn)
-	
+
 	var close_btn = Button.new()
 	close_btn.text = "CLOSE SCOREBOARD"
 	close_btn.custom_minimum_size = Vector2(0, 50)
@@ -148,15 +137,27 @@ func _build_scoreboard_ui() -> void:
 	self.add_child(scoreboard_panel)
 
 func _on_scoreboard_pressed() -> void:
+	scoreboard_panel.visible = true
 	var list = scoreboard_panel.find_child("ScoreList", true, false)
 	if list:
 		for c in list.get_children():
 			c.queue_free()
 		
-		var scores = GameManager.get_high_scores()
+		var loading_label = Label.new()
+		loading_label.text = "Loading global leaderboard from cloud..."
+		loading_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		list.add_child(loading_label)
+		
+		# Fetch from SilentWolf
+		await SilentWolf.Scores.get_scores().sw_get_scores_complete
+		var scores = SilentWolf.Scores.scores
+		
+		if is_instance_valid(loading_label):
+			loading_label.queue_free()
+		
 		if scores.size() == 0:
 			var l = Label.new()
-			l.text = "No scores recorded yet."
+			l.text = "No scores recorded yet. Be the first!"
 			l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 			list.add_child(l)
 		else:
@@ -167,16 +168,41 @@ func _on_scoreboard_pressed() -> void:
 				l.fit_content = true
 				l.autowrap_mode = TextServer.AUTOWRAP_OFF
 				
-				var time_val = s.get("time", 0.0)
+				var meta = s.get("metadata", {})
+				var time_val = meta.get("time", 0.0) if typeof(meta) == TYPE_DICTIONARY else 0.0
 				var mins = int(time_val / 60.0)
 				var secs = int(time_val) % 60
 				var time_str = "%02d:%02d" % [mins, secs]
 				
-				l.text = "[b]#%d %s[/b] [%s] - Comp Score: %s | Time: %s | Budget: $%s | XP: %s" % [
-					i+1, s.get("name", "Unknown"), s.get("diff", "Easy"), str(s.get("score", 0)), 
-					time_str, str(s.get("budget", 0)), str(s.get("xp", 0))
+				# Medal and colour for top 3
+				var medal := ""
+				var hex_color := "ffffff"
+				match i:
+					0:
+						medal = "🥇 "
+						hex_color = "FFD700"
+					1:
+						medal = "🥈 "
+						hex_color = "C0C0C0"
+					2:
+						medal = "🥉 "
+						hex_color = "CD7F32"
+				
+				var player_name = s.get("player_name", "Unknown")
+				var diff = meta.get("diff", "Easy") if typeof(meta) == TYPE_DICTIONARY else "Easy"
+				var budget = meta.get("budget", 0) if typeof(meta) == TYPE_DICTIONARY else 0
+				var xp = meta.get("xp", 0) if typeof(meta) == TYPE_DICTIONARY else 0
+				
+				var rank_str := ""
+				if i < 3:
+					rank_str = "[color=#%s][b]%s#%d %s[/b][/color]" % [hex_color, medal, i+1, player_name]
+				else:
+					rank_str = "[b]#%d %s[/b]" % [i+1, player_name]
+				
+				l.text = "%s  [%s] — Score: %s | Time: %s | Budget: $%s | XP: %s" % [
+					rank_str, diff, str(s.get("score", 0)),
+					time_str, str(budget), str(xp)
 				]
+				
 				list.add_child(l)
 				list.add_child(HSeparator.new())
-				
-	scoreboard_panel.visible = true

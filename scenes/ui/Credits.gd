@@ -40,11 +40,8 @@ func _ready() -> void:
 	var sep2 = HSeparator.new(); layout.add_child(sep2)
 	
 	add_text.call("Project Team", 24, Color(0.9, 0.9, 0.9))
-	add_text.call("Main Developer:", 16, Color.GRAY)
-	add_text.call("Ferdaws Qaem", 22, Color.WHITE)
-	
-	add_text.call("Emotional Support Team:", 16, Color.GRAY)
-	add_text.call("Abdelmagied farhouda\nMohamed Sallam", 22, Color.WHITE)
+	add_text.call("Project Members:", 16, Color.GRAY)
+	add_text.call("Ferdaws Qaem\nAbdelmagied Farhouda\nMohamed Sallam", 22, Color.WHITE)
 	
 	var sep3 = HSeparator.new(); layout.add_child(sep3)
 	
