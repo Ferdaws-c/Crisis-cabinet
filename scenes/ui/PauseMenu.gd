@@ -2,6 +2,9 @@ extends CanvasLayer
 
 @onready var panel = PanelContainer.new()
 @onready var center = CenterContainer.new()
+var time_label = Label.new()
+var cheat_container = VBoxContainer.new()
+var cheat_buffer: String = ""
 
 func _ready() -> void:
 	self.visible = false
@@ -31,6 +34,10 @@ func _ready() -> void:
 	title.add_theme_font_size_override("font_size", 28)
 	title.add_theme_color_override("font_color", Color(0.9, 0.6, 0.1))
 	layout.add_child(title)
+	
+	time_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	time_label.add_theme_color_override("font_color", Color(0.8, 0.8, 0.8))
+	layout.add_child(time_label)
 	
 	layout.add_child(HSeparator.new())
 	
@@ -62,12 +69,15 @@ func _ready() -> void:
 	
 	layout.add_child(HSeparator.new())
 	
+	cheat_container.visible = false
+	cheat_container.add_theme_constant_override("separation", 20)
+	
 	# Settings Section
 	var settings_label = Label.new()
 	settings_label.text = "- OPTIONS -"
 	settings_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	settings_label.add_theme_color_override("font_color", Color(0.6, 0.6, 0.6))
-	layout.add_child(settings_label)
+	cheat_container.add_child(settings_label)
 	
 	var toggle_timer_btn = Button.new()
 	toggle_timer_btn.name = "TimerBtn" # So we can find it
@@ -78,16 +88,16 @@ func _ready() -> void:
 	for c in ["corner_radius_top_left","corner_radius_top_right","corner_radius_bottom_left","corner_radius_bottom_right"]: tb_style.set(c, 8)
 	toggle_timer_btn.add_theme_stylebox_override("normal", tb_style)
 	toggle_timer_btn.pressed.connect(_on_toggle_timer_pressed.bind(toggle_timer_btn))
-	layout.add_child(toggle_timer_btn)
+	cheat_container.add_child(toggle_timer_btn)
 	
-	layout.add_child(HSeparator.new())
+	cheat_container.add_child(HSeparator.new())
 	
 	# 5. Budget Adjuster
 	var cheat_label = Label.new()
 	cheat_label.text = "Adjust Budget Manager"
 	cheat_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	cheat_label.add_theme_color_override("font_color", Color.GRAY)
-	layout.add_child(cheat_label)
+	cheat_container.add_child(cheat_label)
 	
 	var adjust_hbox = HBoxContainer.new()
 	adjust_hbox.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -105,7 +115,8 @@ func _ready() -> void:
 	btn_add.pressed.connect(func(): _adjust_budget(5000))
 	adjust_hbox.add_child(btn_add)
 	
-	layout.add_child(adjust_hbox)
+	cheat_container.add_child(adjust_hbox)
+	layout.add_child(cheat_container)
 	
 	panel.add_child(layout)
 	center.add_child(panel)
@@ -114,6 +125,25 @@ func _ready() -> void:
 func show_pause() -> void:
 	self.visible = true
 	GameManager.is_movement_paused = true
+	cheat_container.visible = false
+	cheat_buffer = ""
+	
+	var t = GameManager.total_play_time
+	var mins = int(t / 60.0)
+	var secs = int(t) % 60
+	time_label.text = "Time Elapsed: %02d:%02d" % [mins, secs]
+
+func _unhandled_input(event: InputEvent) -> void:
+	if not self.visible: return
+	if event is InputEventKey and event.pressed and not event.echo:
+		var c = OS.get_keycode_string(event.keycode)
+		if c.length() == 1:
+			cheat_buffer += c.to_upper()
+			if cheat_buffer.length() > 10:
+				cheat_buffer = cheat_buffer.substr(cheat_buffer.length() - 10)
+			if cheat_buffer.ends_with("WIN"):
+				cheat_container.visible = true
+				cheat_buffer = ""
 
 func hide_pause() -> void:
 	self.visible = false

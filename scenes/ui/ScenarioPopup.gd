@@ -353,6 +353,7 @@ func _on_classification_selected(cat: String) -> void:
 		
 	var is_correct = cat == correct_cat
 	current_log.classify = is_correct
+	current_log.classify_name = cat
 	
 	var stat_dict = GameManager.get("stats_" + correct_cat)
 	if stat_dict:
@@ -376,6 +377,7 @@ func _on_strategy_selected(strat: String) -> void:
 	var objective = current_scenario.get("objective", "")
 	var is_correct = ("Select " + strat) in objective or ("Choose " + strat) in objective or strat in objective
 	current_log.strategy = is_correct
+	current_log.strategy_name = strat
 	
 	if is_correct:
 		GameManager.schedule_days -= 3
@@ -398,6 +400,12 @@ func _on_mitigation_selected(is_correct: bool, _opt: String) -> void:
 		hud.log_risk_decision(risk_title, strat, is_correct)
 		
 	current_log.mitigate = is_correct
+	current_log.mitigate_name = _opt
+	
+	current_log.game_time = GameManager.total_play_time
+	var dict = Time.get_datetime_dict_from_system()
+	current_log.real_time = "%d-%02d-%02d %02d:%02d:%02d" % [dict.year, dict.month, dict.day, dict.hour, dict.minute, dict.second]
+	
 	GameManager.decision_log.append(current_log.duplicate(true))
 		
 	if is_correct:

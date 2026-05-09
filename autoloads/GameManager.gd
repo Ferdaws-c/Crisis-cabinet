@@ -252,7 +252,8 @@ func save_high_score() -> void:
 		"score": composite_score, 
 		"budget": budget, 
 		"xp": xp_score,
-		"time": total_play_time
+		"time": total_play_time,
+		"log": decision_log
 	})
 	
 	# Push to SilentWolf Cloud Database
@@ -260,7 +261,8 @@ func save_high_score() -> void:
 		"diff": current_difficulty,
 		"budget": budget,
 		"xp": xp_score,
-		"time": total_play_time
+		"time": total_play_time,
+		"log": decision_log
 	}
 	SilentWolf.Scores.save_score(current_player_name, composite_score, "main", metadata)
 	
