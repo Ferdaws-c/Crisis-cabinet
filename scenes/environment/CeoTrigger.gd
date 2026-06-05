@@ -14,7 +14,7 @@ func _process(_delta: float) -> void:
 				if not ui.visible:
 					ui.show_popup()
 			else:
-				print("ERROR: I pressed E, but I cannot find a node named 'CeoPopup' anywhere in the level! Did you drag CeoPopup.tscn into your map?")
+				printerr("ERROR: I pressed E, but I cannot find a node named 'CeoPopup' anywhere in the level! Did you drag CeoPopup.tscn into your map?")
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.name == "Player":

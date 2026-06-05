@@ -16,7 +16,7 @@ func _on_body_entered(body: Node2D) -> void:
 		if glitch_overlay:
 			glitch_overlay.visible = true
 			
-		print("SUDDEN RISK TRIGGERED: ", scenario_id)
+		#print("SUDDEN RISK TRIGGERED: ", scenario_id)
 		
 		# Wait for glitch effect to play
 		await get_tree().create_timer(1.0).timeout

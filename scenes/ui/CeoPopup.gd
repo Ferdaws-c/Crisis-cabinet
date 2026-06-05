@@ -66,55 +66,28 @@ func show_popup() -> void:
 	var score = GameManager.point_score
 	var best_streak = GameManager.best_streak
 	
-	var diff = GameManager.current_difficulty
-	
-	var good_thresh = 160000
-	var ok_thresh = 130000
-	if diff == "Medium":
-		good_thresh = 110000
-		ok_thresh = 80000
-	elif diff == "Hard":
-		good_thresh = 60000
-		ok_thresh = 30000
-
 	var days = GameManager.schedule_days
-
-	if budget < 0 and days < 0:
+	
+	var games_played = max(1, GameManager.scenarios_completed)
+	var good_thresh = games_played * 1000
+	var ok_thresh = games_played * 400
+	
+	if score < 0:
 		panel.get_theme_stylebox("panel").border_color = Color(0.6, 0.0, 0.0)
 		grade = "[b][color=red]CATASTROPHIC FAILURE[/color][/b]\n"
-		grade += "You bankrupt the company AND missed the launch window! You're an absolute buffoon. A %d day delay on a bleeding project? Security is escorting you out immediately." % abs(days)
-	elif days < 0 and budget >= good_thresh:
-		panel.get_theme_stylebox("panel").border_color = Color(0.8, 0.4, 0.2)
-		grade = "[b][color=orange]MISSED MARKET WINDOW[/color][/b]\n"
-		grade += "You saved our budget, but the project launched %d days late! Our competitors beat us to market. Next time, spend the money to buy speed." % abs(days)
-	elif budget < -150000:
-		panel.get_theme_stylebox("panel").border_color = Color(0.6, 0.0, 0.0)
-		grade = "[b][color=red]FINANCIAL CATASTROPHE[/color][/b]\n"
-		grade += "You absolute buffoon. You plunged us into $150,000+ of pure debt! The company is facing bankruptcy hearings tomorrow because of your incompetence. Security is escorting you out immediately."
-	elif budget < -50000:
-		panel.get_theme_stylebox("panel").border_color = Color(0.8, 0.1, 0.1)
-		grade = "[b][color=red]SEVERE FAILURE[/color][/b]\n"
-		grade += "Are you kidding me? A $50,000+ deficit? We are taking your severe negligence to the board. Your career in project management ends today."
-	elif budget < 0:
-		panel.get_theme_stylebox("panel").border_color = Color(0.8, 0.2, 0.2)
-		grade = "[b][color=red]PROJECT BANKRUPT[/color][/b]\n"
-		grade += "You ran out of money and still kept going. We are in the red. The project is an utter failure and you are formally terminated."
-	elif days < 0:
-		panel.get_theme_stylebox("panel").border_color = Color(0.8, 0.4, 0.2)
-		grade = "[b][color=orange]LATE DELIVERY[/color][/b]\n"
-		grade += "You avoided bankruptcy, but you delivered the project %d days late. Time is money! You're on probation." % abs(days)
-	elif budget < ok_thresh:
+		grade += "You scored terribly. You actively sabotaged the project and proved completely incompetent. Security is escorting you out."
+	elif score < ok_thresh:
 		panel.get_theme_stylebox("panel").border_color = Color(0.8, 0.4, 0.2)
 		grade = "[b][color=orange]DISAPPOINTING[/color][/b]\n"
-		grade += "You disappointed us. You managed to avoid bankruptcy and deliver on-time, but you burned through far more capital than planned."
-	elif budget < good_thresh:
+		grade += "You barely scraped by. Your performance in the project phases was weak, leading to massive inefficiencies."
+	elif score < good_thresh:
 		panel.get_theme_stylebox("panel").border_color = Color(0.8, 0.8, 0.2)
 		grade = "[b][color=yellow]ACCEPTABLE[/color][/b]\n"
-		grade += "You get to keep your job. The budget was tight, but the project survived and launched on-schedule."
+		grade += "You get to keep your job. The project had bumps, but you managed the PMBOK phases adequately."
 	else:
 		panel.get_theme_stylebox("panel").border_color = Color(0.2, 0.8, 0.2)
-		grade = "[b][color=green]GOOD JOB[/color][/b]\n"
-		grade += "Good job! You managed the PMBOK phases efficiently, stuck to the timeline, and returned a healthy budget."
+		grade = "[b][color=green]EXCELLENT JOB[/color][/b]\n"
+		grade += "Outstanding performance! You managed the PMBOK phases brilliantly, maximizing efficiency and minimizing risks."
 		
 	var msg = grade + "\n\n"
 	msg += "[b]Final Remaining Budget:[/b] $" + str(budget) + "\n"

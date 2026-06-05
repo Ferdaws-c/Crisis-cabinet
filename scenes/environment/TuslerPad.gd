@@ -2,6 +2,8 @@ extends Area2D
 
 # The specific category of this pad (Tiger, Alligator, Puppy, Kitten)
 @export var category: String = "tiger"
+# The minigame to launch when this pad is activated
+@export var minigame_id: String = "MG01"
 
 var is_player_on_pad: bool = false
 

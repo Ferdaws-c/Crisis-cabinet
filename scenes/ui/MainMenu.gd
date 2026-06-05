@@ -24,6 +24,20 @@ func _ready() -> void:
 	# Force initial visual highlight
 	_update_button_colors("Easy")
 	
+	# Add Randomizer CheckButton
+	var easy_btn = find_child("EasyButton", true, false)
+	if easy_btn:
+		var parent_hbox = easy_btn.get_parent()
+		var parent_vbox = parent_hbox.get_parent()
+		var rand_btn = CheckButton.new()
+		rand_btn.name = "RandomizerCheck"
+		rand_btn.text = "🎲 Randomizer Mode (Offline Scores Only)"
+		rand_btn.add_theme_font_size_override("font_size", 16)
+		rand_btn.button_pressed = GameManager.randomizer_mode
+		rand_btn.toggled.connect(func(toggled_on): GameManager.randomizer_mode = toggled_on)
+		parent_vbox.add_child(rand_btn)
+		parent_vbox.move_child(rand_btn, parent_hbox.get_index() + 1)
+	
 	# Connect Username input
 	var user_input = find_child("UsernameInput", true, false)
 	if user_input:
@@ -348,21 +362,9 @@ func _show_player_logs(player_name: String, log_data: Array) -> void:
 		for i in range(log_data.size()):
 			var entry = log_data[i]
 			var sc_name = entry.get("title", "Unknown Scenario")
-			var strat = entry.get("strategy_name", "Unknown Strategy")
-			var cat = entry.get("classify_name", "Unknown Class")
-			var opt = entry.get("mitigate_name", "Unknown Action")
-			
-			var c_corr = entry.get("classify", false)
-			var s_corr = entry.get("strategy", false)
-			var m_corr = entry.get("mitigate", false)
-			
-			var c_icon = "✔️" if c_corr else "❌"
-			var s_icon = "✔️" if s_corr else "❌"
-			var m_icon = "✔️" if m_corr else "❌"
-			
-			var c_col = "green" if c_corr else "red"
-			var s_col = "green" if s_corr else "red"
-			var m_col = "green" if m_corr else "red"
+			var score = entry.get("score", 0)
+			var time_taken = entry.get("time_taken", 0.0)
+			var success = entry.get("is_success", false)
 			
 			var game_time = entry.get("game_time", -1.0)
 			var real_time = entry.get("real_time", "")
@@ -376,11 +378,17 @@ func _show_player_logs(player_name: String, log_data: Array) -> void:
 			var date_info = ""
 			if real_time != "":
 				date_info = "\n  Date: [color=darkgray]%s[/color]" % real_time
+				
+			var s_icon = "✔" if success else "❌"
+			var s_col = "green" if success else "red"
 			
 			bbcode += "[b]Scenario %d[/b]%s[b]:[/b] %s\n" % [i+1, time_info, sc_name]
-			bbcode += "  Classify: [color=%s]%s %s[/color]\n" % [c_col, c_icon, cat.to_upper() if cat != "Unknown Class" else cat]
-			bbcode += "  Strategy: [color=%s]%s %s[/color]\n" % [s_col, s_icon, strat]
-			bbcode += "  Action: [color=%s]%s %s[/color]%s\n\n" % [m_col, m_icon, opt, date_info]
+			bbcode += "  Status: [color=%s]%s %s[/color]\n" % [s_col, s_icon, "Completed" if success else "Failed"]
+			bbcode += "  Score: %d pts\n" % score
+			if time_taken < 5.0:
+				bbcode += "  Time Taken: [color=red]%.1fs (Failed: Too fast!)[/color]%s\n\n" % [time_taken, date_info]
+			else:
+				bbcode += "  Time Taken: %.1fs%s\n\n" % [time_taken, date_info]
 			
 	logs_text.text = bbcode
 

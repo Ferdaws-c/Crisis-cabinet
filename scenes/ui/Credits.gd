@@ -20,28 +20,18 @@ func _ready() -> void:
 	# Fade in starting at 0
 	panel.modulate.a = 0.0
 	
-	# Helper function to add labels easily
-	var add_text = func(text: String, size: int, color: Color = Color.WHITE):
-		var lbl = Label.new()
-		lbl.text = text
-		lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		lbl.add_theme_font_size_override("font_size", size)
-		lbl.add_theme_color_override("font_color", color)
-		layout.add_child(lbl)
-		return lbl
-	
-	add_text.call("Thanks everyone for playing this game", 28, Color(0.8, 0.8, 0.2))
+	add_text("Thanks everyone for playing this game", 28, Color(0.8, 0.8, 0.2))
 	
 	var sep1 = HSeparator.new(); layout.add_child(sep1)
 	
-	add_text.call("Special Thanks to", 18, Color.GRAY)
-	add_text.call("Professor YUSUF ALTUNEL", 28, Color(0.4, 0.8, 1.0))
+	add_text("Special Thanks to", 18, Color.GRAY)
+	add_text("Professor YUSUF ALTUNEL", 28, Color(0.4, 0.8, 1.0))
 	
 	var sep2 = HSeparator.new(); layout.add_child(sep2)
 	
-	add_text.call("Project Team", 24, Color(0.9, 0.9, 0.9))
-	add_text.call("Project Members:", 16, Color.GRAY)
-	add_text.call("Ferdaws Qaem\nAbdelmagied Farhouda\nMohamed Sallam", 22, Color.WHITE)
+	add_text("Project Team", 24, Color(0.9, 0.9, 0.9))
+	add_text("Project Members:", 16, Color.GRAY)
+	add_text("Ferdaws Qaem\nAbdelmagied Farhouda\nMohamed Sallam", 22, Color.WHITE)
 	
 	var sep3 = HSeparator.new(); layout.add_child(sep3)
 	
@@ -69,3 +59,12 @@ func _on_exit_pressed() -> void:
 	tw.tween_property(panel, "modulate:a", 0.0, 1.0)
 	await tw.finished
 	get_tree().change_scene_to_file("res://scenes/ui/MainMenu.tscn")
+
+func add_text(text: String, size: int, color: Color = Color.WHITE) -> Label:
+	var lbl = Label.new()
+	lbl.text = text
+	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	lbl.add_theme_font_size_override("font_size", size)
+	lbl.add_theme_color_override("font_color", color)
+	layout.add_child(lbl)
+	return lbl

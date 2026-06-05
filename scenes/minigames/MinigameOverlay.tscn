@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://minigameoverlay001"]
+
+[ext_resource type="Script" path="res://scenes/minigames/MinigameOverlay.gd" id="1_overlay"]
+
+[node name="MinigameOverlay" type="CanvasLayer"]
+layer = 50
+script = ExtResource("1_overlay")

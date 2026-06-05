@@ -68,7 +68,7 @@ func _render_page() -> void:
 	if current_page == 1:
 		title_lbl.text = "1. WHAT IS A RISK?"
 		var msg = "A risk is an uncertain event or condition that, if it occurs, has a positive or negative effect on project objectives.\n\n"
-		msg += "[color=cyan][b]Risk = Probability × Impact[/b][/color]\n\n"
+		msg += "[color=cyan][b]Risk Score = Probability × Impact[/b][/color]\n\n"
 		msg += "You cannot respond to every risk — you must prioritize them using a matrix."
 		body_txt.text = msg
 		btn_next.text = "Next: The Tusler Matrix →"

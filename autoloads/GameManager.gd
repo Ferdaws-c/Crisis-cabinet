@@ -16,6 +16,12 @@ var stats_alligator: Dictionary = {"c": 0, "t": 0}
 var stats_puppy: Dictionary = {"c": 0, "t": 0}
 var stats_kitten: Dictionary = {"c": 0, "t": 0}
 
+# Minigame / Arcade Variables
+var speed_multiplier: float = 1.0
+var _speed_tick: float = 0.0
+var _days_tick: float = 0.0
+var minigame_scores: Array = []   # [{id, score, budget_delta, days_delta}]
+
 # Dynamic State
 var current_player_name: String = "Guest"
 var current_phase: String = "Planning"
@@ -35,6 +41,8 @@ const ASSESSMENT_FEE: int = 5000
 var low_budget_threshold: int = 0
 var current_difficulty: String = "Easy"
 var timer_enabled: bool = true
+var randomizer_mode: bool = false
+var randomizer_pool: Array = []
 
 signal state_changed
 
@@ -76,11 +84,16 @@ func reset_game(reset_difficulty: bool = true) -> void:
 	scenarios_completed = 0
 	current_phase = "Planning"
 	decision_log.clear()
+	randomizer_pool.clear()
+	minigame_scores.clear()
 	game_over = false
 	is_movement_paused = false
 	has_read_info = false
 	has_saved_score = false
 	total_play_time = 0.0
+	speed_multiplier = 1.0
+	_speed_tick = 0.0
+	minigame_scores.clear()
 	
 	stats_tiger = {"c": 0, "t": 0}
 	stats_alligator = {"c": 0, "t": 0}
@@ -92,6 +105,71 @@ func reset_game(reset_difficulty: bool = true) -> void:
 func _process(delta: float) -> void:
 	if not is_movement_paused and not game_over and current_phase != "Finished":
 		total_play_time += delta
+		
+		# Functional Deadline: Drain 1 schedule day every 2 seconds of real play time
+		_days_tick += delta
+		if _days_tick >= 2.0:
+			_days_tick -= 2.0
+			schedule_days -= 1
+			emit_signal("state_changed")
+			if schedule_days <= 0:
+				trigger_game_over("Project deadline missed!")
+		
+		# Global speed escalation — increases 5% every 10 seconds (caps at 2.5×)
+		_speed_tick += delta
+		if _speed_tick >= 10.0:
+			_speed_tick = 0.0
+			speed_multiplier = min(speed_multiplier + 0.05, 2.5)
+
+## Called by MinigameOverlay when a minigame finishes.
+func on_minigame_complete(mg_id: String, score: int, budget_delta: int, days_delta: int, time_taken: float = 0.0) -> void:
+	point_score += score
+	budget = clampi(budget + budget_delta, 0, 999999)
+	schedule_days = clampi(schedule_days + days_delta, 0, 999)
+	scenarios_completed += 1
+	minigame_scores.append({
+		"id": mg_id, "score": score,
+		"budget_delta": budget_delta, "days_delta": days_delta
+	})
+	var is_success = score > 0 and time_taken >= 5.0
+	# Log into decision_log for scoreboard viewer
+	decision_log.append({
+		"title": mg_id,
+		"score": score,
+		"time_taken": time_taken,
+		"is_success": is_success,
+		"classify": is_success,
+		"strategy": is_success,
+		"mitigate": is_success,
+		"game_time": total_play_time,
+		"real_time": _get_real_time()
+	})
+	_update_phase()
+	emit_signal("state_changed")
+	if budget <= 0:
+		trigger_game_over("Budget depleted!")
+	elif schedule_days <= 0:
+		trigger_game_over("Project deadline missed!")
+
+func _get_real_time() -> String:
+	var d: Dictionary = Time.get_datetime_dict_from_system()
+	return "%d-%02d-%02d %02d:%02d:%02d" % [d.year, d.month, d.day, d.hour, d.minute, d.second]
+
+func _update_phase() -> void:
+	var max_s: int = 12
+	if current_difficulty == "Easy": max_s = 4
+	elif current_difficulty == "Medium": max_s = 8
+	var quarter: int = max_s / 4
+	if scenarios_completed >= max_s:
+		current_phase = "Finished"
+	elif scenarios_completed >= quarter * 3:
+		current_phase = "Closing"
+	elif scenarios_completed >= quarter * 2:
+		current_phase = "Monitoring"
+	elif scenarios_completed >= quarter:
+		current_phase = "Executing"
+	else:
+		current_phase = "Planning"
 
 func load_scenarios() -> void:
 	var file_path = "res://gppt_crisis_cabinet_v2.json"
@@ -106,10 +184,10 @@ func load_scenarios() -> void:
 			var data = json.get_data()
 			if data.has("state") and data["state"].has("scenarios"):
 				scenarios = data["state"]["scenarios"]
-				print("Loaded %d scenarios." % scenarios.size())
+				#print("Loaded %d scenarios." % scenarios.size())
 			elif data.has("scenarios"):
 				scenarios = data["scenarios"]
-				print("Loaded %d scenarios." % scenarios.size())
+				#print("Loaded %d scenarios." % scenarios.size())
 			else:
 				printerr("Could not find scenarios key in JSON!")
 		else:
@@ -179,15 +257,15 @@ func mark_scenario_complete(passed: bool = true) -> void:
 	else:
 		current_phase = "Planning"
 	
-	if old_phase != current_phase:
-		print("PHASE TRANSITION: %s -> %s (Scenario %d/%d)" % [old_phase, current_phase, scenarios_completed, max_s])
+	#if old_phase != current_phase:
+		#print("PHASE TRANSITION: %s -> %s (Scenario %d/%d)" % [old_phase, current_phase, scenarios_completed, max_s])
 		
 	emit_signal("state_changed")
 
 func trigger_game_over(reason: String) -> void:
 	game_over = true
 	is_movement_paused = true
-	print("GAME OVER: ", reason)
+	#print("GAME OVER: ", reason)
 	
 	save_high_score()
 	
@@ -246,9 +324,13 @@ func save_high_score() -> void:
 		
 	composite_score = clamp(composite_score, 0, 100)
 	
+	var diff_label = current_difficulty
+	if randomizer_mode:
+		diff_label += " [Random]"
+	
 	scores.append({
 		"name": current_player_name, 
-		"diff": current_difficulty, 
+		"diff": diff_label, 
 		"score": composite_score, 
 		"budget": budget, 
 		"xp": xp_score,
@@ -256,15 +338,16 @@ func save_high_score() -> void:
 		"log": decision_log
 	})
 	
-	# Push to SilentWolf Cloud Database
-	var metadata = {
-		"diff": current_difficulty,
-		"budget": budget,
-		"xp": xp_score,
-		"time": total_play_time,
-		"log": decision_log
-	}
-	SilentWolf.Scores.save_score(current_player_name, composite_score, "main", metadata)
+	if not randomizer_mode:
+		# Push to SilentWolf Cloud Database
+		var metadata = {
+			"diff": current_difficulty,
+			"budget": budget,
+			"xp": xp_score,
+			"time": total_play_time,
+			"log": decision_log
+		}
+		SilentWolf.Scores.save_score(current_player_name, composite_score, "main", metadata)
 	
 	# Sort descending by score
 	scores.sort_custom(func(a, b): return a["score"] > b["score"])
@@ -273,3 +356,9 @@ func save_high_score() -> void:
 		scores = scores.slice(0, 10)
 	var f = FileAccess.open("user://scoreboard.json", FileAccess.WRITE)
 	f.store_string(JSON.stringify(scores))
+
+func get_random_minigame() -> String:
+	if randomizer_pool.is_empty():
+		randomizer_pool = MinigameOverlay.MINIGAME_DATA.keys().duplicate()
+		randomizer_pool.shuffle()
+	return randomizer_pool.pop_back()

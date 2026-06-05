@@ -51,7 +51,7 @@ func _build_ui() -> void:
 	t_vbox.add_theme_constant_override("separation", 15)
 	
 	var t_header = Label.new()
-	t_header.text = "Tusler\nAccuracy"
+	t_header.text = "Phase\nAccuracy"
 	t_header.add_theme_font_size_override("font_size", 22)
 	t_header.add_theme_font_size_override("font_bold", 1)
 	t_vbox.add_child(t_header)
@@ -62,10 +62,10 @@ func _build_ui() -> void:
 	t_grid.add_theme_constant_override("v_separation", 10)
 	t_vbox.add_child(t_grid)
 	
-	t_grid.add_child(_create_tusler_stat("TIGER", GameManager.stats_tiger, Color(0.9, 0.2, 0.2)))
-	t_grid.add_child(_create_tusler_stat("PUPPY", GameManager.stats_puppy, Color(0.9, 0.7, 0.2)))
-	t_grid.add_child(_create_tusler_stat("ALLIGATOR", GameManager.stats_alligator, Color(0.8, 0.1, 0.1)))
-	t_grid.add_child(_create_tusler_stat("KITTEN", GameManager.stats_kitten, Color(0.2, 0.8, 0.4)))
+	t_grid.add_child(_create_phase_stat("🟢 PLANNING", "Planning", Color(0.2, 0.8, 0.3)))
+	t_grid.add_child(_create_phase_stat("🟡 EXECUTING", "Executing", Color(0.9, 0.8, 0.2)))
+	t_grid.add_child(_create_phase_stat("🟠 MONITORING", "Monitoring", Color(0.8, 0.4, 0.8)))
+	t_grid.add_child(_create_phase_stat("🔵 CLOSING", "Closing", Color(0.2, 0.8, 0.9)))
 	
 	t_vbox.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	t_vbox.set_offset(SIDE_LEFT, 20); t_vbox.set_offset(SIDE_TOP, 20)
@@ -113,10 +113,10 @@ func _build_ui() -> void:
 	
 	# Header Row
 	var trow = HBoxContainer.new()
-	trow.add_child(_create_cell("Scenario", true, 2))
-	trow.add_child(_create_cell("Classify", true, 1))
-	trow.add_child(_create_cell("Strategy", true, 1))
-	trow.add_child(_create_cell("Mitigation", true, 1))
+	trow.add_child(_create_cell("Minigame", true, 2))
+	trow.add_child(_create_cell("Status", true, 1))
+	trow.add_child(_create_cell("Score", true, 1))
+	trow.add_child(_create_cell("Time", true, 1))
 	log_vbox.add_child(trow)
 	
 	var sep = HSeparator.new()
@@ -130,12 +130,23 @@ func _build_ui() -> void:
 	data_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	data_list.add_theme_constant_override("separation", 15)
 	
-	for entry in GameManager.decision_log:
+	for entry_v in GameManager.decision_log:
+		var entry: Dictionary = entry_v as Dictionary
 		var row = HBoxContainer.new()
-		row.add_child(_create_cell(entry.title, false, 2))
-		row.add_child(_create_status_cell(entry.classify))
-		row.add_child(_create_status_cell(entry.strategy))
-		row.add_child(_create_status_cell(entry.mitigate))
+		row.add_child(_create_cell(entry.get("title", "Unknown"), false, 2))
+		
+		var success = entry.get("is_success", false)
+		var sc = entry.get("score", 0)
+		var tt = entry.get("time_taken", 0.0)
+		
+		row.add_child(_create_status_cell(success))
+		row.add_child(_create_cell(str(sc) + " pts", false, 1))
+		
+		var tt_lbl = _create_cell("%.1fs" % tt, false, 1)
+		if tt < 5.0:
+			tt_lbl.add_theme_color_override("font_color", Color(0.9, 0.2, 0.2))
+		row.add_child(tt_lbl)
+		
 		data_list.add_child(row)
 		data_list.add_child(HSeparator.new())
 		
@@ -165,7 +176,19 @@ func _build_ui() -> void:
 	btn_row.add_child(continue_btn)
 	main_vbox.add_child(btn_row)
 
-func _create_tusler_stat(title: String, stats: Dictionary, col: Color) -> PanelContainer:
+func _create_phase_stat(title: String, phase_key: String, col: Color) -> PanelContainer:
+	var phase_scores = {"Planning": {"c":0,"t":0}, "Executing": {"c":0,"t":0}, "Monitoring": {"c":0,"t":0}, "Closing": {"c":0,"t":0}}
+	for s_v in GameManager.minigame_scores:
+		var s: Dictionary = s_v as Dictionary
+		var pid = "Planning"
+		var s_id = s.get("id", "")
+		if s_id in ["MG04", "MG05", "MG06"]: pid = "Executing"
+		elif s_id in ["MG07", "MG08", "MG09"]: pid = "Monitoring"
+		elif s_id in ["MG10", "MG11", "MG12"]: pid = "Closing"
+		phase_scores[pid]["t"] += 1
+		if s.get("score", 0) > 0:
+			phase_scores[pid]["c"] += 1
+	
 	var p = PanelContainer.new()
 	p.custom_minimum_size = Vector2(120, 80)
 	var sb = StyleBoxFlat.new()
@@ -186,7 +209,7 @@ func _create_tusler_stat(title: String, stats: Dictionary, col: Color) -> PanelC
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	v.add_child(label)
 	
-	# Safe division
+	var stats = phase_scores[phase_key]
 	var c = stats.get("c", 0)
 	var t = stats.get("t", 0)
 	var perc = 0

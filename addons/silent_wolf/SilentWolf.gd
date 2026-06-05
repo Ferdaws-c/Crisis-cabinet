@@ -33,11 +33,11 @@ var config = {
 }
 
 var scores_config = {
-	"open_scene_on_close": "res://scenes/Splash.tscn"
+	"open_scene_on_close": "res://scenes/ui/MainMenu.tscn"
 }
 
 var auth_config = {
-	"redirect_to_scene": "res://scenes/Splash.tscn",
+	"redirect_to_scene": "res://scenes/ui/MainMenu.tscn",
 	"login_scene": "res://addons/silent_wolf/Auth/Login.tscn",
 	"email_confirmation_scene": "res://addons/silent_wolf/Auth/ConfirmEmail.tscn",
 	"reset_password_scene": "res://addons/silent_wolf/Auth/ResetPassword.tscn",

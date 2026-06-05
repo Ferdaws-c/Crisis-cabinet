@@ -196,7 +196,7 @@ func _update_ui() -> void:
 	if hp_label: hp_label.text = str(GameManager.schedule_days) + " Days Left ⏱️"
 	if budget_label: budget_label.text = "$" + str(GameManager.budget) + " 💰"
 	if streak_label: streak_label.text = str(GameManager.streak) + " / 12 🔥"
-	if xp_label: xp_label.text = str(GameManager.xp_score) + " XP ✨"
+	if xp_label: xp_label.text = str(GameManager.point_score) + " pts ⭐"
 	
 	if phase_label: 
 		phase_label.text = GameManager.current_phase.to_upper()
@@ -214,11 +214,35 @@ func _update_ui() -> void:
 			phase_label.modulate = Color(1.0, 1.0, 1.0)
 	
 	# Update Project Board
-	if acc_labels.has("tiger"):
-		acc_labels["tiger"].text = "🐯 %d / %d" % [GameManager.stats_tiger.c, GameManager.stats_tiger.t]
-		acc_labels["alligator"].text = "🐊 %d / %d" % [GameManager.stats_alligator.c, GameManager.stats_alligator.t]
-		acc_labels["puppy"].text = "🐶 %d / %d" % [GameManager.stats_puppy.c, GameManager.stats_puppy.t]
-		acc_labels["kitten"].text = "🐱 %d / %d" % [GameManager.stats_kitten.c, GameManager.stats_kitten.t]
+	var phase_scores = {"Planning": {"c":0,"t":0}, "Executing": {"c":0,"t":0}, "Monitoring": {"c":0,"t":0}, "Closing": {"c":0,"t":0}}
+	for s in GameManager.minigame_scores:
+		var pid = "Planning"
+		if s.id in ["MG04", "MG05", "MG06"]: pid = "Executing"
+		elif s.id in ["MG07", "MG08", "MG09"]: pid = "Monitoring"
+		elif s.id in ["MG10", "MG11", "MG12"]: pid = "Closing"
+		phase_scores[pid].t += 1
+		if s.score > 0:
+			phase_scores[pid].c += 1
+
+	if acc_labels.has("Planning"):
+		var emo_map = {"Planning": "🟢 Planning", "Executing": "🟡 Executing", "Monitoring": "🟠 Monitoring", "Closing": "🔵 Closing"}
+		for key in ["Planning", "Executing", "Monitoring", "Closing"]:
+			var p = phase_scores[key]
+			var pct = 0
+			if p.t > 0: pct = int((float(p.c) / p.t) * 100.0)
+			acc_labels[key].text = "%s: %d%%" % [emo_map[key], pct]
+
+	if log_list:
+		for c in log_list.get_children():
+			c.queue_free()
+		for entry in GameManager.decision_log:
+			var l = Label.new()
+			var ok = entry.get("classify", false)
+			l.text = "- " + entry.title + (" (Completed)" if ok else " (Failed)")
+			l.add_theme_font_size_override("font_size", 12)
+			l.add_theme_color_override("font_color", Color(0.2, 0.9, 0.2) if ok else Color(0.9, 0.2, 0.2))
+			l.autowrap_mode = TextServer.AUTOWRAP_WORD
+			log_list.add_child(l)
 
 func log_risk_decision(risk_title: String, strategy: String, is_correct: bool) -> void:
 	if not log_list: return
@@ -337,10 +361,10 @@ func _build_project_board() -> void:
 	grid.add_theme_constant_override("h_separation", 20)
 	grid.add_theme_constant_override("v_separation", 10)
 	
-	var emo_map = {"tiger": "🐯", "alligator": "🐊", "puppy": "🐶", "kitten": "🐱"}
-	for key in emo_map.keys():
+	var emo_map = {"Planning": "🟢 Planning", "Executing": "🟡 Executing", "Monitoring": "🟠 Monitoring", "Closing": "🔵 Closing"}
+	for key in ["Planning", "Executing", "Monitoring", "Closing"]:
 		var l = Label.new()
-		l.text = emo_map[key] + " 0 / 0"
+		l.text = emo_map[key] + ": 0%"
 		grid.add_child(l)
 		acc_labels[key] = l
 	
