@@ -99,5 +99,9 @@ func show_popup() -> void:
 	result_label.text = msg
 
 func _on_restart_pressed() -> void:
+	# Disable button immediately to prevent double-press
+	for child in layout.get_children():
+		if child is Button:
+			child.disabled = true
 	self.visible = false
 	get_tree().change_scene_to_file("res://scenes/ui/PerformanceReview.tscn")

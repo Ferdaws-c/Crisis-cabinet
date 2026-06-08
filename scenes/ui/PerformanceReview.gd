@@ -2,10 +2,47 @@ extends CanvasLayer
 
 var _is_exiting: bool = false  # guard against double-press / mid-scroll crash
 
+# Data snapshots — captured once in _ready, never accessed live during scroll
+var _snap_minigame_scores: Array = []
+var _snap_decision_log: Array = []
+var _snap_total_time: float = 0.0
+
 func _ready() -> void:
-	self.layer = 120 # Put at the absolute top
-	_build_ui()
+	self.layer = 120
 	GameManager.is_movement_paused = true
+	# ── Snapshot ALL GameManager data NOW, before anything else runs ──
+	# This decouples the UI entirely from live autoload state so scrolling
+	# can never race against a reset_game() call or any other mutation.
+	_snap_total_time = GameManager.total_play_time
+	for s in GameManager.minigame_scores:
+		_snap_minigame_scores.append((s as Dictionary).duplicate())
+	for e in GameManager.decision_log:
+		_snap_decision_log.append((e as Dictionary).duplicate())
+	_build_ui()
+
+	# Create a solid loading overlay on top of the built UI
+	var overlay = ColorRect.new()
+	overlay.color = Color(0.02, 0.05, 0.1, 1.0) # Match background color
+	overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	self.add_child(overlay)
+	
+	var loading_lbl = Label.new()
+	loading_lbl.text = "Loading Performance Review..."
+	loading_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	loading_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	loading_lbl.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	loading_lbl.add_theme_font_size_override("font_size", 24)
+	loading_lbl.add_theme_color_override("font_color", Color(0.8, 0.8, 0.8))
+	overlay.add_child(loading_lbl)
+	
+	# Wait for the 2.0s buffer to complete before showing the page
+	await get_tree().create_timer(2.0).timeout
+	
+	# Fade out the overlay to reveal the review page
+	var tw = create_tween()
+	tw.tween_property(overlay, "color:a", 0.0, 0.5)
+	await tw.finished
+	overlay.queue_free()
 
 func _build_ui() -> void:
 	var bg = ColorRect.new()
@@ -32,7 +69,7 @@ func _build_ui() -> void:
 	main_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	main_margin.add_child(main_vbox)
 	
-	var total_time = GameManager.total_play_time
+	var total_time = _snap_total_time
 	var mins = int(total_time / 60.0)
 	var secs = int(total_time) % 60
 	
@@ -74,9 +111,14 @@ func _build_ui() -> void:
 	t_grid.add_child(_create_phase_stat("🟠 MONITORING", "Monitoring", Color(0.8, 0.4, 0.8)))
 	t_grid.add_child(_create_phase_stat("🔵 CLOSING", "Closing", Color(0.2, 0.8, 0.9)))
 	
-	t_vbox.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	t_vbox.set_offset(SIDE_LEFT, 20); t_vbox.set_offset(SIDE_TOP, 20)
-	tusler_panel.add_child(t_vbox)
+	# PanelContainer auto-fills its child — use a MarginContainer for padding
+	var t_margin = MarginContainer.new()
+	t_margin.add_theme_constant_override("margin_left", 20)
+	t_margin.add_theme_constant_override("margin_top", 20)
+	t_margin.add_theme_constant_override("margin_right", 20)
+	t_margin.add_theme_constant_override("margin_bottom", 20)
+	t_margin.add_child(t_vbox)
+	tusler_panel.add_child(t_margin)
 	
 	# PMBOK Text Block
 	var info_panel = PanelContainer.new()
@@ -99,10 +141,14 @@ func _build_ui() -> void:
 	info_body.add_theme_color_override("font_color", Color(0.7, 0.7, 0.8))
 	info_vbox.add_child(info_body)
 	
-	info_vbox.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	info_vbox.set_offset(SIDE_LEFT, 20); info_vbox.set_offset(SIDE_TOP, 20)
-	info_vbox.set_offset(SIDE_RIGHT, -20)
-	info_panel.add_child(info_vbox)
+	# PanelContainer auto-fills its child — use a MarginContainer for padding
+	var info_margin = MarginContainer.new()
+	info_margin.add_theme_constant_override("margin_left", 20)
+	info_margin.add_theme_constant_override("margin_top", 20)
+	info_margin.add_theme_constant_override("margin_right", 20)
+	info_margin.add_theme_constant_override("margin_bottom", 20)
+	info_margin.add_child(info_vbox)
+	info_panel.add_child(info_margin)
 	
 	# === BOTTOM ROW: Decisions Log ===
 	var log_panel = PanelContainer.new()
@@ -134,12 +180,8 @@ func _build_ui() -> void:
 	data_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	data_list.add_theme_constant_override("separation", 15)
 	
-	# Snapshot the log data right now so it can't be wiped mid-render
-	var log_snapshot: Array = []
-	for entry_v in GameManager.decision_log:
-		var entry: Dictionary = entry_v as Dictionary
-		if entry.size() > 0:
-			log_snapshot.append(entry.duplicate())
+	# Snapshot already captured in _ready — use it here (never reads GameManager live)
+	var log_snapshot: Array = _snap_decision_log
 	
 	for entry in log_snapshot:
 		var row = HBoxContainer.new()
@@ -161,11 +203,15 @@ func _build_ui() -> void:
 		data_list.add_child(HSeparator.new())
 	
 	log_vbox.add_child(data_list)
-	
-	log_vbox.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	log_vbox.set_offset(SIDE_LEFT, 20); log_vbox.set_offset(SIDE_TOP, 20)
-	log_vbox.set_offset(SIDE_RIGHT, -20); log_vbox.set_offset(SIDE_BOTTOM, -20)
-	log_panel.add_child(log_vbox)
+
+	# PanelContainer auto-fills its child — use a MarginContainer for padding
+	var log_margin = MarginContainer.new()
+	log_margin.add_theme_constant_override("margin_left", 20)
+	log_margin.add_theme_constant_override("margin_top", 20)
+	log_margin.add_theme_constant_override("margin_right", 20)
+	log_margin.add_theme_constant_override("margin_bottom", 20)
+	log_margin.add_child(log_vbox)
+	log_panel.add_child(log_margin)
 	
 	# Continue Button
 	var btn_row = HBoxContainer.new()
@@ -187,8 +233,8 @@ func _build_ui() -> void:
 
 func _create_phase_stat(title: String, phase_key: String, col: Color) -> PanelContainer:
 	var phase_scores = {"Planning": {"c":0,"t":0}, "Executing": {"c":0,"t":0}, "Monitoring": {"c":0,"t":0}, "Closing": {"c":0,"t":0}}
-	for s_v in GameManager.minigame_scores:
-		var s: Dictionary = s_v as Dictionary
+	# Use snapshot — never reads GameManager.minigame_scores live
+	for s in _snap_minigame_scores:
 		var pid = "Planning"
 		var s_id = s.get("id", "")
 		if s_id in ["MG04", "MG05", "MG06"]: pid = "Executing"

@@ -305,11 +305,11 @@ func _resolve_fork(f: Dictionary, size: Vector2) -> void:
 		other_emv = f.left_emv
 
 	if chosen_emv >= other_emv:
-		_budget_delta += chosen_emv
+		_budget_delta += 1000
 		_score += 50
 		JuiceManager.correct_sound()
 		JuiceManager.spawn_floating_text(_game_area, Vector2(size.x / 2.0, _player_y - 40),
-			"BEST EMV! +$%d" % chosen_emv, Color(0.3, 1.0, 0.3))
+			"BEST EMV! +$1K", Color(0.3, 1.0, 0.3))
 	else:
 		_score -= 25
 		JuiceManager.wrong_sound()

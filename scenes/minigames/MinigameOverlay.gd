@@ -453,6 +453,7 @@ func _on_close_pressed() -> void:
 		_caller_room.unconsume_pad(_caller_pad)
 	_splash_panel.get_meta("center").visible = false
 	visible = false
+	GameManager.is_in_minigame = false
 	GameManager.is_movement_paused = false
 
 # ── Game start ─────────────────────────────────────────────────────────────────
@@ -490,6 +491,9 @@ func _start_game(mg_id: String) -> void:
 		_max_time = 45.0
 	_time_remaining = _max_time
 	_is_running = true
+	
+	# Pause the days countdown while actively playing a minigame
+	GameManager.is_in_minigame = true
 
 # ── Game end ───────────────────────────────────────────────────────────────────
 func _end_game() -> void:
@@ -497,6 +501,8 @@ func _end_game() -> void:
 		return
 	_end_called = true
 	_is_running = false
+	# Resume the days countdown now that the minigame is done
+	GameManager.is_in_minigame = false
 
 	JuiceManager.game_over_sound()
 

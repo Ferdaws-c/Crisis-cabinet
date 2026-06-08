@@ -207,7 +207,7 @@ func _on_scoreboard_pressed() -> void:
 		tabs.current_tab = 0 # Default to Local
 	_populate_local_scores()
 
-func _create_score_row(i: int, player_name: String, score: int, diff: String, time_val: float, budget: int, xp: int, log_data: Array) -> Control:
+func _create_score_row(i: int, player_name: String, score: int, diff: String, time_val: float, budget: int, xp: int, date: String, log_data: Array) -> Control:
 	var hbox = HBoxContainer.new()
 	var l = RichTextLabel.new()
 	l.bbcode_enabled = true
@@ -232,8 +232,9 @@ func _create_score_row(i: int, player_name: String, score: int, diff: String, ti
 	else:
 		rank_str = "[b]#%d %s[/b]" % [i+1, player_name]
 	
-	l.text = "%s  [%s] — Score: %s | Time: %s | Budget: $%s | Pts: %s" % [
-		rank_str, diff, str(score), time_str, str(budget), str(xp)
+	var date_part = (" | " + date) if date != "" else ""
+	l.text = "%s  [%s] — Score: %s | Time: %s | Budget: $%s | Pts: %s%s" % [
+		rank_str, diff, str(score), time_str, str(budget), str(xp), date_part
 	]
 	hbox.add_child(l)
 	
@@ -260,7 +261,8 @@ func _populate_local_scores() -> void:
 		for i in range(scores.size()):
 			var s = scores[i]
 			var log_data = s.get("log", [])
-			var l = _create_score_row(i, s.get("name", "Unknown"), s.get("score", 0), s.get("diff", "Easy"), s.get("time", 0.0), s.get("budget", 0), s.get("xp", 0), log_data)
+			var date = s.get("date", "")
+			var l = _create_score_row(i, s.get("name", "Unknown"), s.get("score", 0), s.get("diff", "Easy"), s.get("time", 0.0), s.get("budget", 0), s.get("xp", 0), date, log_data)
 			list.add_child(l)
 			list.add_child(HSeparator.new())
 
@@ -295,8 +297,9 @@ func _populate_global_scores() -> void:
 			var diff = meta.get("diff", "Easy") if typeof(meta) == TYPE_DICTIONARY else "Easy"
 			var pname = s.get("player_name", "Unknown")
 			var log_data = meta.get("log", []) if typeof(meta) == TYPE_DICTIONARY else []
+			var date = meta.get("date", "") if typeof(meta) == TYPE_DICTIONARY else ""
 			
-			var l = _create_score_row(i, pname, s.get("score", 0), diff, time_val, budget, xp, log_data)
+			var l = _create_score_row(i, pname, s.get("score", 0), diff, time_val, budget, xp, date, log_data)
 			list.add_child(l)
 			list.add_child(HSeparator.new())
 

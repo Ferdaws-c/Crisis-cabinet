@@ -40,6 +40,15 @@ var _time_label: Label
 
 var _lane_indicators: Array = []
 
+# ── Dynamic speed ─────────────────────────────────────────────────
+const SPEED_BASE: float = 1.0
+const SPEED_MAX: float  = 2.2    # cap when collecting lots of greens
+const SPEED_MIN: float  = 0.4    # floor when hitting lots of reds
+const SPEED_UP: float   = 0.12   # boost per green collected
+const SPEED_DOWN: float = 0.18   # penalty per red hit
+var _current_speed: float = SPEED_BASE
+var _speed_label: Label
+
 # Input guard
 var _w_was_down: bool = false
 var _s_was_down: bool = false
@@ -122,6 +131,14 @@ func start(game_area: Control, overlay: Node) -> void:
 
 	_spawn_timer = 0.5
 
+	# Speed meter label
+	_speed_label = Label.new()
+	_speed_label.text = "Speed: 1.0x"
+	_speed_label.add_theme_font_size_override("font_size", 15)
+	_speed_label.modulate = Color(1.0, 0.85, 0.3)
+	_speed_label.position = Vector2(10, 58)
+	game_area.add_child(_speed_label)
+
 func _spawn_object() -> void:
 	var size: Vector2 = _game_area.size
 	var is_red: bool = randf() < 0.75
@@ -153,7 +170,8 @@ func tick(delta: float) -> bool:
 	if _finished:
 		return true
 
-	var speed: float = GameManager.speed_multiplier
+	# Use dynamic speed driven by green/red collisions
+	var speed: float = _current_speed
 	var size: Vector2 = _game_area.size
 
 	_game_timer -= delta
@@ -174,7 +192,7 @@ func tick(delta: float) -> bool:
 	_w_was_down = w_down
 	_s_was_down = s_down
 
-	# Horizontal movement
+	# Horizontal movement — scales with speed so you can always dodge
 	var move_x = 0.0
 	if Input.is_key_pressed(KEY_A) or Input.is_key_pressed(KEY_LEFT): move_x -= 1.0
 	if Input.is_key_pressed(KEY_D) or Input.is_key_pressed(KEY_RIGHT): move_x += 1.0
@@ -189,10 +207,10 @@ func tick(delta: float) -> bool:
 	for i in range(4):
 		_lane_indicators[i].color = Color(0.3, 0.9, 1.0) if i == _player_lane else Color(0.3, 0.3, 0.6)
 
-	# Spawn
+	# Spawn — interval shrinks as speed rises
 	_spawn_timer -= delta
 	if _spawn_timer <= 0.0:
-		_spawn_timer = 0.45 / speed # Much faster spawning
+		_spawn_timer = 0.75 / speed
 		_spawn_object()
 
 	# Move and check objects
@@ -202,7 +220,7 @@ func tick(delta: float) -> bool:
 		if not is_instance_valid(node):
 			dead.append(obj)
 			continue
-		node.position.x -= 600.0 * speed * delta # Moving right to left, much faster
+		node.position.x -= 350.0 * speed * delta
 
 		# Collision check
 		var obj_center_x: float = node.position.x + 40
@@ -214,15 +232,19 @@ func tick(delta: float) -> bool:
 				_score -= 100
 				_budget_delta -= 4000
 				_green_streak = 0
+				# RED hit — slow down
+				_current_speed = clamp(_current_speed - SPEED_DOWN, SPEED_MIN, SPEED_MAX)
 				JuiceManager.wrong_sound()
 				JuiceManager.hit_stop_and_shake(0.5)
-				JuiceManager.spawn_floating_text(_game_area, node.position, "-100 pts -$4K", Color(1, 0.3, 0.3))
+				JuiceManager.spawn_floating_text(_game_area, node.position, "-100 pts -$4K 🐢", Color(1, 0.3, 0.3))
 			else:
 				_score += 150
 				_budget_delta += 2000
 				_green_streak += 1
+				# GREEN collect — speed up
+				_current_speed = clamp(_current_speed + SPEED_UP, SPEED_MIN, SPEED_MAX)
 				JuiceManager.correct_sound()
-				JuiceManager.spawn_floating_text(_game_area, node.position, "+150 pts +$2K", Color(0.4, 1.0, 0.4))
+				JuiceManager.spawn_floating_text(_game_area, node.position, "+150 pts +$2K ⚡", Color(0.4, 1.0, 0.4))
 				if _green_streak >= 5 and _green_streak % 5 == 0:
 					_score += 300
 					JuiceManager.bonus_sound()
@@ -239,9 +261,19 @@ func tick(delta: float) -> bool:
 	for o in dead:
 		_objects.erase(o)
 
+	# Update speed label with color feedback
+	_speed_label.text = "Speed: %.1fx" % _current_speed
+	if _current_speed > 1.2:
+		_speed_label.add_theme_color_override("font_color", Color(0.3, 1.0, 0.4))   # green = fast
+	elif _current_speed < 0.85:
+		_speed_label.add_theme_color_override("font_color", Color(1.0, 0.4, 0.3))   # red = slow
+	else:
+		_speed_label.add_theme_color_override("font_color", Color(1.0, 0.85, 0.3))  # yellow = normal
+
 	_score_label.text = "Score: %d" % _score
 	_streak_label.text = "Green Streak: %d" % _green_streak
 	return _finished
+
 
 func get_result() -> Dictionary:
 	return {

@@ -43,6 +43,10 @@ var current_difficulty: String = "Easy"
 var timer_enabled: bool = true
 var randomizer_mode: bool = false
 var randomizer_pool: Array = []
+var is_in_minigame: bool = false  # true only while a minigame is actively running
+
+# Stores data for the cloud upload — consumed by Credits.gd after scene is stable
+var _pending_cloud_upload: Dictionary = {}
 
 signal state_changed
 
@@ -88,6 +92,7 @@ func reset_game(reset_difficulty: bool = true) -> void:
 	minigame_scores.clear()
 	game_over = false
 	is_movement_paused = false
+	is_in_minigame = false
 	has_read_info = false
 	has_saved_score = false
 	total_play_time = 0.0
@@ -103,17 +108,20 @@ func reset_game(reset_difficulty: bool = true) -> void:
 	emit_signal("state_changed")
 
 func _process(delta: float) -> void:
-	if not is_movement_paused and not game_over and current_phase != "Finished":
+	if not game_over and current_phase != "Finished":
+		# Always count total play time — includes minigame time
 		total_play_time += delta
 		
-		# Functional Deadline: Drain 1 schedule day every 2 seconds of real play time
-		_days_tick += delta
-		if _days_tick >= 2.0:
-			_days_tick -= 2.0
-			schedule_days -= 1
-			emit_signal("state_changed")
-			if schedule_days <= 0:
-				trigger_game_over("Project deadline missed!")
+		if not is_movement_paused:
+			# Days countdown pauses whenever movement is paused
+			# (minigames, popups, menus, CEO, result screen, instruction screen, etc.)
+			_days_tick += delta
+			if _days_tick >= 2.0:
+				_days_tick -= 2.0
+				schedule_days -= 1
+				emit_signal("state_changed")
+				if schedule_days <= 0:
+					trigger_game_over("Project deadline missed!")
 		
 		# Global speed escalation — increases 5% every 10 seconds (caps at 2.5×)
 		_speed_tick += delta
@@ -328,6 +336,10 @@ func save_high_score() -> void:
 	if randomizer_mode:
 		diff_label += " [Random]"
 	
+	# Build a yyyy/mm/dd date string for display
+	var dt: Dictionary = Time.get_datetime_dict_from_system()
+	var date_str: String = "%04d/%02d/%02d" % [dt.year, dt.month, dt.day]
+	
 	scores.append({
 		"name": current_player_name, 
 		"diff": diff_label, 
@@ -335,27 +347,45 @@ func save_high_score() -> void:
 		"budget": budget, 
 		"xp": point_score,
 		"time": total_play_time,
-		"log": decision_log
+		"date": date_str,
+		"log": decision_log.duplicate(true)  # deep copy so reset_game can't wipe it
 	})
-	
-	if not randomizer_mode:
-		# Push to SilentWolf Cloud Database
-		var metadata = {
-			"diff": current_difficulty,
-			"budget": budget,
-			"xp": point_score,
-			"time": total_play_time,
-			"log": decision_log
-		}
-		SilentWolf.Scores.save_score(current_player_name, composite_score, "main", metadata)
 	
 	# Sort descending by score
 	scores.sort_custom(func(a, b): return a["score"] > b["score"])
 	# Keep top 10 locally
 	if scores.size() > 10:
 		scores = scores.slice(0, 10)
+	
+	# ── Write local file FIRST (synchronous, always safe) ──
 	var f = FileAccess.open("user://scoreboard.json", FileAccess.WRITE)
-	f.store_string(JSON.stringify(scores))
+	if f:
+		f.store_string(JSON.stringify(scores))
+		f.close()
+	
+	# ── Stage cloud upload — Credits.gd picks this up after scene is fully stable ──
+	# We do NOT start the HTTP thread here. It fires from Credits._ready() with a
+	# 2-second delay so the scene transition and all rendering are long done.
+	if not randomizer_mode:
+		_pending_cloud_upload = {
+			"name":  current_player_name,
+			"score": composite_score,
+			"meta": {
+				"diff":   current_difficulty,
+				"budget": budget,
+				"xp":     point_score,
+				"time":   total_play_time,
+				"date":   date_str,
+				"log":    decision_log.duplicate(true)
+			}
+		}
+
+func get_pending_upload() -> Dictionary:
+	return _pending_cloud_upload
+
+func clear_pending_upload() -> void:
+	_pending_cloud_upload = {}
+
 
 func get_random_minigame() -> String:
 	if randomizer_pool.is_empty():

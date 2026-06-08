@@ -254,13 +254,13 @@ func _process_input(key: String) -> void:
 				"8-STREAK! +400", Color(1, 1, 0))
 	else:
 		_score -= 200
-		_budget_delta -= 5000
+		_budget_delta -= 1000
 		_streak = 0
 		JuiceManager.wrong_sound()
 		JuiceManager.hit_stop_and_shake(0.6)
 		JuiceManager.spawn_floating_text(_game_area,
 			target.panel.position + Vector2(CUBICLE_SIZE.x * 0.5, CUBICLE_SIZE.y * 0.5),
-			"WRONG! -200 -$5K", Color(1, 0.3, 0.3))
+			"WRONG! -200 -$1K", Color(1, 0.3, 0.3))
 
 	_deactivate(target)
 

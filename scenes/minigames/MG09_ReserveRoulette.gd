@@ -284,10 +284,10 @@ func tick(delta: float) -> bool:
 		
 		# Check collision with player
 		if Rect2(risk.position, risk.size).has_point(_core_pos) or risk.position.y >= size.y:
-			_budget_delta -= 3000
+			_budget_delta -= 300
 			JuiceManager.wrong_sound()
 			JuiceManager.hit_stop_and_shake(0.4)
-			JuiceManager.spawn_floating_text(_game_area, risk.position, "HIT! -$3K", Color(1, 0.3, 0.3))
+			JuiceManager.spawn_floating_text(_game_area, risk.position, "HIT! -$300", Color(1, 0.3, 0.3))
 			dead_known.append(risk)
 			risk.queue_free()
 	for r in dead_known:

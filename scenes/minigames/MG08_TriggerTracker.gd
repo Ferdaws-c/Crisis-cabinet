@@ -267,12 +267,12 @@ func tick(delta: float) -> bool:
 
 		# Expired — EXPLOSION!
 		if t.life <= 0.0:
-			_budget_delta -= 8000
-			_days_delta -= 3
+			_budget_delta -= 1500
+			_days_delta -= 1
 			_defuse_streak = 0
 			JuiceManager.wrong_sound()
 			JuiceManager.hit_stop_and_shake(0.8)
-			JuiceManager.spawn_floating_text(_game_area, t.pos, "EXPLOSION! -$8K -3d", Color(1, 0.2, 0.2))
+			JuiceManager.spawn_floating_text(_game_area, t.pos, "EXPLOSION! -$1.5K -1d", Color(1, 0.2, 0.2))
 			_cleanup_trigger(t)
 			to_remove.append(t)
 
