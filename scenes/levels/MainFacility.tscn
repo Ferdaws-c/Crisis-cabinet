@@ -2502,7 +2502,7 @@ tile_set = SubResource("TileSet_tlhd4")
 
 [node name="Player" parent="." instance=ExtResource("1_45ba0")]
 z_index = 7
-position = Vector2(-3783, -526)
+position = Vector2(-3779, 109)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(3, 3)
@@ -2543,7 +2543,7 @@ required_xp = 495
 
 [node name="CeoRoomDoor" parent="InteractionTriggers/Doors" instance=ExtResource("12_8avxx")]
 z_index = 7
-position = Vector2(-3853, -443)
+position = Vector2(-3815, -443)
 required_xp = 600
 
 [node name="InfoTrigger" parent="InteractionTriggers" instance=ExtResource("12_d4kdi")]
