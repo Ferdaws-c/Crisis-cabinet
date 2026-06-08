@@ -333,7 +333,7 @@ func save_high_score() -> void:
 		"diff": diff_label, 
 		"score": composite_score, 
 		"budget": budget, 
-		"xp": xp_score,
+		"xp": point_score,
 		"time": total_play_time,
 		"log": decision_log
 	})
@@ -343,7 +343,7 @@ func save_high_score() -> void:
 		var metadata = {
 			"diff": current_difficulty,
 			"budget": budget,
-			"xp": xp_score,
+			"xp": point_score,
 			"time": total_play_time,
 			"log": decision_log
 		}

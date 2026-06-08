@@ -232,7 +232,7 @@ func _create_score_row(i: int, player_name: String, score: int, diff: String, ti
 	else:
 		rank_str = "[b]#%d %s[/b]" % [i+1, player_name]
 	
-	l.text = "%s  [%s] — Score: %s | Time: %s | Budget: $%s | XP: %s" % [
+	l.text = "%s  [%s] — Score: %s | Time: %s | Budget: $%s | Pts: %s" % [
 		rank_str, diff, str(score), time_str, str(budget), str(xp)
 	]
 	hbox.add_child(l)

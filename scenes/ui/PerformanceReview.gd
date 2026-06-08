@@ -1,8 +1,9 @@
 extends CanvasLayer
 
+var _is_exiting: bool = false  # guard against double-press / mid-scroll crash
+
 func _ready() -> void:
 	self.layer = 120 # Put at the absolute top
-	
 	_build_ui()
 	GameManager.is_movement_paused = true
 
@@ -12,16 +13,23 @@ func _build_ui() -> void:
 	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	self.add_child(bg)
 	
+	# ── Outer scroll so the whole page is scrollable on small screens ──
+	var outer_scroll = ScrollContainer.new()
+	outer_scroll.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	outer_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	bg.add_child(outer_scroll)
+	
 	var main_margin = MarginContainer.new()
-	main_margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	main_margin.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	main_margin.add_theme_constant_override("margin_top", 40)
 	main_margin.add_theme_constant_override("margin_bottom", 40)
 	main_margin.add_theme_constant_override("margin_left", 60)
 	main_margin.add_theme_constant_override("margin_right", 60)
-	bg.add_child(main_margin)
+	outer_scroll.add_child(main_margin)
 	
 	var main_vbox = VBoxContainer.new()
 	main_vbox.add_theme_constant_override("separation", 30)
+	main_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	main_margin.add_child(main_vbox)
 	
 	var total_time = GameManager.total_play_time
@@ -35,13 +43,13 @@ func _build_ui() -> void:
 	header_lbl.add_theme_color_override("font_color", Color(0.3, 0.9, 0.4))
 	main_vbox.add_child(header_lbl)
 	
-	# === TOP ROW: Tusler Grid | PMBOK Block ===
+	# === TOP ROW: Phase Accuracy | PMBOK Block ===
 	var top_hbox = HBoxContainer.new()
 	top_hbox.custom_minimum_size = Vector2(0, 250)
 	top_hbox.add_theme_constant_override("separation", 30)
 	main_vbox.add_child(top_hbox)
 	
-	# Tusler Grid Container
+	# Phase Accuracy Panel
 	var tusler_panel = PanelContainer.new()
 	tusler_panel.custom_minimum_size = Vector2(300, 0)
 	_apply_box_style(tusler_panel, Color(0.1, 0.15, 0.25))
@@ -53,7 +61,6 @@ func _build_ui() -> void:
 	var t_header = Label.new()
 	t_header.text = "Phase\nAccuracy"
 	t_header.add_theme_font_size_override("font_size", 22)
-	t_header.add_theme_font_size_override("font_bold", 1)
 	t_vbox.add_child(t_header)
 	
 	var t_grid = GridContainer.new()
@@ -99,7 +106,6 @@ func _build_ui() -> void:
 	
 	# === BOTTOM ROW: Decisions Log ===
 	var log_panel = PanelContainer.new()
-	log_panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_apply_box_style(log_panel, Color(0.1, 0.15, 0.25))
 	main_vbox.add_child(log_panel)
 	
@@ -123,21 +129,25 @@ func _build_ui() -> void:
 	sep.add_theme_constant_override("separation", 5)
 	log_vbox.add_child(sep)
 	
-	# Scroll area for rows
-	var scroll = ScrollContainer.new()
-	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	# ── Decision log rows (no inner ScrollContainer — outer scroll handles it) ──
 	var data_list = VBoxContainer.new()
 	data_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	data_list.add_theme_constant_override("separation", 15)
 	
+	# Snapshot the log data right now so it can't be wiped mid-render
+	var log_snapshot: Array = []
 	for entry_v in GameManager.decision_log:
 		var entry: Dictionary = entry_v as Dictionary
+		if entry.size() > 0:
+			log_snapshot.append(entry.duplicate())
+	
+	for entry in log_snapshot:
 		var row = HBoxContainer.new()
 		row.add_child(_create_cell(entry.get("title", "Unknown"), false, 2))
 		
-		var success = entry.get("is_success", false)
-		var sc = entry.get("score", 0)
-		var tt = entry.get("time_taken", 0.0)
+		var success: bool = entry.get("is_success", false)
+		var sc: int = entry.get("score", 0)
+		var tt: float = entry.get("time_taken", 0.0)
 		
 		row.add_child(_create_status_cell(success))
 		row.add_child(_create_cell(str(sc) + " pts", false, 1))
@@ -149,9 +159,8 @@ func _build_ui() -> void:
 		
 		data_list.add_child(row)
 		data_list.add_child(HSeparator.new())
-		
-	scroll.add_child(data_list)
-	log_vbox.add_child(scroll)
+	
+	log_vbox.add_child(data_list)
 	
 	log_vbox.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	log_vbox.set_offset(SIDE_LEFT, 20); log_vbox.set_offset(SIDE_TOP, 20)
@@ -252,5 +261,13 @@ func _apply_box_style(panel: PanelContainer, color: Color) -> void:
 	panel.add_theme_stylebox_override("panel", style)
 
 func _on_continue_pressed() -> void:
-	GameManager.reset_game(true)
+	# Guard: ignore if already in progress
+	if _is_exiting:
+		return
+	_is_exiting = true
+	
+	# Change scene FIRST — then reset GameManager data on the next idle frame
+	# so no live nodes are accessing wiped arrays during this frame.
 	get_tree().change_scene_to_file("res://scenes/ui/Credits.tscn")
+	# Defer the reset so it runs after the scene swap is fully committed
+	GameManager.call_deferred("reset_game", true)
