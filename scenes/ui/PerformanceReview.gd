@@ -14,10 +14,14 @@ func _ready() -> void:
 	# This decouples the UI entirely from live autoload state so scrolling
 	# can never race against a reset_game() call or any other mutation.
 	_snap_total_time = GameManager.total_play_time
+	_snap_minigame_scores.clear()
 	for s in GameManager.minigame_scores:
-		_snap_minigame_scores.append((s as Dictionary).duplicate())
+		if s is Dictionary:
+			_snap_minigame_scores.append(s.duplicate(true))
+	_snap_decision_log.clear()
 	for e in GameManager.decision_log:
-		_snap_decision_log.append((e as Dictionary).duplicate())
+		if e is Dictionary:
+			_snap_decision_log.append(e.duplicate(true))
 	_build_ui()
 
 	# Create a solid loading overlay on top of the built UI
@@ -39,10 +43,12 @@ func _ready() -> void:
 	await get_tree().create_timer(2.0).timeout
 	
 	# Fade out the overlay to reveal the review page
-	var tw = create_tween()
-	tw.tween_property(overlay, "color:a", 0.0, 0.5)
-	await tw.finished
-	overlay.queue_free()
+	if is_instance_valid(overlay):
+		var tw = create_tween()
+		tw.tween_property(overlay, "color:a", 0.0, 0.5)
+		await tw.finished
+		if is_instance_valid(overlay):
+			overlay.queue_free()
 
 func _build_ui() -> void:
 	var bg = ColorRect.new()
@@ -260,7 +266,6 @@ func _create_phase_stat(title: String, phase_key: String, col: Color) -> PanelCo
 	var label = Label.new()
 	label.text = title
 	label.add_theme_color_override("font_color", col)
-	label.add_theme_font_size_override("font_bold", 1)
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	v.add_child(label)
 	
@@ -284,8 +289,6 @@ func _create_cell(txt: String, is_bold: bool, size_mut: int) -> Label:
 	l.text = txt
 	l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	l.size_flags_stretch_ratio = size_mut
-	if is_bold:
-		l.add_theme_font_size_override("font_bold", 1)
 	return l
 
 func _create_status_cell(is_correct: bool) -> Label:

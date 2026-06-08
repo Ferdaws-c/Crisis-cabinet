@@ -191,7 +191,10 @@ func show_popup(scenario_data: Dictionary, _category: String) -> void:
 		"title": current_scenario.get("title", "Unknown Risk"),
 		"classify": false,
 		"strategy": false,
-		"mitigate": false
+		"mitigate": false,
+		"score": 0,
+		"time_taken": 0.0,
+		"is_success": false
 	}
 	if situation_label and current_scenario.has("setup"):
 		situation_label.text = current_scenario["setup"]
@@ -362,6 +365,7 @@ func _on_classification_selected(cat: String) -> void:
 		GameManager.emit_signal("state_changed")
 	
 	if is_correct:
+		current_log.score += 30
 		GameManager.schedule_days -= 2
 		GameManager.add_score(30)
 		_start_strategy()
@@ -380,6 +384,7 @@ func _on_strategy_selected(strat: String) -> void:
 	current_log.strategy_name = strat
 	
 	if is_correct:
+		current_log.score += 20
 		GameManager.schedule_days -= 3
 		GameManager.add_score(20)
 		_start_mitigation()
@@ -401,14 +406,11 @@ func _on_mitigation_selected(is_correct: bool, _opt: String) -> void:
 		
 	current_log.mitigate = is_correct
 	current_log.mitigate_name = _opt
+	current_log.is_success = is_correct
+	current_log.time_taken = 45.0 - time_left
 	
-	current_log.game_time = GameManager.total_play_time
-	var dict = Time.get_datetime_dict_from_system()
-	current_log.real_time = "%d-%02d-%02d %02d:%02d:%02d" % [dict.year, dict.month, dict.day, dict.hour, dict.minute, dict.second]
-	
-	GameManager.decision_log.append(current_log.duplicate(true))
-		
 	if is_correct:
+		current_log.score += 30
 		GameManager.schedule_days -= 5
 		GameManager.add_score(30)
 		GameManager.increment_streak()
@@ -491,6 +493,15 @@ func _scenario_done() -> void:
 		tw.tween_property(popup_panel, "modulate:a", 0.0, 0.4)
 		await tw.finished
 	self.visible = false
+	
+	# Set final fields on current_log
+	current_log.game_time = GameManager.total_play_time
+	var dict = Time.get_datetime_dict_from_system()
+	current_log.real_time = "%d-%02d-%02d %02d:%02d:%02d" % [dict.year, dict.month, dict.day, dict.hour, dict.minute, dict.second]
+	
+	# Append to decision_log exactly once at completion
+	GameManager.decision_log.append(current_log.duplicate(true))
+	
 	var passed = current_log.mitigate == true
 	GameManager.mark_scenario_complete(passed)
 	GameManager.is_movement_paused = false

@@ -87,3 +87,7 @@ func _on_body_entered(body: Node2D) -> void:
 func _on_body_exited(body: Node2D) -> void:
 	if body.name == "Player":
 		player_in_zone = false
+
+func _exit_tree() -> void:
+	if GameManager.state_changed.is_connected(_check_phase):
+		GameManager.state_changed.disconnect(_check_phase)

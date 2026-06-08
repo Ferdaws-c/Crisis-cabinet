@@ -123,13 +123,14 @@ func _ready() -> void:
 	tw.finished.connect(func(): fade_rect.queue_free())
 
 func _process(_delta: float) -> void:
-	if project_board:
-		project_board.visible = not GameManager.is_movement_paused
+	if not is_instance_valid(project_board):
+		return
+	project_board.visible = not GameManager.is_movement_paused
 		
 	# Pause Menu Trigger (Escape Key)
 	if Input.is_action_just_pressed("ui_cancel"):
 		var p_menu = get_tree().root.find_child("PauseMenu", true, false)
-		if p_menu:
+		if is_instance_valid(p_menu):
 			if p_menu.visible:
 				p_menu.hide_pause()
 			else:
@@ -137,12 +138,12 @@ func _process(_delta: float) -> void:
 				if not GameManager.is_movement_paused or (p_menu.visible == false and GameManager.is_movement_paused == false):
 					p_menu.show_pause()
 	
-	if minimap_cam:
+	if is_instance_valid(minimap_cam):
 		var player = get_tree().root.find_child("Player", true, false)
-		if player:
+		if is_instance_valid(player):
 			minimap_cam.global_position = player.global_position
 			
-			if minimap_marker:
+			if is_instance_valid(minimap_marker):
 				var target_name = ""
 				var completed = GameManager.scenarios_completed
 				
@@ -168,7 +169,7 @@ func _process(_delta: float) -> void:
 					target_name = "CeoTrigger"
 				
 				var target_node = get_tree().root.find_child(target_name, true, false)
-				if target_node:
+				if is_instance_valid(target_node):
 					# Map Real Space -> UI Space
 					var world_offset = target_node.global_position - player.global_position
 					var ui_offset = world_offset * minimap_cam.zoom.x
@@ -187,6 +188,10 @@ func _process(_delta: float) -> void:
 
 func _on_state_changed() -> void:
 	_update_ui()
+
+func _exit_tree() -> void:
+	if GameManager.is_connected("state_changed", Callable(self, "_on_state_changed")):
+		GameManager.disconnect("state_changed", Callable(self, "_on_state_changed"))
 
 func show_interaction_prompt(is_visible: bool) -> void:
 	if global_prompt:
