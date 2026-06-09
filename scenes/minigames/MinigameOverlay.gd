@@ -501,6 +501,9 @@ func _end_game() -> void:
 		return
 	_end_called = true
 	_is_running = false
+	# Safety: if hit_stop_and_shake is mid-await, its engine.time_scale = 0.05
+	# would be stuck. Force it back to 1.0 immediately.
+	JuiceManager.reset_time_scale()
 	# Resume the days countdown now that the minigame is done
 	GameManager.is_in_minigame = false
 

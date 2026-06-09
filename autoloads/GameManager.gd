@@ -109,6 +109,10 @@ func reset_game(reset_difficulty: bool = true) -> void:
 	emit_signal("state_changed")
 
 func _process(delta: float) -> void:
+	var current_scene = get_tree().current_scene
+	if not is_instance_valid(current_scene) or current_scene.name != "MainFacility":
+		return
+
 	if not game_over and current_phase != "Finished":
 		# Always count total play time — includes minigame time
 		total_play_time += delta
@@ -371,22 +375,19 @@ func save_high_score() -> void:
 		f.store_string(JSON.stringify(scores))
 		f.close()
 	
-	# ── Stage cloud upload — Credits.gd picks this up after scene is fully stable ──
-	# We do NOT start the HTTP thread here. It fires from Credits._ready() with a
-	# 2-second delay so the scene transition and all rendering are long done.
+	# ── Upload to cloud immediately so scores are not lost if the game crashes ──
 	if not randomizer_mode:
-		_pending_cloud_upload = {
-			"name":  current_player_name,
-			"score": composite_score,
-			"meta": {
-				"diff":   current_difficulty,
-				"budget": budget,
-				"xp":     point_score,
-				"time":   total_play_time,
-				"date":   date_str,
-				"log":    decision_log.duplicate(true)
-			}
+		var meta = {
+			"diff":   current_difficulty,
+			"budget": budget,
+			"xp":     point_score,
+			"time":   total_play_time,
+			"date":   date_str,
+			"log":    decision_log.duplicate(true)
 		}
+		SilentWolf.Scores.save_score(current_player_name, composite_score, "main", meta)
+	
+	_pending_cloud_upload = {}
 
 func get_pending_upload() -> Dictionary:
 	return _pending_cloud_upload
@@ -400,3 +401,162 @@ func get_random_minigame() -> String:
 		randomizer_pool = MinigameOverlay.MINIGAME_DATA.keys().duplicate()
 		randomizer_pool.shuffle()
 	return randomizer_pool.pop_back()
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == KEY_F2:
+			_insert_f2_test_data()
+
+func _insert_f2_test_data() -> void:
+	print("F2 Debug: Inserting test data...")
+	var test_log = [
+		{
+			"classify": true,
+			"game_time": 42.1420835206314,
+			"is_success": true,
+			"mitigate": true,
+			"real_time": "2026-06-09 11:16:45",
+			"score": 375.0,
+			"strategy": true,
+			"time_taken": 30.0048203777764,
+			"title": "MG03"
+		},
+		{
+			"classify": true,
+			"game_time": 92.1528666317514,
+			"is_success": true,
+			"mitigate": true,
+			"real_time": "2026-06-09 11:17:36",
+			"score": 1950.0,
+			"strategy": true,
+			"time_taken": 45.0038386666641,
+			"title": "MG02"
+		},
+		{
+			"classify": true,
+			"game_time": 131.121681076194,
+			"is_success": true,
+			"mitigate": true,
+			"real_time": "2026-06-09 11:18:15",
+			"score": 1850.0,
+			"strategy": true,
+			"time_taken": 35.4329861111047,
+			"title": "MG01"
+		},
+		{
+			"classify": true,
+			"game_time": 164.398133565136,
+			"is_success": true,
+			"mitigate": true,
+			"real_time": "2026-06-09 11:18:48",
+			"score": 1150.0,
+			"strategy": true,
+			"time_taken": 24.6583969333295,
+			"title": "MG05"
+		},
+		{
+			"classify": true,
+			"game_time": 213.519551231887,
+			"is_success": true,
+			"mitigate": true,
+			"real_time": "2026-06-09 11:19:38",
+			"score": 1040.0,
+			"strategy": true,
+			"time_taken": 45.0036256666605,
+			"title": "MG06"
+		},
+		{
+			"classify": true,
+			"game_time": 238.462733009709,
+			"is_success": true,
+			"mitigate": true,
+			"real_time": "2026-06-09 11:20:04",
+			"score": 6300.0,
+			"strategy": true,
+			"time_taken": 20.4501262222178,
+			"title": "MG04"
+		},
+		{
+			"classify": true,
+			"game_time": 288.228668927725,
+			"is_success": true,
+			"mitigate": true,
+			"real_time": "2026-06-09 11:20:56",
+			"score": 5300.0,
+			"strategy": true,
+			"time_taken": 45.0062136957861,
+			"title": "MG09"
+		},
+		{
+			"classify": true,
+			"game_time": 338.524092705444,
+			"is_success": true,
+			"mitigate": true,
+			"real_time": "2026-06-09 11:21:47",
+			"score": 6900.0,
+			"strategy": true,
+			"time_taken": 45.0040957777771,
+			"title": "MG07"
+		},
+		{
+			"classify": true,
+			"game_time": 387.245916055282,
+			"is_success": true,
+			"mitigate": true,
+			"real_time": "2026-06-09 11:22:36",
+			"score": 5300.0,
+			"strategy": true,
+			"time_taken": 45.0012286833301,
+			"title": "MG08"
+		},
+		{
+			"classify": true,
+			"game_time": 437.930175055131,
+			"is_success": true,
+			"mitigate": true,
+			"real_time": "2026-06-09 11:23:27",
+			"score": 10250.0,
+			"strategy": true,
+			"time_taken": 45.0047615555528,
+			"title": "MG12"
+		},
+		{
+			"classify": true,
+			"game_time": 488.054612654993,
+			"is_success": true,
+			"mitigate": true,
+			"real_time": "2026-06-09 11:24:17",
+			"score": 5450.0,
+			"strategy": true,
+			"time_taken": 45.0067095999981,
+			"title": "MG10"
+		},
+		{
+			"classify": true,
+			"game_time": 538.366670254817,
+			"is_success": true,
+			"mitigate": true,
+			"real_time": "2026-06-09 11:25:08",
+			"score": 2850.0,
+			"strategy": true,
+			"time_taken": 45.0068415999971,
+			"title": "MG11"
+		}
+	]
+	
+	decision_log = test_log.duplicate(true)
+	minigame_scores.clear()
+	for entry in test_log:
+		minigame_scores.append({
+			"id": entry.get("title", ""),
+			"score": int(entry.get("score", 0)),
+			"budget_delta": 0,
+			"days_delta": 0
+		})
+	scenarios_completed = 12
+	point_score = 48715
+	xp_score = 48715
+	budget = 236600
+	schedule_days = 120
+	current_phase = "Finished"
+	emit_signal("state_changed")

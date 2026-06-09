@@ -247,7 +247,7 @@ func _create_score_row(i: int, player_name: String, score: int, diff: String, ti
 	var export_btn = Button.new()
 	export_btn.text = "📥 EXPORT LOGS"
 	export_btn.custom_minimum_size = Vector2(150, 0)
-	export_btn.pressed.connect(func(): _export_player_logs(player_name, log_data))
+	export_btn.pressed.connect(func(): _show_export_format_selection(player_name, log_data))
 	hbox.add_child(export_btn)
 	
 	if log_data.size() == 0:
@@ -439,6 +439,173 @@ func _export_player_logs(player_name: String, log_data: Array) -> void:
 	)
 	
 	fd.popup_centered(Vector2i(800, 600))
+
+func _show_export_format_selection(player_name: String, log_data: Array) -> void:
+	# Build a choice popup overlay
+	var choice_overlay = ColorRect.new()
+	choice_overlay.color = Color(0, 0, 0, 0.7)
+	choice_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	choice_overlay.z_index = 300 # Above scoreboard
+	
+	var center = CenterContainer.new()
+	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	choice_overlay.add_child(center)
+	
+	var panel = PanelContainer.new()
+	panel.custom_minimum_size = Vector2(400, 200)
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color(0.1, 0.1, 0.12, 0.95)
+	style.border_width_left = 3; style.border_width_top = 3
+	style.border_width_right = 3; style.border_width_bottom = 3
+	style.border_color = Color(0.3, 0.5, 0.8)
+	style.corner_radius_top_left = 8; style.corner_radius_bottom_right = 8
+	style.content_margin_left = 20; style.content_margin_top = 20
+	style.content_margin_right = 20; style.content_margin_bottom = 20
+	panel.add_theme_stylebox_override("panel", style)
+	center.add_child(panel)
+	
+	var vbox = VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 15)
+	panel.add_child(vbox)
+	
+	var title = Label.new()
+	title.text = "Select Export Format for:\n" + player_name
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.add_theme_font_size_override("font_size", 16)
+	vbox.add_child(title)
+	
+	vbox.add_child(HSeparator.new())
+	
+	var btn_json = Button.new()
+	btn_json.text = "📄 User Logs (JSON)"
+	btn_json.custom_minimum_size = Vector2(0, 45)
+	btn_json.pressed.connect(func():
+		choice_overlay.queue_free()
+		_export_player_logs(player_name, log_data)
+	)
+	vbox.add_child(btn_json)
+	
+	var btn_jsonl = Button.new()
+	btn_jsonl.text = "📥 GPAF Event Logs (JSONL)"
+	btn_jsonl.custom_minimum_size = Vector2(0, 45)
+	btn_jsonl.pressed.connect(func():
+		choice_overlay.queue_free()
+		_export_player_logs_jsonl(player_name, log_data)
+	)
+	vbox.add_child(btn_jsonl)
+	
+	var btn_cancel = Button.new()
+	btn_cancel.text = "Cancel"
+	btn_cancel.custom_minimum_size = Vector2(0, 35)
+	btn_cancel.pressed.connect(func():
+		choice_overlay.queue_free()
+	)
+	vbox.add_child(btn_cancel)
+	
+	add_child(choice_overlay)
+
+func _export_player_logs_jsonl(player_name: String, log_data: Array) -> void:
+	var fd = FileDialog.new()
+	fd.title = "Export GPAF JSONL Logs for Player: %s" % player_name
+	fd.file_mode = FileDialog.FILE_MODE_SAVE_FILE
+	fd.access = FileDialog.ACCESS_FILESYSTEM
+	fd.filters = PackedStringArray(["*.jsonl ; JSON Lines Files"])
+	
+	# Sanitize filename
+	var safe_name = player_name.to_lower().replace(" ", "_")
+	var regex = RegEx.new()
+	regex.compile("[^a-zA-Z0-9_]")
+	safe_name = regex.sub(safe_name, "", true)
+	if safe_name == "":
+		safe_name = "player"
+		
+	fd.current_file = "gpaf_logs_%s.jsonl" % safe_name
+	fd.use_native_dialog = true
+	
+	add_child(fd)
+	
+	fd.file_selected.connect(func(path: String):
+		var file = FileAccess.open(path, FileAccess.WRITE)
+		if file:
+			file.store_string(reconstruct_gpaf_jsonl(player_name, log_data))
+			file.close()
+		fd.queue_free()
+	)
+	
+	fd.canceled.connect(func():
+		fd.queue_free()
+	)
+	
+	fd.popup_centered(Vector2i(800, 600))
+
+func reconstruct_gpaf_jsonl(player_name: String, log_data: Array) -> String:
+	var lines = []
+	var pseudo_id = "p_" + player_name.to_lower().replace(" ", "_")
+	var regex = RegEx.new()
+	regex.compile("[^a-zA-Z0-9_]")
+	pseudo_id = regex.sub(pseudo_id, "", true)
+	if pseudo_id == "p_":
+		pseudo_id = "p_unknown"
+		
+	var session_id = "s_reconstructed"
+	var game_id = "GM-CrisisCabinetV2"
+	
+	# Helper to format ISO-8601 UTC timestamp
+	var format_ts = func(real_time_str: String) -> String:
+		if real_time_str != "" and real_time_str.length() >= 19:
+			return real_time_str.replace(" ", "T") + "Z"
+		return Time.get_datetime_string_from_system(true) + "Z"
+
+	# 1. session_start
+	var start_ts = format_ts.call(log_data[0].get("real_time", "")) if log_data.size() > 0 else Time.get_datetime_string_from_system(true) + "Z"
+	lines.append(JSON.stringify({
+		"ts": start_ts,
+		"playerPseudoId": pseudo_id,
+		"sessionId": session_id,
+		"gameId": game_id,
+		"eventType": "session_start",
+		"payload": {}
+	}))
+	
+	# 2. Iterate through minigames
+	var cumulative_score = 0
+	for i in range(log_data.size()):
+		var entry = log_data[i]
+		var ts = format_ts.call(entry.get("real_time", ""))
+		cumulative_score += int(entry.get("score", 0))
+		
+		# level_complete
+		lines.append(JSON.stringify({
+			"ts": ts,
+			"playerPseudoId": pseudo_id,
+			"sessionId": session_id,
+			"gameId": game_id,
+			"eventType": "level_complete",
+			"payload": { "level": i + 1 }
+		}))
+		
+		# score_update
+		lines.append(JSON.stringify({
+			"ts": ts,
+			"playerPseudoId": pseudo_id,
+			"sessionId": session_id,
+			"gameId": game_id,
+			"eventType": "score_update",
+			"payload": { "score": cumulative_score }
+		}))
+		
+	# 3. session_end
+	var end_ts = format_ts.call(log_data[-1].get("real_time", "")) if log_data.size() > 0 else Time.get_datetime_string_from_system(true) + "Z"
+	lines.append(JSON.stringify({
+		"ts": end_ts,
+		"playerPseudoId": pseudo_id,
+		"sessionId": session_id,
+		"gameId": game_id,
+		"eventType": "session_end",
+		"payload": { "completed": true }
+	}))
+	
+	return "\n".join(lines)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not scoreboard_panel or not scoreboard_panel.visible:

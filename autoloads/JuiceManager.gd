@@ -3,12 +3,29 @@ extends Node
 ## Provides: hit-stop, screen shake, floating combat text, audio tones
 ## NOTE: All audio functions are NON-async (no await) — safe to call from _process.
 
+# Persistent container for AudioStreamPlayers — lives on the autoload so it
+# is never freed during scene transitions (unlike current_scene children).
+var _audio_root: Node
+
+func _ready() -> void:
+	_audio_root = Node.new()
+	_audio_root.name = "AudioRoot"
+	add_child(_audio_root)
+
 # ── Screen Shake & Hit-Stop ──────────────────────────────────────────────────
 
 func hit_stop_and_shake(intensity: float = 8.0) -> void:
+	# Capture the scene we're running in BEFORE the await.
+	# If the scene changes while we're suspended, we bail out safely.
+	var scene_before = get_tree().current_scene
 	Engine.time_scale = 0.05
 	await get_tree().create_timer(0.06, true, false, true).timeout
+	# Always restore time scale — no matter what happened during the await.
 	Engine.time_scale = 1.0
+	# If the scene changed while we were awaiting, stop here — the old camera
+	# no longer exists and trying to tween it will crash.
+	if not is_instance_valid(scene_before) or get_tree().current_scene != scene_before:
+		return
 	var cam: Camera2D = _get_camera()
 	if not cam:
 		return
@@ -30,9 +47,16 @@ func shake_only(intensity: float = 5.0) -> void:
 					randf_range(-intensity, intensity)), 0.03)
 	tw.tween_property(cam, "offset", Vector2.ZERO, 0.04)
 
+## Force time_scale back to 1.0. Called by MinigameOverlay._end_game() as a
+## safety net so a pending hit_stop_and_shake can never leave the game frozen.
+func reset_time_scale() -> void:
+	Engine.time_scale = 1.0
+
 func _get_camera() -> Camera2D:
+	if not is_instance_valid(get_tree()):
+		return null
 	var scene = get_tree().current_scene
-	if scene == null:
+	if not is_instance_valid(scene):
 		return null
 	for node in scene.get_children():
 		if node is Camera2D:
@@ -55,7 +79,9 @@ func spawn_floating_text(parent: Node, pos: Vector2, text: String, color: Color)
 	tw.set_parallel(true)
 	tw.tween_property(lbl, "position:y", pos.y - 70.0, 0.9)
 	tw.tween_property(lbl, "modulate:a", 0.0, 0.9)
-	tw.chain().tween_callback(lbl.queue_free)
+	# Guard: the label may already be freed if _game_area was cleared before the
+	# 0.9s tween completes (e.g. player exits minigame or next game starts).
+	tw.chain().tween_callback(func(): if is_instance_valid(lbl): lbl.queue_free())
 
 # ── Audio Tones (NON-async) ──────────────────────────────────────────────────
 # Uses AudioStreamPlayer.finished signal → queue_free instead of await.
@@ -63,10 +89,10 @@ func spawn_floating_text(parent: Node, pos: Vector2, text: String, color: Color)
 
 func _make_player(duration: float, vol_db: float) -> AudioStreamPlayer:
 	var player := AudioStreamPlayer.new()
-	var scene = get_tree().current_scene
-	if scene == null:
-		return player
-	scene.add_child(player)
+	# Add to the persistent _audio_root (child of this autoload) rather than
+	# the current scene. This means audio keeps playing safely across scene
+	# transitions and never becomes a dangling child of a freed scene.
+	_audio_root.add_child(player)
 	var gen := AudioStreamGenerator.new()
 	gen.mix_rate = 22050.0
 	gen.buffer_length = duration + 0.05

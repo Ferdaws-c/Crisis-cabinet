@@ -4,6 +4,7 @@ extends CanvasLayer
 @onready var panel = PanelContainer.new()
 @onready var layout = VBoxContainer.new()
 var result_label: RichTextLabel
+var panel_style: StyleBoxFlat
 
 func _ready() -> void:
 	self.visible = false
@@ -11,17 +12,17 @@ func _ready() -> void:
 	
 	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	
-	var style = StyleBoxFlat.new()
-	style.bg_color = Color(0.1, 0.1, 0.1, 0.95)
-	style.corner_radius_top_left = 12
-	style.corner_radius_bottom_right = 12
-	style.border_width_left = 6; style.border_width_top = 6
-	style.border_color = Color(0.8, 0.2, 0.2)
-	style.content_margin_left = 40
-	style.content_margin_top = 40
-	style.content_margin_right = 40
-	style.content_margin_bottom = 40
-	panel.add_theme_stylebox_override("panel", style)
+	panel_style = StyleBoxFlat.new()
+	panel_style.bg_color = Color(0.1, 0.1, 0.1, 0.95)
+	panel_style.corner_radius_top_left = 12
+	panel_style.corner_radius_bottom_right = 12
+	panel_style.border_width_left = 6; panel_style.border_width_top = 6
+	panel_style.border_color = Color(0.8, 0.2, 0.2)
+	panel_style.content_margin_left = 40
+	panel_style.content_margin_top = 40
+	panel_style.content_margin_right = 40
+	panel_style.content_margin_bottom = 40
+	panel.add_theme_stylebox_override("panel", panel_style)
 	
 	layout.add_theme_constant_override("separation", 25)
 	layout.custom_minimum_size = Vector2(700, 0)
@@ -55,7 +56,7 @@ func _ready() -> void:
 	panel.add_child(layout)
 	center.add_child(panel)
 	self.add_child(center)
-
+ 
 func show_popup() -> void:
 	self.visible = true
 	GameManager.is_movement_paused = true
@@ -73,19 +74,19 @@ func show_popup() -> void:
 	var ok_thresh = games_played * 400
 	
 	if score < 0:
-		panel.get_theme_stylebox("panel").border_color = Color(0.6, 0.0, 0.0)
+		panel_style.border_color = Color(0.6, 0.0, 0.0)
 		grade = "[b][color=red]CATASTROPHIC FAILURE[/color][/b]\n"
 		grade += "You scored terribly. You actively sabotaged the project and proved completely incompetent. Security is escorting you out."
 	elif score < ok_thresh:
-		panel.get_theme_stylebox("panel").border_color = Color(0.8, 0.4, 0.2)
+		panel_style.border_color = Color(0.8, 0.4, 0.2)
 		grade = "[b][color=orange]DISAPPOINTING[/color][/b]\n"
 		grade += "You barely scraped by. Your performance in the project phases was weak, leading to massive inefficiencies."
 	elif score < good_thresh:
-		panel.get_theme_stylebox("panel").border_color = Color(0.8, 0.8, 0.2)
+		panel_style.border_color = Color(0.8, 0.8, 0.2)
 		grade = "[b][color=yellow]ACCEPTABLE[/color][/b]\n"
 		grade += "You get to keep your job. The project had bumps, but you managed the PMBOK phases adequately."
 	else:
-		panel.get_theme_stylebox("panel").border_color = Color(0.2, 0.8, 0.2)
+		panel_style.border_color = Color(0.2, 0.8, 0.2)
 		grade = "[b][color=green]EXCELLENT JOB[/color][/b]\n"
 		grade += "Outstanding performance! You managed the PMBOK phases brilliantly, maximizing efficiency and minimizing risks."
 		

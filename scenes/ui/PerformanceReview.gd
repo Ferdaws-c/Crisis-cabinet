@@ -193,9 +193,9 @@ func _build_ui() -> void:
 		var row = HBoxContainer.new()
 		row.add_child(_create_cell(entry.get("title", "Unknown"), false, 2))
 		
-		var success: bool = entry.get("is_success", false)
-		var sc: int = entry.get("score", 0)
-		var tt: float = entry.get("time_taken", 0.0)
+		var success: bool = bool(entry.get("is_success", false))
+		var sc: int = int(entry.get("score", 0))
+		var tt: float = float(entry.get("time_taken", 0.0))
 		
 		row.add_child(_create_status_cell(success))
 		row.add_child(_create_cell(str(sc) + " pts", false, 1))
@@ -259,12 +259,12 @@ func _create_phase_stat(title: String, phase_key: String, col: Color) -> PanelCo
 	# Use snapshot — never reads GameManager.minigame_scores live
 	for s in _snap_minigame_scores:
 		var pid = "Planning"
-		var s_id = s.get("id", "")
+		var s_id = str(s.get("id", ""))
 		if s_id in ["MG04", "MG05", "MG06"]: pid = "Executing"
 		elif s_id in ["MG07", "MG08", "MG09"]: pid = "Monitoring"
 		elif s_id in ["MG10", "MG11", "MG12"]: pid = "Closing"
 		phase_scores[pid]["t"] += 1
-		if s.get("score", 0) > 0:
+		if int(s.get("score", 0)) > 0:
 			phase_scores[pid]["c"] += 1
 	
 	var p = PanelContainer.new()
