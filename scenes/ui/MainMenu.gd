@@ -244,6 +244,16 @@ func _create_score_row(i: int, player_name: String, score: int, diff: String, ti
 	btn.pressed.connect(func(): _show_player_logs(player_name, log_data))
 	hbox.add_child(btn)
 	
+	var export_btn = Button.new()
+	export_btn.text = "📥 EXPORT LOGS"
+	export_btn.custom_minimum_size = Vector2(150, 0)
+	export_btn.pressed.connect(func(): _export_player_logs(player_name, log_data))
+	hbox.add_child(export_btn)
+	
+	if log_data.size() == 0:
+		btn.disabled = true
+		export_btn.disabled = true
+	
 	return hbox
 
 func _populate_local_scores() -> void:
@@ -394,6 +404,41 @@ func _show_player_logs(player_name: String, log_data: Array) -> void:
 				bbcode += "  Time Taken: %.1fs%s\n\n" % [time_taken, date_info]
 			
 	logs_text.text = bbcode
+
+func _export_player_logs(player_name: String, log_data: Array) -> void:
+	var fd = FileDialog.new()
+	fd.title = "Export Logs for Player: %s" % player_name
+	fd.file_mode = FileDialog.FILE_MODE_SAVE_FILE
+	fd.access = FileDialog.ACCESS_FILESYSTEM
+	fd.filters = PackedStringArray(["*.json ; JSON Files"])
+	
+	# Sanitize filename
+	var safe_name = player_name.to_lower().replace(" ", "_")
+	var regex = RegEx.new()
+	regex.compile("[^a-zA-Z0-9_]")
+	safe_name = regex.sub(safe_name, "", true)
+	if safe_name == "":
+		safe_name = "player"
+		
+	fd.current_file = "crisis_cabinet_logs_%s.json" % safe_name
+	fd.use_native_dialog = true
+	
+	add_child(fd)
+	
+	fd.file_selected.connect(func(path: String):
+		var file = FileAccess.open(path, FileAccess.WRITE)
+		if file:
+			var json_string = JSON.stringify(log_data, "\t")
+			file.store_string(json_string)
+			file.close()
+		fd.queue_free()
+	)
+	
+	fd.canceled.connect(func():
+		fd.queue_free()
+	)
+	
+	fd.popup_centered(Vector2i(800, 600))
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not scoreboard_panel or not scoreboard_panel.visible:

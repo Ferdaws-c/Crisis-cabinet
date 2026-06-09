@@ -91,6 +91,7 @@ func reset_game(reset_difficulty: bool = true) -> void:
 	randomizer_pool.clear()
 	minigame_scores.clear()
 	game_over = false
+	GPAFLogger.start_session()
 	is_movement_paused = false
 	is_in_minigame = false
 	has_read_info = false
@@ -154,6 +155,10 @@ func on_minigame_complete(mg_id: String, score: int, budget_delta: int, days_del
 	})
 	_update_phase()
 	emit_signal("state_changed")
+	
+	# GPAF Analytics Logging
+	GPAFLogger.log_score_update(point_score)
+	GPAFLogger.log_level_complete(scenarios_completed)
 	if budget <= 0:
 		trigger_game_over("Budget depleted!")
 	elif schedule_days <= 0:
@@ -306,6 +311,9 @@ func get_high_scores() -> Array:
 func save_high_score() -> void:
 	if has_saved_score: return
 	has_saved_score = true
+	
+	# GPAF Analytics Logging
+	GPAFLogger.end_session(not game_over)
 	var scores = get_high_scores()
 	
 	var max_budget_val = 200000.0

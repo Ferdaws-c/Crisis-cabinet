@@ -19,6 +19,7 @@ config/icon="uid://cigy5w3w1y8ik"
 [autoload]
 
 GameManager="*res://autoloads/GameManager.gd"
+GPAFLogger="*res://autoloads/GPAFLogger.gd"
 JuiceManager="*res://autoloads/JuiceManager.gd"
 MinigameOverlay="*res://scenes/minigames/MinigameOverlay.gd"
 SilentWolf="*res://addons/silent_wolf/SilentWolf.gd"

@@ -222,6 +222,8 @@ func _build_ui() -> void:
 	# Continue Button
 	var btn_row = HBoxContainer.new()
 	btn_row.alignment = BoxContainer.ALIGNMENT_CENTER
+	btn_row.add_theme_constant_override("separation", 20)
+	
 	var continue_btn = Button.new()
 	continue_btn.text = "Finish Review & Roll Credits →"
 	continue_btn.custom_minimum_size = Vector2(400, 60)
@@ -233,8 +235,23 @@ func _build_ui() -> void:
 		bs.set(c, 8)
 	continue_btn.add_theme_stylebox_override("normal", bs)
 	continue_btn.pressed.connect(_on_continue_pressed)
-	
 	btn_row.add_child(continue_btn)
+	
+	var export_gpaf_btn = Button.new()
+	export_gpaf_btn.text = "📥 Export GPAF JSONL Logs"
+	export_gpaf_btn.custom_minimum_size = Vector2(300, 60)
+	export_gpaf_btn.add_theme_font_size_override("font_size", 20)
+	
+	var export_style = StyleBoxFlat.new()
+	export_style.bg_color = Color(0.15, 0.45, 0.25)
+	for c in ["corner_radius_top_left","corner_radius_top_right","corner_radius_bottom_left","corner_radius_bottom_right"]:
+		export_style.set(c, 8)
+	export_gpaf_btn.add_theme_stylebox_override("normal", export_style)
+	export_gpaf_btn.pressed.connect(func():
+		GPAFLogger.export_logs_to_file(self)
+	)
+	btn_row.add_child(export_gpaf_btn)
+	
 	main_vbox.add_child(btn_row)
 
 func _create_phase_stat(title: String, phase_key: String, col: Color) -> PanelContainer:
