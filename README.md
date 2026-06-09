@@ -1,3 +1,5 @@
+Download the full game here : https://drive.google.com/drive/folders/1CnQMH94tpXgi2_ZINFUdVSeKf4LOkJV3?usp=drive_link
+
 # 🏆 Crisis Cabinet: IT Project Risk Management Simulation
 
 [![Engine](https://img.shields.io/badge/Engine-Godot_4.4.1-blue?logo=godot-engine&logoColor=white)](https://godotengine.org/)
