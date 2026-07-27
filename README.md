@@ -1,5 +1,5 @@
 Download the full game here : https://drive.google.com/drive/folders/1CnQMH94tpXgi2_ZINFUdVSeKf4LOkJV3?usp=drive_link
-
+hosted online (Not Recommened since its not complete yet.) : https://ferdaws-gd.itch.io/crisis-cabinet
 # 🏆 Crisis Cabinet: IT Project Risk Management Simulation
 
 [![Engine](https://img.shields.io/badge/Engine-Godot_4.4.1-blue?logo=godot-engine&logoColor=white)](https://godotengine.org/)
